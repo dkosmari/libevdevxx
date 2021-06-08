@@ -141,10 +141,14 @@ namespace evdev {
     }
 
 
-    Device::~Device() noexcept
-    {
-        close();
-    }
+    Device::~Device() noexcept = default;
+
+
+    Device::Device(Device&& other) noexcept = default;
+
+
+    Device&
+    Device::operator=(Device&& other) noexcept = default;
 
 
     libevdev*
@@ -197,6 +201,13 @@ namespace evdev {
         if (f == -1)
             throw logic_error{__PRETTY_FUNCTION__ + " failed"s};
         return f;
+    }
+
+
+    void
+    Device::open(const path& filename, int flags)
+    {
+        owned_file.open(filename, flags);
     }
 
 

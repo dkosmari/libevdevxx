@@ -91,6 +91,12 @@ namespace evdev {
         virtual ~Device() noexcept;
 
 
+        // move operations
+        Device(Device&& other) noexcept;
+        Device& operator=(Device&& other) noexcept;
+
+
+
         ::libevdev* data() noexcept;
         const ::libevdev* data() const noexcept;
 
@@ -99,11 +105,14 @@ namespace evdev {
         void ungrab();
 
 
+        // supply a file descriptor without owning it
         void fd (int fd);
         void change_fd(int fd);
         int fd() const;
 
-        // only valid when Device owns the file handle
+
+        void open(const path& filename, int flags = O_RDONLY | O_NONBLOCK);
+        // only valid if Device opened the file, not if given a fd.
         void close() noexcept;
         void nonblock(bool enable);
 

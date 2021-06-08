@@ -52,4 +52,3 @@ company: compile_flags.txt
 
 compile_flags.txt: Makefile
 	echo "$(AM_CPPFLAGS) $(CPPFLAGS) $(DEFS)" | xargs -n1 | sort -u > $(srcdir)/compile_flags.txt
-
