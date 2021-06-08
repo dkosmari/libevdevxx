@@ -1,0 +1,59 @@
+Name:           @PACKAGE_NAME@
+Version:        @PACKAGE_VERSION@
+Release:        1%{?dist}
+Summary:        A C++ wrapper for libevdev.
+
+License:        GPLv3
+Source0:        @PACKAGE_TARNAME@-@PACKAGE_VERSION@.tar.gz
+
+BuildRequires:  lib64evdev-devel
+BuildRequires:  gcc-c++
+
+Requires:       lib64evdev2
+
+Group:          System/Libraries
+
+%description
+%{name} is a C++17 wrapper for libevdev.
+
+
+%package        devel
+Summary:        Development files for %{name}
+Requires:       %{name}%{?_isa} = %{version}-%{release}
+
+Group:          Development/C++
+
+%description    devel
+The %{name}-devel package contains libraries and header files for
+developing applications that use %{name}.
+
+
+%prep
+%autosetup
+
+
+%build
+%configure --disable-static
+%make_build
+
+
+%install
+rm -rf $RPM_BUILD_ROOT
+%make_install
+find $RPM_BUILD_ROOT -name '*.la' -exec rm -f {} ';'
+
+
+%{?ldconfig_scriptlets}
+
+
+%files
+%license COPYING
+%doc AUTHORS ChangeLog NEWS README
+%{_libdir}/*.so.*
+
+%files devel
+%doc INSTALL
+%{_includedir}/*
+%{_libdir}/*.so
+%{_libdir}/pkgconfig/libevdevxx.pc
+
