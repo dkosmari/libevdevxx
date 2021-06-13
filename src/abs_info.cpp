@@ -20,7 +20,7 @@
 #include <ostream>
 #include <sstream>
 
-#include "absinfo.hpp"
+#include "abs_info.hpp"
 
 
 using std::string;

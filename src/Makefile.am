@@ -16,7 +16,7 @@ lib_LTLIBRARIES = libevdevxx.la
 libevdevxxdir = $(includedir)/libevdevxx
 
 libevdevxx_HEADERS = \
-	absinfo.hpp \
+	abs_info.hpp \
 	device.hpp \
 	dropped_sync.hpp \
 	error.hpp \
@@ -29,7 +29,7 @@ libevdevxx_HEADERS = \
 
 
 libevdevxx_la_SOURCES = \
-	absinfo.cpp \
+	abs_info.cpp \
 	device.cpp \
 	dropped_sync.cpp \
 	error.cpp \

@@ -31,7 +31,7 @@
 
 #include <libevdev/libevdev.h>
 
-#include "absinfo.hpp"
+#include "abs_info.hpp"
 #include "event.hpp"
 #include "property.hpp"
 #include "read.hpp"

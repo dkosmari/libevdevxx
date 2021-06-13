@@ -17,8 +17,8 @@
  */
 
 
-#ifndef LIBEVDEVXX_ABSINFO_HPP
-#define LIBEVDEVXX_ABSINFO_HPP
+#ifndef LIBEVDEVXX_ABS_INFO_HPP
+#define LIBEVDEVXX_ABS_INFO_HPP
 
 
 #include <cstdint>
