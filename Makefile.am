@@ -24,5 +24,5 @@ RPM_TARBALL_NAME = $(HOME)/rpmbuild/SOURCES/$(TARBALL_NAME)
 
 rpm: libevdevxx.spec dist-gzip
 	[ -e $(RPM_TARBALL_NAME) ] || \
-		ln -s $(PWD)/$(TARBALL_NAME) $(RPM_TARBALL_NAME)
+		$(LN_S) $(PWD)/$(TARBALL_NAME) $(RPM_TARBALL_NAME)
 	rpmbuild -ba $<

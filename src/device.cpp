@@ -211,6 +211,13 @@ namespace evdev {
     }
 
 
+    bool
+    Device::is_open() const noexcept
+    {
+        return owned_file.is_open();
+    }
+
+
     void
     Device::close() noexcept
     {

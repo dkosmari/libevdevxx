@@ -113,6 +113,7 @@ namespace evdev {
 
         void open(const path& filename, int flags = O_RDONLY | O_NONBLOCK);
         // only valid if Device opened the file, not if given a fd.
+        bool is_open() const noexcept;
         void close() noexcept;
         void nonblock(bool enable);
 
