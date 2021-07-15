@@ -47,11 +47,6 @@ namespace evdev {
     using std::filesystem::path;
     using std::vector;
 
-    using opt_string = optional<string>;
-    using opt_int = optional<int>;
-
-
-
 
     enum class LogPriority {
         none  = -1,
@@ -134,8 +129,8 @@ namespace evdev {
         // --------------------- //
 
         string name() const;
-        opt_string phys() const;
-        opt_string uniq() const;
+        optional<string> phys() const;
+        optional<string> uniq() const;
 
         uint16_t product_id() const noexcept;
         uint16_t vendor_id() const noexcept;
@@ -160,7 +155,7 @@ namespace evdev {
         AbsInfo abs_info(Code code) const;
 
         int get(Type type, Code code) const noexcept;
-        opt_int fetch(Type type, Code code) const noexcept;
+        optional<int> fetch(Type type, Code code) const noexcept;
 
         bool get_repeat(int& delay, int& period) const noexcept;
 
@@ -173,8 +168,8 @@ namespace evdev {
         // TODO: these codes should be enums
 
         int get_slot(unsigned slot, Code code) const noexcept;
-        opt_int fetch_slot(unsigned slot, Code code) const noexcept;
-        opt_int num_slots() const noexcept;
+        optional<int> fetch_slot(unsigned slot, Code code) const noexcept;
+        optional<int> num_slots() const noexcept;
         int current_slot() const noexcept;
 
 

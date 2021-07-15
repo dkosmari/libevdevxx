@@ -112,13 +112,11 @@ namespace evdev::internal {
                      int flags)
     {
         if (is_open())
-            throw runtime_error{"file object is already open"s};
+            throw runtime_error{"File object is already open."s};
 
         fd = ::open(file.c_str(), flags);
         if (fd < 0)
-            throw Error{"::open("s
-                    + list_to_string(file, flags)
-                    + ") failed"s, errno};
+            throw Error{"Failed to open \""s + file.string() + "\""s, errno};
     }
 
 
@@ -128,14 +126,11 @@ namespace evdev::internal {
                      ::mode_t mode)
     {
         if (is_open())
-            throw runtime_error{"file object is already open"s};
+            throw runtime_error{"File object is already open."s};
 
         fd = ::open(file.c_str(), flags, mode);
         if (fd < 0)
-            throw Error{"::open("s
-                    + list_to_string(file, flags, mode)
-                    + ") failed"s, errno};
-
+            throw Error{"Failed to open \""s + file.string() + "\""s, errno};
     }
 
 

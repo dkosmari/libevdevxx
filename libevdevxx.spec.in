@@ -1,15 +1,15 @@
 Name:           @PACKAGE_NAME@
 Version:        @PACKAGE_VERSION@
-Release:        1%{?dist}
+Release:        %mkrel 2
 Summary:        A C++ wrapper for libevdev.
 
 License:        GPLv3
 Source0:        @PACKAGE_TARNAME@-@PACKAGE_VERSION@.tar.gz
 
-BuildRequires:  lib64evdev-devel
+BuildRequires:  pkgconfig(libevdev)
 BuildRequires:  gcc-c++
 
-Requires:       lib64evdev2
+# Requires:       lib64evdev2
 
 Group:          System/Libraries
 
@@ -48,12 +48,14 @@ find $RPM_BUILD_ROOT -name '*.la' -exec rm -f {} ';'
 
 %files
 %license COPYING
-%doc AUTHORS ChangeLog NEWS README
+%doc AUTHORS
+%doc README
 %{_libdir}/*.so.*
 
 %files devel
-%doc INSTALL
-%{_includedir}/*
+%doc ChangeLog
+%doc NEWS
+%{_includedir}/*.hpp
 %{_libdir}/*.so
 %{_libdir}/pkgconfig/libevdevxx.pc
 
