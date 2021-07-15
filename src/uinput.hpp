@@ -34,7 +34,8 @@
 namespace evdev {
 
 
-    using opt_path = std::optional<std::filesystem::path>;
+    using std::filesystem::path;
+    using std::optional;
 
 
     class Uinput {
@@ -57,9 +58,9 @@ namespace evdev {
 
         int fd() const noexcept;
 
-        opt_path syspath() noexcept;
+        optional<path> syspath() noexcept;
 
-        opt_path devnode() noexcept;
+        optional<path> devnode() noexcept;
 
         void write(Type type, Code code, int value);
 

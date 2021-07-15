@@ -23,7 +23,6 @@
 #include "abs_info.hpp"
 
 
-using std::string;
 using std::ostream;
 using std::ostringstream;
 

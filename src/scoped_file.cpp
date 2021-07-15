@@ -40,8 +40,9 @@
 #endif
 
 
-using std::runtime_error;
 using std::filesystem::path;
+using std::logic_error;
+using std::runtime_error;
 using std::string;
 
 using namespace std::literals;
@@ -112,7 +113,7 @@ namespace evdev::internal {
                      int flags)
     {
         if (is_open())
-            throw runtime_error{"File object is already open."s};
+            throw logic_error{"File object is already open."s};
 
         fd = ::open(file.c_str(), flags);
         if (fd < 0)
@@ -126,7 +127,7 @@ namespace evdev::internal {
                      ::mode_t mode)
     {
         if (is_open())
-            throw runtime_error{"File object is already open."s};
+            throw logic_error{"File object is already open."s};
 
         fd = ::open(file.c_str(), flags, mode);
         if (fd < 0)
@@ -155,7 +156,7 @@ namespace evdev::internal {
     ScopedFile::nonblock(bool enable)
     {
         if (!is_open())
-            throw Error{EBADFD};
+            throw logic_error{"File must be open before it's set to nonblock."};
 
         int flags = ::fcntl(fd, F_GETFL);
         if (flags < 0)

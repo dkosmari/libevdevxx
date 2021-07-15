@@ -29,6 +29,8 @@
 
 namespace evdev {
 
+    using std::string;
+
 
     enum Property : unsigned {
 
@@ -43,9 +45,9 @@ namespace evdev {
     };
 
 
-    Property to_property(const std::string& name);
+    Property to_property(const string& name);
 
-    std::string to_string(Property prop);
+    string to_string(Property prop);
 
     std::ostream& operator<<(std::ostream& out, Property prop);
 

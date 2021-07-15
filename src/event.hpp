@@ -21,9 +21,9 @@
 #define LIBEVDEVXX_EVENT_HPP
 
 
+#include <cstdint>
 #include <iosfwd>
 #include <string>
-#include <cstdint>
 
 #include <libevdev/libevdev.h>
 
@@ -31,12 +31,18 @@
 namespace evdev {
 
 
+    using std::int32_t;
+    using std::string;
+    using std::uint16_t;
+    using std::uint32_t;
+
+
     // ---- //
     // Type //
     // ---- //
 
 
-    enum Type : std::uint16_t {
+    enum Type : uint16_t {
         syn       = EV_SYN,
         key       = EV_KEY,
         rel       = EV_REL,
@@ -52,9 +58,9 @@ namespace evdev {
     };
 
 
-    Type to_type(const std::string& name);
+    Type to_type(const string& name);
 
-    std::string to_string(Type type);
+    string to_string(Type type);
 
     std::ostream& operator<<(std::ostream& out, Type type);
 
@@ -64,13 +70,13 @@ namespace evdev {
     // ---- //
 
 
-    using Code = std::uint16_t;
+    using Code = uint16_t;
 
 
     Code count(Type t);
 
 
-    std::string to_string(Type t, Code code);
+    string to_string(Type t, Code code);
 
 
 
@@ -80,12 +86,12 @@ namespace evdev {
 
 
     struct Event {
-        std::uint32_t sec{};
-        std::uint32_t usec{};
+        uint32_t sec{};
+        uint32_t usec{};
 
         Type type{};
         Code code{};
-        std::int32_t value{};
+        int32_t value{};
 
 
         constexpr Event() noexcept = default;
@@ -129,7 +135,7 @@ namespace evdev {
 
 
 
-    std::string to_string(const Event& e);
+    string to_string(const Event& e);
 
 
     std::ostream& operator<<(std::ostream& out, const Event& e);

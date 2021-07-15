@@ -29,6 +29,10 @@
 namespace evdev {
 
 
+    using std::string;
+
+
+
     // ---- //
     // Flag //
     // ---- //
@@ -112,7 +116,7 @@ namespace evdev {
     }
 
 
-    std::string to_string(Flag flag);
+    string to_string(Flag flag);
 
     std::ostream& operator<<(std::ostream& out, Flag flag);
 
@@ -130,7 +134,7 @@ namespace evdev {
     };
 
 
-    std::string to_string(Status st);
+    string to_string(Status st);
 
 
     int to_errno(Status st);

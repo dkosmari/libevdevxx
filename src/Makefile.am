@@ -11,7 +11,6 @@ libevdevxxdir = $(includedir)/libevdevxx
 libevdevxx_HEADERS = \
 	abs_info.hpp \
 	device.hpp \
-	dropped_sync.hpp \
 	error.hpp \
 	evdevxx.hpp \
 	event.hpp \
@@ -19,6 +18,7 @@ libevdevxx_HEADERS = \
 	property.hpp \
 	read.hpp \
 	scoped_file.hpp \
+	sync_error.hpp \
 	uinput.hpp
 
 
@@ -28,7 +28,6 @@ lib_LTLIBRARIES = libevdevxx.la
 libevdevxx_la_SOURCES = \
 	abs_info.cpp \
 	device.cpp \
-	dropped_sync.cpp \
 	error.cpp \
 	event.cpp \
 	grabber.cpp \
@@ -36,6 +35,7 @@ libevdevxx_la_SOURCES = \
 	property.cpp \
 	read.cpp \
 	scoped_file.cpp \
+	sync_error.cpp \
 	uinput.cpp
 
 

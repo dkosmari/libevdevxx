@@ -44,7 +44,7 @@ namespace evdev {
                                                      f,
                                                      &ptr);
         if (e < 0)
-            throw Error{__PRETTY_FUNCTION__, -e};
+            throw Error{"libevdev_uinput_create_from_device()", -e};
         udev.reset(ptr);
     }
 
@@ -70,7 +70,7 @@ namespace evdev {
     }
 
 
-    opt_path
+    optional<path>
     Uinput::syspath() noexcept
     {
         const char* p = ::libevdev_uinput_get_syspath(data());
@@ -80,7 +80,7 @@ namespace evdev {
     }
 
 
-    opt_path
+    optional<path>
     Uinput::devnode() noexcept
     {
         const char* p = ::libevdev_uinput_get_devnode(data());
@@ -97,7 +97,7 @@ namespace evdev {
     {
         int e = ::libevdev_uinput_write_event(data(), type, code, value);
         if (e < 0)
-            throw Error{__PRETTY_FUNCTION__, -e};
+            throw Error{"libevdev_uinput_write_event", -e};
     }
 
 

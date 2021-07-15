@@ -17,18 +17,26 @@
  */
 
 
-#include <stdexcept>
+#ifndef LIBEVDEVXX_SYNC_ERROR_HPP
+#define LIBEVDEVXX_SYNC_ERROR_HPP
 
-#include "dropped_sync.hpp"
+
+#include "event.hpp"
 
 
 namespace evdev {
 
 
-    DroppedSync::DroppedSync(const Event& event) :
-        std::runtime_error{"lost sync"},
-        event{event}
-    {}
+    struct SyncError : std::runtime_error {
+
+        Event event;
+
+        SyncError(const Event& event);
+
+    };
 
 
 }
+
+
+#endif

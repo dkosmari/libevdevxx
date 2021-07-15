@@ -24,13 +24,13 @@
 
 #include "abs_info.hpp"
 #include "device.hpp"
-#include "dropped_sync.hpp"
 #include "error.hpp"
 #include "event.hpp"
 #include "grabber.hpp"
 #include "property.hpp"
 #include "read.hpp"
 #include "scoped_file.hpp"
+#include "sync_error.hpp"
 #include "uinput.hpp"
 
 #endif

@@ -25,8 +25,8 @@
 #include <thread>
 
 #include "device.hpp"
-#include "dropped_sync.hpp"
 #include "error.hpp"
+#include "sync_error.hpp"
 
 
 using std::cerr;
@@ -37,7 +37,7 @@ using std::flush;
 using namespace std::literals;
 
 using evdev::Device;
-using evdev::DroppedSync;
+using evdev::SyncError;
 using evdev::Event;
 using evdev::Flag;
 using evdev::Status;
@@ -80,7 +80,7 @@ int main(int argc, char* argv[])
                 Event event = dev.read();
                 cout << event << endl;
             }
-            catch (DroppedSync& ds) {
+            catch (SyncError& se) {
                 cout << "dropped sync" << endl;
                 // trigger a resync
                 Event delta;

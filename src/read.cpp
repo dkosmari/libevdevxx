@@ -25,7 +25,6 @@
 #include "private_utils.hpp"
 
 
-using std::string;
 using std::ostream;
 using std::ostringstream;
 

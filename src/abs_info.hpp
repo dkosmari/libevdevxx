@@ -31,13 +31,17 @@
 namespace evdev {
 
 
+    using std::int32_t;
+    using std::string;
+
+
     struct AbsInfo {
-        std::int32_t val = 0;
-        std::int32_t min = 0;
-        std::int32_t max = 0;
-        std::int32_t fuzz = 0;
-        std::int32_t flat = 0;
-        std::int32_t res = 0;
+        int32_t val = 0;
+        int32_t min = 0;
+        int32_t max = 0;
+        int32_t fuzz = 0;
+        int32_t flat = 0;
+        int32_t res = 0;
 
 
         constexpr AbsInfo() noexcept = default;
@@ -83,7 +87,7 @@ namespace evdev {
     };
 
 
-    std::string to_string(const AbsInfo& info);
+    string to_string(const AbsInfo& info);
 
 
     std::ostream& operator<<(std::ostream& out, const AbsInfo& info);
