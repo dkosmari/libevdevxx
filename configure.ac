@@ -39,9 +39,12 @@ AC_TYPE_MODE_T
 # Checks for library functions.
 AC_FUNC_STRERROR_R
 
-AC_CONFIG_FILES([libevdevxx.pc
-                 libevdevxx.spec
-                 Makefile
-                 src/Makefile
-                 tests/Makefile])
+AC_CONFIG_FILES([
+examples/Makefile
+libevdevxx.pc
+libevdevxx.spec
+Makefile
+src/Makefile
+tools/Makefile
+])
 AC_OUTPUT

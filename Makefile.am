@@ -11,7 +11,8 @@ EXTRA_DIST = \
 
 SUBDIRS = \
 	src \
-	tests
+	examples \
+	tools
 
 
 pcfiledir = $(pkgconfigdir)

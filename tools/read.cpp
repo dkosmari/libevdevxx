@@ -81,7 +81,7 @@ int main(int argc, char* argv[])
                 cout << event << endl;
             }
             catch (SyncError& se) {
-                cout << "dropped sync" << endl;
+                cout << "lost sync" << endl;
                 // trigger a resync
                 Event delta;
                 while (dev.read(delta, Flag::resync) == Status::dropped)

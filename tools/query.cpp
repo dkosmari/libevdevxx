@@ -27,7 +27,8 @@
 #include <sys/ioctl.h>
 #include <unistd.h>
 
-#include "device.hpp"
+// this header is installed as <libevdevxx/evdevxx.hpp>
+#include "evdevxx.hpp"
 
 
 using std::size_t;

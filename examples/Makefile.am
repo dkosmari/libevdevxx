@@ -14,20 +14,11 @@ LDADD = \
 	$(LIBEVDEV_LIBS)
 
 
-noinst_PROGRAMS = \
-	circle-mouse \
-	query-device \
-	dump-events
-
+noinst_PROGRAMS = circle-mouse
 
 
 circle_mouse_SOURCES = circle-mouse.cpp
 
-
-query_device_SOURCES = query-device.cpp
-
-
-dump_events_SOURCES = dump-events.cpp
 
 
 .PHONY: company

@@ -6,6 +6,8 @@ syntax: glob
 *.log
 *.o
 *.pc
+*.spec
+*.tar.gz
 *~
 .deps
 .libs
@@ -17,13 +19,11 @@ config.h
 config.h.in
 config.status
 configure
+examples/circle-mouse
 libtool
 m4
 Makefile
 Makefile.in
 stamp-h1
-tests/circle-mouse
-tests/dump-events
-tests/query-device
-*.tar.gz
-*.spec
+tools/evdevxx-query
+tools/evdevxx-read
