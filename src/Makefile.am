@@ -1,31 +1,28 @@
 # src/Makefile.am
 
-AM_CXXFLAGS = \
-	-Wall -Wextra -Werror
+
+AM_CXXFLAGS = -Wall -Wextra -Werror
 
 
-AM_CPPFLAGS = \
-	$(LIBEVDEV_CFLAGS)
-
-
-
-
-lib_LTLIBRARIES = libevdevxx.la
+AM_CPPFLAGS = $(LIBEVDEV_CFLAGS)
 
 
 libevdevxxdir = $(includedir)/libevdevxx
-
 libevdevxx_HEADERS = \
 	abs_info.hpp \
 	device.hpp \
 	dropped_sync.hpp \
 	error.hpp \
+	evdevxx.hpp \
 	event.hpp \
 	grabber.hpp \
 	property.hpp \
 	read.hpp \
 	scoped_file.hpp \
 	uinput.hpp
+
+
+lib_LTLIBRARIES = libevdevxx.la
 
 
 libevdevxx_la_SOURCES = \
@@ -42,8 +39,7 @@ libevdevxx_la_SOURCES = \
 	uinput.cpp
 
 
-libevdevxx_la_LIBADD = \
-	$(LIBEVDEV_LIBS)
+libevdevxx_la_LIBADD = $(LIBEVDEV_LIBS)
 
 
 .PHONY: company
