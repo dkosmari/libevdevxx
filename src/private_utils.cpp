@@ -17,14 +17,25 @@
  */
 
 
-#include <vector>
+#include <iomanip>
+#include <ios>
+#include <sstream>
+#include <stdexcept>
 #include <string.h>
+#include <vector>
 
 #include "private_utils.hpp"
 
 #ifdef HAVE_CONFIG_H
 #include <config.h>
 #endif
+
+
+using std::setw;
+using std::showbase;
+using std::hex;
+using std::invalid_argument;
+using std::out_of_range;
 
 
 namespace evdev::priv {
@@ -59,6 +70,69 @@ namespace evdev::priv {
         }
         return buf;
 #endif
+    }
+
+
+    string
+    to_hex(unsigned val, unsigned width, bool base)
+    {
+        std::ostringstream out;
+        if (base)
+            out << showbase;
+        out << hex << setw(width) << val;
+        return out.str();
+    }
+
+
+    std::istream&
+    getline(std::istream& input,
+            string& line,
+            const std::function<bool(char)>& pred)
+    {
+        line.clear();
+        char c;
+        while (input.get(c)) {
+            if (!pred(c)) {
+                input.unget();
+                break;
+            }
+
+            line.push_back(c);
+        }
+        return input;
+    }
+
+
+
+    FlagsGuard::FlagsGuard(std::ios_base& stream) :
+        stream(stream),
+        saved{stream.flags()}
+    {}
+
+
+    FlagsGuard::~FlagsGuard()
+    {
+        stream.flags(saved);
+    }
+
+
+    unsigned long
+    stoul_range(const string& arg,
+                size_t* pos,
+                unsigned base,
+                unsigned long max,
+                const string& error_msg)
+    {
+        try {
+            unsigned long value = std::stoul(arg, pos, base);
+            if (value > max)
+                throw out_of_range{error_msg + ": '"s + arg + "'"s};
+            return value;
+        }
+        catch (std::exception& e) {
+            throw invalid_argument{error_msg + ": '"s
+                    + arg + "': "s + e.what()};
+        }
     }
 
 

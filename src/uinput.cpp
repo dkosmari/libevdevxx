@@ -91,8 +91,8 @@ namespace evdev {
 
 
     void
-    Uinput::write(Type type,
-                  Code code,
+    Uinput::write(Event::Type type,
+                  Event::Code code,
                   int value)
     {
         int e = ::libevdev_uinput_write_event(data(), type, code, value);
@@ -102,56 +102,68 @@ namespace evdev {
 
 
     void
-    Uinput::syn(Code code, int value)
-    { write(Type::syn, code, value); }
+    Uinput::write(Event::TypeCode tc, int value)
+    { write(tc.type, tc.code, value); }
+
 
     void
-    Uinput::key(Code code, int value)
-    { write(Type::key, code, value); }
+    Uinput::write(const Event& event)
+    {
+        write(event.type, event.code, event.value);
+    }
+
 
     void
-    Uinput::rel(Code code, int value)
-    { write(Type::rel, code, value); }
+    Uinput::syn(Event::Code code, int value)
+    { write(Event::Type::syn, code, value); }
 
     void
-    Uinput::abs(Code code, int value)
-    { write(Type::abs, code, value); }
+    Uinput::key(Event::Code code, int value)
+    { write(Event::Type::key, code, value); }
 
     void
-    Uinput::msc(Code code, int value)
-    { write(Type::msc, code, value); }
+    Uinput::rel(Event::Code code, int value)
+    { write(Event::Type::rel, code, value); }
 
     void
-    Uinput::sw(Code code, int value)
-    { write(Type::sw, code, value); }
+    Uinput::abs(Event::Code code, int value)
+    { write(Event::Type::abs, code, value); }
 
     void
-    Uinput::led(Code code, int value)
-    { write(Type::led, code, value); }
+    Uinput::msc(Event::Code code, int value)
+    { write(Event::Type::msc, code, value); }
 
     void
-    Uinput::snd(Code code, int value)
-    { write(Type::snd, code, value); }
+    Uinput::sw(Event::Code code, int value)
+    { write(Event::Type::sw, code, value); }
 
     void
-    Uinput::rep(Code code, int value)
-    { write(Type::rep, code, value); }
+    Uinput::led(Event::Code code, int value)
+    { write(Event::Type::led, code, value); }
 
     void
-    Uinput::ff(Code code, int value)
-    { write(Type::ff, code, value); }
+    Uinput::snd(Event::Code code, int value)
+    { write(Event::Type::snd, code, value); }
 
     void
-    Uinput::pwr(Code code, int value)
-    { write(Type::pwr, code, value); }
+    Uinput::rep(Event::Code code, int value)
+    { write(Event::Type::rep, code, value); }
 
     void
-    Uinput::ff_status(Code code, int value)
-    { write(Type::ff_status, code, value); }
+    Uinput::ff(Event::Code code, int value)
+    { write(Event::Type::ff, code, value); }
+
+    void
+    Uinput::pwr(Event::Code code, int value)
+    { write(Event::Type::pwr, code, value); }
+
+    void
+    Uinput::ff_status(Event::Code code, int value)
+    { write(Event::Type::ff_status, code, value); }
 
 
     void
     Uinput::flush()
-    { syn(SYN_REPORT, 0); }
+    { syn(Event::Code{SYN_REPORT}, 0); }
 
 }

@@ -24,10 +24,16 @@
 
 #include "event.hpp"
 
+#include "private_utils.hpp"
+
 
 using std::ostream;
 using std::ostringstream;
 using std::setw;
+using std::runtime_error;
+using std::out_of_range;
+using std::invalid_argument;
+
 
 using namespace std::literals;
 
@@ -35,86 +41,46 @@ using namespace std::literals;
 namespace evdev {
 
 
-    // ---- //
-    // Type //
-    // ---- //
+
+    // --------- //
+    // Type+Code //
+    // --------- //
 
 
-    Type
-    to_type(const string& name)
+    Event::TypeCode::TypeCode(const string& type_name,
+                              const string& code_name) :
+        TypeCode{Type{type_name}, Code{code_name}}
+    {}
+
+
+    Event::TypeCode::TypeCode(const string& code_name)
     {
-        int val = ::libevdev_event_type_from_name(name.c_str());
-        if (val < 0)
-            throw std::runtime_error{"invalid event type name \""s + name + "\""s};
-        return Type(val);
+        int type_val = ::libevdev_event_type_from_code_name(code_name.c_str());
+        int code_val = ::libevdev_event_code_from_code_name(code_name.c_str());
+        if (type_val == -1 || code_val == -1)
+            throw invalid_argument{"bad event code name: '"s
+                    + code_name + "'"s};
+        type = Type(type_val);
+        code = Code(code_val);
     }
 
 
-    string
-    to_string(Type type)
+
+    pair<string, string>
+    to_string(const Event::TypeCode& tc)
     {
-        unsigned val = type;
-        const char* s = ::libevdev_event_type_get_name(val);
-        if (!s)
-            return "unknown event type "s + std::to_string(val);
-        return s;
+        return {
+            to_string(tc.type),
+            to_string(tc.type, tc.code)
+        };
     }
 
 
     ostream&
-    operator<<(ostream& out, Type type)
+    operator<<(ostream& out, const Event::TypeCode& tc)
     {
-        return out << to_string(type);
+        return out << tc.type << '/' << tc.code;
     }
-
-
-    Code
-    count(Type t)
-    {
-        switch (t) {
-            case Type::syn:
-                return SYN_CNT;
-            case Type::key:
-                return KEY_CNT;
-            case Type::rel:
-                return REL_CNT;
-            case Type::abs:
-                return ABS_CNT;
-            case Type::sw:
-                return SW_CNT;
-            case Type::msc:
-                return MSC_CNT;
-            case Type::led:
-                return LED_CNT;
-            case Type::rep:
-                return REP_CNT;
-            case Type::snd:
-                return SND_CNT;
-            case Type::ff:
-                return FF_CNT;
-            case Type::ff_status:
-                return FF_STATUS_MAX+1;
-            default:
-                return 0;
-        }
-    }
-
-
-
-    // ---- //
-    // Code //
-    // ---- //
-
-
-    string
-    to_string(Type t, Code code)
-    {
-        const char* n = ::libevdev_event_code_get_name(t, code);
-        if (!n)
-            return "unknown ("s + std::to_string(code) + ")"s;
-        return n;
-    }
-
 
 
     // ----- //

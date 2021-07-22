@@ -62,23 +62,25 @@ namespace evdev {
 
         optional<path> devnode() noexcept;
 
-        void write(Type type, Code code, int value);
+        void write(Event::Type type, Event::Code code, int value);
+        void write(Event::TypeCode type_code, int value);
+        void write(const Event& event);
 
 
         // convenience methods
 
-        void syn(Code code, int value);
-        void key(Code code, int value);
-        void rel(Code code, int value);
-        void abs(Code code, int value);
-        void msc(Code code, int value);
-        void sw(Code code, int value);
-        void led(Code code, int value);
-        void snd(Code code, int value);
-        void rep(Code code, int value);
-        void ff(Code code, int value);
-        void pwr(Code code, int value);
-        void ff_status(Code code, int value);
+        void syn(Event::Code code, int value);
+        void key(Event::Code code, int value);
+        void rel(Event::Code code, int value);
+        void abs(Event::Code code, int value);
+        void msc(Event::Code code, int value);
+        void sw(Event::Code code, int value);
+        void led(Event::Code code, int value);
+        void snd(Event::Code code, int value);
+        void rep(Event::Code code, int value);
+        void ff(Event::Code code, int value);
+        void pwr(Event::Code code, int value);
+        void ff_status(Event::Code code, int value);
 
         void flush();
 

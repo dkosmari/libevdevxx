@@ -3,7 +3,7 @@
 
 AC_PREREQ([2.70])
 AC_INIT([libevdevxx], [0.2], [])
-AC_CONFIG_SRCDIR([src/device.cpp])
+AC_CONFIG_SRCDIR([src/evdevxx.hpp])
 AC_CONFIG_HEADERS([config.h])
 AC_CONFIG_AUX_DIR([build-aux])
 AC_CONFIG_MACRO_DIR([m4])
@@ -27,6 +27,8 @@ PKG_INSTALLDIR
 
 # Checks for libraries.
 PKG_CHECK_MODULES([LIBEVDEV], [libevdev >= 1.6])
+
+AX_BOOST_BASE([1.70])
 
 # Checks for header files.
 AC_CHECK_HEADERS([fcntl.h])

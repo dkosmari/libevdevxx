@@ -34,16 +34,18 @@ using namespace std::literals;
 
 using evdev::Device;
 using evdev::Uinput;
+using Code = evdev::Event::Code;
 
 
 int main()
 {
     Device dev;
     dev.name("Fake Mouse");
-    dev.enable_rel(REL_X);
-    dev.enable_rel(REL_Y);
+
+    dev.enable_rel(Code{REL_X});
+    dev.enable_rel(Code{REL_Y});
     // needs at least one button
-    dev.enable_key(BTN_LEFT);
+    dev.enable_key(Code{BTN_LEFT});
 
     Uinput udev{dev};
     cout << "Created uinput device at "
@@ -57,8 +59,8 @@ int main()
         int x = static_cast<int>(radius * std::cos(angle));
         int y = static_cast<int>(radius * std::sin(angle));
 
-        udev.rel(REL_X, x);
-        udev.rel(REL_Y, y);
+        udev.rel(Code{REL_X}, x);
+        udev.rel(Code{REL_Y}, y);
         udev.flush();
 
         std::this_thread::sleep_for(16ms);

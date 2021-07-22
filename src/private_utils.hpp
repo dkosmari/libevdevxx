@@ -21,7 +21,11 @@
 #define LIBEVDEVXX_PRIVATE_UTILS_HPP
 
 
+#include <functional>
+#include <ios>
+#include <iosfwd>
 #include <string>
+
 
 // Note: this is an implementation-side header, do not install.
 
@@ -30,6 +34,8 @@ namespace evdev::priv {
 
     using std::string;
     using std::to_string;
+    using std::size_t;
+
 
     using namespace std::literals;
 
@@ -57,6 +63,31 @@ namespace evdev::priv {
 
 
     string errno_to_string(int e);
+
+
+    string to_hex(unsigned val, unsigned width = 0, bool base = true);
+
+
+    std::istream& getline(std::istream& input,
+                          string& line,
+                          const std::function<bool(char)>& pred);
+
+
+    class FlagsGuard {
+        std::ios_base& stream;
+        std::ios_base::fmtflags saved;
+    public:
+        FlagsGuard(std::ios_base& stream);
+        ~FlagsGuard();
+    };
+
+
+    unsigned long
+    stoul_range(const string& arg,
+                size_t* pos,
+                unsigned base,
+                unsigned long max,
+                const string& error_msg);
 }
 
 

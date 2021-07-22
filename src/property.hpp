@@ -26,32 +26,71 @@
 
 #include <libevdev/libevdev.h>
 
+#include "number_base.hpp"
+
 
 namespace evdev {
 
     using std::string;
+    using std::size_t;
 
 
-    enum Property : unsigned {
+    class Property : public impl::NumberBase<unsigned, Property> {
 
-        pointer        = INPUT_PROP_POINTER,
-        direct         = INPUT_PROP_DIRECT,
-        button_pad     = INPUT_PROP_BUTTONPAD,
-        semi_mt        = INPUT_PROP_SEMI_MT,
-        top_button_pad = INPUT_PROP_TOPBUTTONPAD,
-        pointing_stick = INPUT_PROP_POINTING_STICK,
-        accelerometer  = INPUT_PROP_ACCELEROMETER
+        using base_type = impl::NumberBase<unsigned, Property>;
+
+    public:
+
+        using base_type::base_type;
+
+
+        Property(const string& name, bool numeric, size_t* pos);
+        Property(const string& name, bool numeric);
+        Property(const string& name, size_t* pos);
+        Property(const string& name);
+
+
+        static
+        constexpr
+        Property max() noexcept
+        {
+            return Property{INPUT_PROP_MAX};
+        }
+
+
+        static const Property pointer;
+        static const Property direct;
+        static const Property button_pad;
+        static const Property semi_mt;
+        static const Property top_button_pad;
+        static const Property pointing_stick;
+        static const Property accelerometer;
+
 
     };
 
 
-    Property to_property(const string& name);
+#define DEFINE(x, y) \
+    constexpr Property Property::x{INPUT_PROP_ ## y}
+
+    DEFINE(pointer, POINTER);
+    DEFINE(direct, DIRECT);
+    DEFINE(button_pad, BUTTONPAD);
+    DEFINE(semi_mt, SEMI_MT);
+    DEFINE(top_button_pad, TOPBUTTONPAD);
+    DEFINE(pointing_stick, POINTING_STICK);
+    DEFINE(accelerometer, ACCELEROMETER);
+
+#undef DEFINE
+
 
     string to_string(Property prop);
+
 
     std::ostream& operator<<(std::ostream& out, Property prop);
 
 
+    std::istream& operator>>(std::istream& in, Property& prop);
 }
 
 

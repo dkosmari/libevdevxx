@@ -298,42 +298,47 @@ namespace evdev {
 
 
     bool
-    Device::has(Type type) const noexcept
+    Device::has(Event::Type type) const noexcept
     { return ::libevdev_has_event_type(data(), type); }
 
 
     bool
-    Device::has(Type type, Code code) const noexcept
+    Device::has(Event::Type type, Event::Code code) const noexcept
     { return ::libevdev_has_event_code(data(), type, code); }
 
 
+    bool
+    Device::has(const Event::TypeCode& tc) const noexcept
+    { return has(tc.type, tc.code); }
+
+
     int
-    Device::abs_min(Code code) const noexcept
+    Device::abs_min(Event::Code code) const noexcept
     { return ::libevdev_get_abs_minimum(data(), code); }
 
 
     int
-    Device::abs_max(Code code) const noexcept
+    Device::abs_max(Event::Code code) const noexcept
     { return ::libevdev_get_abs_maximum(data(), code); }
 
 
     int
-    Device::abs_fuzz(Code code) const noexcept
+    Device::abs_fuzz(Event::Code code) const noexcept
     { return ::libevdev_get_abs_fuzz(data(), code); }
 
 
     int
-    Device::abs_flat(Code code) const noexcept
+    Device::abs_flat(Event::Code code) const noexcept
     { return ::libevdev_get_abs_flat(data(), code); }
 
 
     int
-    Device::abs_res(Code code) const noexcept
+    Device::abs_res(Event::Code code) const noexcept
     { return ::libevdev_get_abs_resolution(data(), code); }
 
 
     AbsInfo
-    Device::abs_info(Code code) const
+    Device::abs_info(Event::Code code) const
     {
         auto info = ::libevdev_get_abs_info(data(), code);
         if (!info)
@@ -343,12 +348,17 @@ namespace evdev {
 
 
     int
-    Device::get(Type type, Code code) const noexcept
+    Device::get(Event::Type type, Event::Code code) const noexcept
     { return ::libevdev_get_event_value(data(), type, code); }
 
 
+    int
+    Device::get(const Event::TypeCode& tc) const noexcept
+    { return get(tc.type, tc.code); }
+
+
     optional<int>
-    Device::fetch(Type type, Code code) const noexcept
+    Device::fetch(Event::Type type, Event::Code code) const noexcept
     {
         int value;
         // returns a boolean, 0 = error
@@ -356,6 +366,11 @@ namespace evdev {
             return {};
         return {value};
     }
+
+
+    optional<int>
+    Device::fetch(const Event::TypeCode& tc) const noexcept
+    { return fetch(tc.type, tc.code); }
 
 
     bool
@@ -374,14 +389,14 @@ namespace evdev {
 
 
     int
-    Device::get_slot(unsigned slot, Code code) const noexcept
+    Device::get_slot(unsigned slot, Event::Code code) const noexcept
     {
         return ::libevdev_get_slot_value(data(), slot, code);
     }
 
 
     optional<int>
-    Device::fetch_slot(unsigned slot, Code code) const noexcept
+    Device::fetch_slot(unsigned slot, Event::Code code) const noexcept
     {
         int value;
         // returns boolean, 0 on error
@@ -465,7 +480,7 @@ namespace evdev {
 
 
     void
-    Device::set(Type type, Code code, int value)
+    Device::set(Event::Type type, Event::Code code, int value)
     {
         if (::libevdev_set_event_value(data(), type, code, value))
             throw runtime_error{"libevdev_set_event_value() failed."};
@@ -473,7 +488,12 @@ namespace evdev {
 
 
     void
-    Device::set_slot(unsigned slot, Code code, int value)
+    Device::set(const Event::TypeCode& tc, int value)
+    { return set(tc.type, tc.code, value); }
+
+
+    void
+    Device::set_slot(unsigned slot, Event::Code code, int value)
     {
         if (::libevdev_set_slot_value(data(), slot, code, value))
             throw runtime_error{"libevdev_set_slot_value() failed."};
@@ -481,32 +501,32 @@ namespace evdev {
 
 
     void
-    Device::abs_min(Code code, int val)
+    Device::abs_min(Event::Code code, int val)
     { ::libevdev_set_abs_minimum(data(), code, val); }
 
 
     void
-    Device::abs_max(Code code, int val)
+    Device::abs_max(Event::Code code, int val)
     { ::libevdev_set_abs_maximum(data(), code, val); }
 
 
     void
-    Device::abs_fuzz(Code code, int val)
+    Device::abs_fuzz(Event::Code code, int val)
     { ::libevdev_set_abs_fuzz(data(), code, val); }
 
 
     void
-    Device::abs_flat(Code code, int val)
+    Device::abs_flat(Event::Code code, int val)
     { ::libevdev_set_abs_flat(data(), code, val); }
 
 
     void
-    Device::abs_res(Code code, int val)
+    Device::abs_res(Event::Code code, int val)
     { ::libevdev_set_abs_resolution(data(), code, val); }
 
 
     void
-    Device::abs_info(Code code, const AbsInfo& info)
+    Device::abs_info(Event::Code code, const AbsInfo& info)
     {
         ::input_absinfo rinfo = info;
         ::libevdev_set_abs_info(data(), code, &rinfo);
@@ -514,7 +534,7 @@ namespace evdev {
 
 
     void
-    Device::enable(Type type)
+    Device::enable(Event::Type type)
     {
         if (::libevdev_enable_event_type(data(), type))
             throw runtime_error{"libevdev_enable_event_type() failed."};
@@ -522,7 +542,7 @@ namespace evdev {
 
 
     void
-    Device::disable(Type type)
+    Device::disable(Event::Type type)
     {
         if (::libevdev_disable_event_type(data(), type))
             throw runtime_error{"libevdev_disable_event_type() failed."};
@@ -530,10 +550,10 @@ namespace evdev {
 
 
     void
-    Device::enable(Type type,
-                   Code code)
+    Device::enable(Event::Type type,
+                   Event::Code code)
     {
-        if (type == Type::abs || type == Type::rep)
+        if (type == Event::Type::abs || type == Event::Type::rep)
             throw logic_error{"Wrong overload for type \""
                     + to_string(type) + "\"."};
         if (::libevdev_enable_event_code(data(), type, code, nullptr))
@@ -542,27 +562,32 @@ namespace evdev {
 
 
     void
-    Device::enable_abs(Code code,
+    Device::enable(const Event::TypeCode& tc)
+    { enable(tc.type, tc.code); }
+
+
+    void
+    Device::enable_abs(Event::Code code,
                        const AbsInfo& info)
     {
         ::input_absinfo rinfo = info;
-        if (::libevdev_enable_event_code(data(), Type::abs, code, &rinfo))
+        if (::libevdev_enable_event_code(data(), Event::Type::abs, code, &rinfo))
             throw runtime_error{"libevdev_enable_event_code() failed."};
     }
 
 
     void
-    Device::enable_rep(Code code,
+    Device::enable_rep(Event::Code code,
                        int arg)
     {
-        if (::libevdev_enable_event_code(data(), Type::rep, code, &arg))
+        if (::libevdev_enable_event_code(data(), Event::Type::rep, code, &arg))
             throw runtime_error{"libevdev_enable_event_code() failed."};
     }
 
 
     void
-    Device::disable(Type type,
-                    Code code)
+    Device::disable(Event::Type type,
+                    Event::Code code)
     {
         if (::libevdev_disable_event_code(data(), type, code))
             throw runtime_error{"libevdev_disable_event_code() failed."};
@@ -570,7 +595,12 @@ namespace evdev {
 
 
     void
-    Device::kernel_abs_info(Code code, const AbsInfo& info)
+    Device::disable(const Event::TypeCode& tc)
+    { disable(tc.type, tc.code); }
+
+
+    void
+    Device::kernel_abs_info(Event::Code code, const AbsInfo& info)
     {
         ::input_absinfo rinfo = info;
         if (int e = ::libevdev_kernel_set_abs_info(data(), code, &rinfo);
@@ -580,7 +610,7 @@ namespace evdev {
 
 
     void
-    Device::kernel_led_value(Code code, ::libevdev_led_value value)
+    Device::kernel_led_value(Event::Code code, ::libevdev_led_value value)
     {
         if (int e = ::libevdev_kernel_set_led_value(data(), code, value);
             e < 0)
@@ -658,48 +688,48 @@ namespace evdev {
     }
 
 
-    vector<Type>
+    vector<Event::Type>
     Device::types() const
     {
-        vector<Type> result;
-        for (uint16_t e = 0; e < EV_CNT; ++e)
-            if (Type type{e}; has(type))
-                result.push_back(type);
+        vector<Event::Type> result;
+        for (auto t = Event::Type{0}; t <= Event::Type::max(); ++t)
+            if (has(t))
+                result.push_back(t);
         return result;
     }
 
 
-    vector<Code>
-    Device::codes(Type t) const
+    vector<Event::Code>
+    Device::codes(Event::Type type) const
     {
-        return codes(t, count(t));
+        return codes(type, Event::Code::max(type));
     }
 
 
-    vector<Code>
-    Device::codes(Type t, Code count) const
+    vector<Event::Code>
+    Device::codes(Event::Type type, Event::Code max) const
     {
-        vector<Code> result;
-        for (Code c = 0; c < count; ++c)
-            if (has(t, c))
+        vector<Event::Code> result;
+        for (Event::Code c{0}; c <= max; ++c)
+            if (has(type, c))
                 result.push_back(c);
         return result;
     }
 
 
     void
-    Device::enable_key(Code code)
-    { enable(Type::key, code); }
+    Device::enable_key(Event::Code code)
+    { enable(Event::Type::key, code); }
 
 
     void
-    Device::enable_rel(Code code)
-    { enable(Type::rel, code); }
+    Device::enable_rel(Event::Code code)
+    { enable(Event::Type::rel, code); }
 
 
     void
-    Device::enable_abs(Code code)
-    { enable(Type::abs, code); }
+    Device::enable_abs(Event::Code code)
+    { enable(Event::Type::abs, code); }
 
 
 }

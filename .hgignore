@@ -27,3 +27,5 @@ Makefile.in
 stamp-h1
 tools/evdevxx-query
 tools/evdevxx-read
+tools/evdevxx-remap
+tools/*.ini

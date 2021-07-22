@@ -44,8 +44,8 @@ using std::string;
 
 using evdev::Device;
 using evdev::Property;
-using evdev::Type;
-using evdev::Code;
+using Type = evdev::Event::Type;
+using Code = evdev::Event::Code;
 
 
 unsigned columns = 80;
@@ -67,7 +67,7 @@ void print_codes(const Device& d, Type t)
 
     for (size_t i = 0; i < codes.size(); ++i) {
         auto c = codes[i];
-        string name = to_string(t, c);
+        string name = c.name(t);
 
         if (i > 0 && name.size() + x + 2 > columns) {
             cout << "\n   ";
@@ -88,7 +88,7 @@ void print_abs(const Device& d)
 {
     auto codes = d.codes(Type::abs);
     for (Code c : codes) {
-        cout << "    " << to_string(Type::abs, c) << "\n";
+        cout << "    " << c.name(Type::abs) << "\n";
         cout << "        " << d.abs_info(c) << "\n";
     }
 }

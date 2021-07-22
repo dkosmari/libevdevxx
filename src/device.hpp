@@ -143,19 +143,23 @@ namespace evdev {
         bool has(Property prop) const noexcept;
 
 
-        bool has(Type type) const noexcept;
-        bool has(Type type, Code code) const noexcept;
+        bool has(Event::Type type) const noexcept;
+        bool has(Event::Type type, Event::Code code) const noexcept;
+        bool has(const Event::TypeCode& tc) const noexcept;
 
-        int abs_min (Code code) const noexcept;
-        int abs_max (Code code) const noexcept;
-        int abs_fuzz(Code code) const noexcept;
-        int abs_flat(Code code) const noexcept;
-        int abs_res (Code code) const noexcept;
+        int abs_min (Event::Code code) const noexcept;
+        int abs_max (Event::Code code) const noexcept;
+        int abs_fuzz(Event::Code code) const noexcept;
+        int abs_flat(Event::Code code) const noexcept;
+        int abs_res (Event::Code code) const noexcept;
 
-        AbsInfo abs_info(Code code) const;
+        AbsInfo abs_info(Event::Code code) const;
 
-        int get(Type type, Code code) const noexcept;
-        optional<int> fetch(Type type, Code code) const noexcept;
+        int get(Event::Type type, Event::Code code) const noexcept;
+        int get(const Event::TypeCode& tc) const noexcept;
+
+        optional<int> fetch(Event::Type type, Event::Code code) const noexcept;
+        optional<int> fetch(const Event::TypeCode& tc) const noexcept;
 
         bool get_repeat(int& delay, int& period) const noexcept;
 
@@ -165,10 +169,8 @@ namespace evdev {
         // Multi-touch related functions //
         // ----------------------------- //
 
-        // TODO: these codes should be enums
-
-        int get_slot(unsigned slot, Code code) const noexcept;
-        optional<int> fetch_slot(unsigned slot, Code code) const noexcept;
+        int get_slot(unsigned slot, Event::Code code) const noexcept;
+        optional<int> fetch_slot(unsigned slot, Event::Code code) const noexcept;
         optional<int> num_slots() const noexcept;
         int current_slot() const noexcept;
 
@@ -190,28 +192,31 @@ namespace evdev {
         void enable(Property prop);
         void disable(Property prop);
 
-        void set(Type type, Code code, int value);
+        void set(Event::Type type, Event::Code code, int value);
+        void set(const Event::TypeCode& tc, int value);
 
-        void set_slot(unsigned slot, Code code, int value);
+        void set_slot(unsigned slot, Event::Code code, int value);
 
-        void abs_min (Code code, int val);
-        void abs_max (Code code, int val);
-        void abs_fuzz(Code code, int val);
-        void abs_flat(Code code, int val);
-        void abs_res (Code code, int val);
+        void abs_min (Event::Code code, int val);
+        void abs_max (Event::Code code, int val);
+        void abs_fuzz(Event::Code code, int val);
+        void abs_flat(Event::Code code, int val);
+        void abs_res (Event::Code code, int val);
 
-        void abs_info(Code code, const AbsInfo& abs);
+        void abs_info(Event::Code code, const AbsInfo& abs);
 
-        void enable(Type type);
-        void disable(Type type);
+        void enable(Event::Type type);
+        void disable(Event::Type type);
 
-        void enable(Type type, Code code);
-        void enable_abs(Code code, const AbsInfo& info);
-        void enable_rep(Code code, int arg);
-        void disable(Type type, Code code);
+        void enable(Event::Type type, Event::Code code);
+        void enable(const Event::TypeCode& tc);
+        void enable_abs(Event::Code code, const AbsInfo& info);
+        void enable_rep(Event::Code code, int arg);
+        void disable(Event::Type type, Event::Code code);
+        void disable(const Event::TypeCode& tc);
 
-        void kernel_abs_info(Code code, const AbsInfo& abs);
-        void kernel_led_value(Code code, ::libevdev_led_value value);
+        void kernel_abs_info(Event::Code code, const AbsInfo& abs);
+        void kernel_led_value(Event::Code code, ::libevdev_led_value value);
 
         void set_clock_id(int clockid);
 
@@ -232,15 +237,15 @@ namespace evdev {
 
         vector<Property> properties() const;
 
-        vector<Type> types() const;
+        vector<Event::Type> types() const;
 
-        vector<Code> codes(Type t) const;
-        vector<Code> codes(Type t, Code count) const;
+        vector<Event::Code> codes(Event::Type type) const;
+        vector<Event::Code> codes(Event::Type type, Event::Code max) const;
 
 
-        void enable_key(Code code);
-        void enable_rel(Code code);
-        void enable_abs(Code code);
+        void enable_key(Event::Code code);
+        void enable_rel(Event::Code code);
+        void enable_abs(Event::Code code);
     };
 
 
