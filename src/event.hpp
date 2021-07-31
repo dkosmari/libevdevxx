@@ -157,6 +157,60 @@ namespace evdev {
             TypeCode(const string& type_name, const string& code_name);
             TypeCode(const string& code_name);
 
+
+            constexpr
+            bool
+            operator==(const TypeCode& other) const noexcept
+            {
+                return type == other.type
+                    && code == other.code;
+            }
+
+
+            constexpr
+            bool
+            operator!=(const TypeCode& other) const noexcept
+            {
+                return type != other.type
+                    || code != other.code;
+            }
+
+
+            constexpr
+            bool
+            operator<(const TypeCode& other) const noexcept
+            {
+                if (type < other.type) return true;
+                if (other.type < type) return false;
+                return code < other.code;
+            }
+
+
+            constexpr
+            bool
+            operator<=(const TypeCode& other) const noexcept
+            {
+                return ! (*this > other);
+            }
+
+
+            constexpr
+            bool
+            operator>(const TypeCode& other) const noexcept
+            {
+                if (type > other.type) return true;
+                if (other.type > type) return false;
+                return code > other.code;
+            }
+
+
+            constexpr
+            bool
+            operator>=(const TypeCode& other) const noexcept
+            {
+                return ! (*this < other);
+            }
+
         };
 
 

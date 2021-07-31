@@ -16,26 +16,13 @@ LDADD = \
 
 bin_PROGRAMS = \
 	evdevxx-query \
-	evdevxx-read \
-	evdevxx-remap
+	evdevxx-read
 
 
 evdevxx_query_SOURCES = query.cpp
 
 
 evdevxx_read_SOURCES = read.cpp
-
-
-evdevxx_remap_SOURCES = \
-	ini_file.cpp ini_file.hpp \
-	remap.cpp
-
-evdevxx_remap_CPPFLAGS = \
-	$(AM_CPPFLAGS) \
-	$(CPPFLAGS) \
-	$(BOOST_CPPFLAGS)
-
-evdevxx_remap_LDFLAGS = $(BOOST_LDFLAGS)
 
 
 .PHONY: company

@@ -83,6 +83,7 @@ namespace evdev::impl {
             return value <= other.value;
         }
 
+
         constexpr
         bool
         operator>(const NumberBase& other) const noexcept
@@ -91,6 +92,7 @@ namespace evdev::impl {
         }
 
 
+        constexpr
         bool
         operator>=(const NumberBase& other) const noexcept
         {
@@ -106,6 +108,7 @@ namespace evdev::impl {
         }
 
 
+        constexpr
         bool
         operator!=(const NumberBase& other) const noexcept
         {
@@ -113,6 +116,7 @@ namespace evdev::impl {
         }
 
 
+        constexpr
         NumberBase& operator++() noexcept
         {
             ++value;
@@ -120,6 +124,7 @@ namespace evdev::impl {
         }
 
 
+        constexpr
         derived_type operator++(int) noexcept
         {
             derived_type old{*this};

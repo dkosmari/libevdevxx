@@ -28,8 +28,6 @@ PKG_INSTALLDIR
 # Checks for libraries.
 PKG_CHECK_MODULES([LIBEVDEV], [libevdev >= 1.6])
 
-AX_BOOST_BASE([1.70])
-
 # Checks for header files.
 AC_CHECK_HEADERS([fcntl.h])
 AC_CHECK_HEADERS([sys/ioctl.h])
