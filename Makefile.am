@@ -22,7 +22,6 @@ pcfile_DATA = libevdevxx.pc
 
 .PHONY: rpm
 
-TARBALL_NAME = $(PACKAGE_TARNAME)-$(PACKAGE_VERSION).tar.gz
 RPM_TARBALL_NAME = $(HOME)/rpmbuild/SOURCES/$(TARBALL_NAME)
 
 rpm: libevdevxx.spec dist-gzip

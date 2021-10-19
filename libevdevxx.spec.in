@@ -7,7 +7,7 @@ Release:        %mkrel 1
 Summary:        A C++ wrapper for libevdev.
 Group:          System/Libraries
 License:        GPLv3+
-Source0:        @PACKAGE_TARNAME@-@PACKAGE_VERSION@.tar.gz
+Source0:        @TARBALL_NAME@
 
 %description
 This is the library needed to run programs linked with %{name}.

@@ -70,18 +70,13 @@ namespace evdev {
     };
 
 
-#define DEFINE(x, y) \
-    constexpr Property Property::x{INPUT_PROP_ ## y}
-
-    DEFINE(pointer, POINTER);
-    DEFINE(direct, DIRECT);
-    DEFINE(button_pad, BUTTONPAD);
-    DEFINE(semi_mt, SEMI_MT);
-    DEFINE(top_button_pad, TOPBUTTONPAD);
-    DEFINE(pointing_stick, POINTING_STICK);
-    DEFINE(accelerometer, ACCELEROMETER);
-
-#undef DEFINE
+    constexpr Property Property::pointer        {INPUT_PROP_POINTER};
+    constexpr Property Property::direct         {INPUT_PROP_DIRECT};
+    constexpr Property Property::button_pad     {INPUT_PROP_BUTTONPAD};
+    constexpr Property Property::semi_mt        {INPUT_PROP_SEMI_MT};
+    constexpr Property Property::top_button_pad {INPUT_PROP_TOPBUTTONPAD};
+    constexpr Property Property::pointing_stick {INPUT_PROP_POINTING_STICK};
+    constexpr Property Property::accelerometer  {INPUT_PROP_ACCELEROMETER};
 
 
     string to_string(Property prop);

@@ -2,7 +2,7 @@
 # Process this file with autoconf to produce a configure script.
 
 AC_PREREQ([2.70])
-AC_INIT([libevdevxx], [0.2], [])
+AC_INIT([libevdevxx], [0.3], [])
 AC_CONFIG_SRCDIR([src/evdevxx.hpp])
 AC_CONFIG_HEADERS([config.h])
 AC_CONFIG_AUX_DIR([build-aux])
@@ -39,12 +39,15 @@ AC_TYPE_MODE_T
 # Checks for library functions.
 AC_FUNC_STRERROR_R
 
+TARBALL_NAME="${PACKAGE_NAME}-${PACKAGE_VERSION}.tar.gz"
+AC_SUBST([TARBALL_NAME])
+
 AC_CONFIG_FILES([
-examples/Makefile
-libevdevxx.pc
-libevdevxx.spec
-Makefile
-src/Makefile
-tools/Makefile
+        examples/Makefile
+        libevdevxx.pc
+        libevdevxx.spec
+        Makefile
+        src/Makefile
+        tools/Makefile
 ])
 AC_OUTPUT

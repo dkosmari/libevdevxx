@@ -132,8 +132,8 @@ namespace evdev {
         optional<string> phys() const;
         optional<string> uniq() const;
 
-        uint16_t product_id() const noexcept;
-        uint16_t vendor_id() const noexcept;
+        uint16_t product() const noexcept;
+        uint16_t vendor() const noexcept;
         uint16_t bustype() const noexcept;
         uint16_t version() const noexcept;
 
@@ -184,8 +184,8 @@ namespace evdev {
         void phys(const string& phys);
         void uniq(const string& uniq);
 
-        void product_id(uint16_t pid);
-        void vendor_id(uint16_t vid);
+        void product(uint16_t pid);
+        void vendor(uint16_t vid);
         void bustype(uint16_t bus);
         void version(uint16_t ver);
 

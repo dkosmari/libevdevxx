@@ -268,12 +268,12 @@ namespace evdev {
 
 
     uint16_t
-    Device::product_id() const noexcept
+    Device::product() const noexcept
     { return ::libevdev_get_id_product(data()); }
 
 
     uint16_t
-    Device::vendor_id() const noexcept
+    Device::vendor() const noexcept
     { return ::libevdev_get_id_vendor(data()); }
 
 
@@ -444,12 +444,12 @@ namespace evdev {
 
 
     void
-    Device::product_id(uint16_t pid)
+    Device::product(uint16_t pid)
     { ::libevdev_set_id_product(data(), pid); }
 
 
     void
-    Device::vendor_id(uint16_t vid)
+    Device::vendor(uint16_t vid)
     { ::libevdev_set_id_vendor(data(), vid); }
 
 

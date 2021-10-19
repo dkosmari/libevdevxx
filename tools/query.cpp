@@ -101,8 +101,8 @@ void print_device(const Device& d)
     print_if("  Uniq: ", d.uniq());
 
     cout << hex << setfill('0')
-         << "  VID: " << setw(4) << d.vendor_id() << "\n"
-         << "  PID: " << setw(4) << d.product_id() << "\n"
+         << "  VID: " << setw(4) << d.vendor() << "\n"
+         << "  PID: " << setw(4) << d.product() << "\n"
          << "  BUS: " << setw(4) << d.bustype() << "\n"
          << "  VER: " << setw(4) << d.version() << "\n"
          << dec;
