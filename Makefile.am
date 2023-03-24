@@ -6,7 +6,8 @@ ACLOCAL_AMFLAGS = -I m4
 EXTRA_DIST = \
 	bootstrap \
 	libevdevxx.pc.in \
-	libevdevxx.spec.in
+	libevdevxx.spec.in \
+	README.md
 
 
 SUBDIRS = \

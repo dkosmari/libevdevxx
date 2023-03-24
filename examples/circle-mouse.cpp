@@ -1,6 +1,6 @@
 /*
  *  libevdevxx - a C++ wrapper for libevdev
- *  Copyright (C) 2021  Daniel K. O.
+ *  Copyright (C) 2021-2023  Daniel K. O.
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
