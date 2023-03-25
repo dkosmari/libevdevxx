@@ -1,19 +1,8 @@
 /*
- *  libevdevxx - a C++ wrapper for libevdev
- *  Copyright (C) 2021  Daniel K. O.
+ * libevdevxx - a C++ wrapper for libevdev
  *
- *  This program is free software: you can redistribute it and/or modify
- *  it under the terms of the GNU General Public License as published by
- *  the Free Software Foundation, either version 3 of the License, or
- *  (at your option) any later version.
- *
- *  This program is distributed in the hope that it will be useful,
- *  but WITHOUT ANY WARRANTY; without even the implied warranty of
- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *  GNU General Public License for more details.
- *
- *  You should have received a copy of the GNU General Public License
- *  along with this program.  If not, see <https://www.gnu.org/licenses/>.
+ * Copyright (C) 2021-2023  Daniel K. O.
+ * SPDX-License-Identifier: MIT
  */
 
 
@@ -24,9 +13,8 @@
 #include <signal.h>
 #include <thread>
 
-#include "device.hpp"
-#include "error.hpp"
-#include "sync_error.hpp"
+#include <libevdevxx/Device.hpp>
+#include <libevdevxx/SyncError.hpp>
 
 
 using std::cerr;
@@ -35,13 +23,6 @@ using std::endl;
 using std::flush;
 
 using namespace std::literals;
-
-using evdev::Device;
-using evdev::SyncError;
-using evdev::Event;
-using evdev::Flag;
-using evdev::Status;
-
 
 volatile std::sig_atomic_t should_quit = false;
 
@@ -63,13 +44,12 @@ int main(int argc, char* argv[])
     }
 
     try {
-        Device dev{argv[1]};
+        evdev::Device dev{argv[1]};
         cout << "Opened device \"" << dev.name() << "\"" << endl;
 
         std::signal(SIGINT, handle_terminate);
         std::signal(SIGTERM, handle_terminate);
 
-        Event event;
         while (!should_quit) {
 
             try {
@@ -77,14 +57,15 @@ int main(int argc, char* argv[])
                     std::this_thread::sleep_for(10ms);
                 if (should_quit)
                     break;
-                Event event = dev.read();
+
+                auto event = dev.read();
                 cout << event << endl;
             }
-            catch (SyncError& se) {
+            catch (evdev::SyncError& se) {
                 cout << "lost sync" << endl;
                 // trigger a resync
-                Event delta;
-                while (dev.read(delta, Flag::resync) == Status::dropped)
+                evdev::Event delta;
+                while (dev.read(delta, evdev::ReadFlag::resync) == evdev::ReadStatus::dropped)
                     cout << "delta: " << delta << endl;
                 cout << "sync restored" << endl;
             }

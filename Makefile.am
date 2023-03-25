@@ -11,6 +11,7 @@ EXTRA_DIST = \
 
 
 SUBDIRS = \
+	include/libevdevxx \
 	src \
 	examples \
 	tools

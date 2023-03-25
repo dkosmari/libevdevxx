@@ -1,30 +1,18 @@
 /*
- *  libevdevxx - a C++ wrapper for libevdev
- *  Copyright (C) 2021  Daniel K. O.
+ * libevdevxx - a C++ wrapper for libevdev
  *
- *  This program is free software: you can redistribute it and/or modify
- *  it under the terms of the GNU General Public License as published by
- *  the Free Software Foundation, either version 3 of the License, or
- *  (at your option) any later version.
- *
- *  This program is distributed in the hope that it will be useful,
- *  but WITHOUT ANY WARRANTY; without even the implied warranty of
- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *  GNU General Public License for more details.
- *
- *  You should have received a copy of the GNU General Public License
- *  along with this program.  If not, see <https://www.gnu.org/licenses/>.
+ * Copyright (C) 2021-2023  Daniel K. O.
+ * SPDX-License-Identifier: MIT
  */
-
 
 #include <algorithm> // swap()
 #include <stdexcept>
 #include <string>
 
-#include "scoped_file.hpp"
+#include "libevdevxx/detail/ScopedFile.hpp"
 
 #include "error.hpp"
-#include "private_utils.hpp"
+#include "utils.hpp"
 
 
 #ifdef HAVE_CONFIG_H
@@ -40,18 +28,10 @@
 #endif
 
 
-using std::filesystem::path;
-using std::logic_error;
-using std::runtime_error;
-using std::string;
-
 using namespace std::literals;
 
-using evdev::priv::list_to_string;
 
-
-
-namespace evdev::internal {
+namespace evdev::detail {
 
 
     ScopedFile::ScopedFile() noexcept = default;
@@ -62,7 +42,7 @@ namespace evdev::internal {
     {}
 
 
-    ScopedFile::ScopedFile(const path& file,
+    ScopedFile::ScopedFile(const std::filesystem::path& file,
                            int flags)
     {
         open(file, flags);
@@ -109,29 +89,29 @@ namespace evdev::internal {
 
 
     void
-    ScopedFile::open(const path& file,
+    ScopedFile::open(const std::filesystem::path& file,
                      int flags)
     {
         if (is_open())
-            throw logic_error{"File object is already open."s};
+            throw std::logic_error{"File object is already open."s};
 
         fd = ::open(file.c_str(), flags);
         if (fd < 0)
-            throw Error{"Failed to open \""s + file.string() + "\""s, errno};
+            throw_sys_error(errno, "Failed to open \""s + file.string() + "\""s);
     }
 
 
     void
-    ScopedFile::open(const path& file,
+    ScopedFile::open(const std::filesystem::path& file,
                      int flags,
                      ::mode_t mode)
     {
         if (is_open())
-            throw logic_error{"File object is already open."s};
+            throw std::logic_error{"File object is already open."s};
 
         fd = ::open(file.c_str(), flags, mode);
         if (fd < 0)
-            throw Error{"Failed to open \""s + file.string() + "\""s, errno};
+            throw_sys_error(errno, "Failed to open \""s + file.string() + "\""s);
     }
 
 
@@ -156,11 +136,11 @@ namespace evdev::internal {
     ScopedFile::nonblock(bool enable)
     {
         if (!is_open())
-            throw logic_error{"File must be open before it's set to nonblock."};
+            throw std::logic_error{"File must be open before it's set to nonblock."};
 
         int flags = ::fcntl(fd, F_GETFL);
         if (flags < 0)
-            throw Error{errno};
+            throw_sys_error(errno);
 
         if (enable)
             flags |= O_NONBLOCK;
@@ -168,6 +148,6 @@ namespace evdev::internal {
             flags &= ~O_NONBLOCK;
 
         if (::fcntl(fd, F_SETFL, flags) < 0)
-            throw Error{errno};
+            throw_sys_error(errno);
     }
 }

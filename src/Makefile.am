@@ -1,46 +1,32 @@
 # src/Makefile.am
 
 
-AM_CXXFLAGS = -Wall -Wextra -Werror
+AM_CXXFLAGS = -Wall -Wextra
 
 
-AM_CPPFLAGS = $(LIBEVDEV_CFLAGS)
-
-
-
-libevdevxxdir = $(includedir)/libevdevxx
-libevdevxx_HEADERS = \
-	abs_info.hpp \
-	device.hpp \
-	error.hpp \
-	evdevxx.hpp \
-	event.hpp \
-	grabber.hpp \
-	number_base.hpp \
-	property.hpp \
-	read.hpp \
-	scoped_file.hpp \
-	sync_error.hpp \
-	uinput.hpp
+AM_CPPFLAGS = \
+	-I$(top_srcdir)/include \
+	$(LIBEVDEV_CFLAGS)
 
 
 lib_LTLIBRARIES = libevdevxx.la
 
 
 libevdevxx_la_SOURCES = \
-	abs_info.cpp \
-	device.cpp \
-	error.cpp \
-	event.cpp \
-	event_code.cpp \
-	event_type.cpp \
-	grabber.cpp \
-	private_utils.hpp private_utils.cpp \
-	property.cpp \
-	read.cpp \
-	scoped_file.cpp \
-	sync_error.cpp \
-	uinput.cpp
+	AbsInfo.cpp \
+	Type.cpp \
+	Code.cpp \
+	error.cpp error.hpp \
+	Property.cpp \
+	ReadFlag.cpp \
+	ReadStatus.cpp \
+	Event.cpp \
+	Device.cpp \
+	Grabber.cpp \
+	utils.cpp utils.hpp \
+	ScopedFile.cpp \
+	SyncError.cpp \
+	Uinput.cpp
 
 
 libevdevxx_la_LIBADD = $(LIBEVDEV_LIBS)

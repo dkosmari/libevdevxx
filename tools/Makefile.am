@@ -6,7 +6,7 @@ AM_CXXFLAGS = -Wall -Wextra
 
 AM_CPPFLAGS = \
 	$(LIBEVDEV_CFLAGS) \
-	-I$(top_srcdir)/src
+	-I$(top_srcdir)/include
 
 
 LDADD = \

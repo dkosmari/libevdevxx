@@ -1,19 +1,8 @@
 /*
- *  libevdevxx - a C++ wrapper for libevdev
- *  Copyright (C) 2021  Daniel K. O.
+ * libevdevxx - a C++ wrapper for libevdev
  *
- *  This program is free software: you can redistribute it and/or modify
- *  it under the terms of the GNU General Public License as published by
- *  the Free Software Foundation, either version 3 of the License, or
- *  (at your option) any later version.
- *
- *  This program is distributed in the hope that it will be useful,
- *  but WITHOUT ANY WARRANTY; without even the implied warranty of
- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *  GNU General Public License for more details.
- *
- *  You should have received a copy of the GNU General Public License
- *  along with this program.  If not, see <https://www.gnu.org/licenses/>.
+ * Copyright (C) 2021-2023  Daniel K. O.
+ * SPDX-License-Identifier: MIT
  */
 
 
@@ -28,7 +17,7 @@
 #include <unistd.h>
 
 // this header is installed as <libevdevxx/evdevxx.hpp>
-#include "evdevxx.hpp"
+#include <libevdevxx/evdevxx.hpp>
 
 
 using std::size_t;
@@ -44,8 +33,8 @@ using std::string;
 
 using evdev::Device;
 using evdev::Property;
-using Type = evdev::Event::Type;
-using Code = evdev::Event::Code;
+using evdev::Type;
+using evdev::Code;
 
 
 unsigned columns = 80;
@@ -67,7 +56,7 @@ void print_codes(const Device& d, Type t)
 
     for (size_t i = 0; i < codes.size(); ++i) {
         auto c = codes[i];
-        string name = c.name(t);
+        string name = code_to_string(t, c);
 
         if (i > 0 && name.size() + x + 2 > columns) {
             cout << "\n   ";
@@ -88,7 +77,7 @@ void print_abs(const Device& d)
 {
     auto codes = d.codes(Type::abs);
     for (Code c : codes) {
-        cout << "    " << c.name(Type::abs) << "\n";
+        cout << "    " << code_to_string(Type::abs, c) << "\n";
         cout << "        " << d.abs_info(c) << "\n";
     }
 }

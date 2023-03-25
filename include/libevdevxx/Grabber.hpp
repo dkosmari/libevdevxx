@@ -1,0 +1,35 @@
+/*
+ * libevdevxx - a C++ wrapper for libevdev
+ *
+ * Copyright (C) 2021-2023  Daniel K. O.
+ * SPDX-License-Identifier: MIT
+ */
+
+
+#ifndef LIBEVDEVXX_GRABBER_HPP
+#define LIBEVDEVXX_GRABBER_HPP
+
+
+#include "Device.hpp"
+
+
+namespace evdev {
+
+
+    class Grabber {
+
+        Device& dev;
+
+    public:
+
+        Grabber(Device& dev);
+
+        ~Grabber();
+
+    };
+
+
+}
+
+
+#endif

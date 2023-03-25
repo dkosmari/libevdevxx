@@ -1,19 +1,8 @@
 /*
- *  libevdevxx - a C++ wrapper for libevdev
- *  Copyright (C) 2021-2023  Daniel K. O.
+ * libevdevxx - a C++ wrapper for libevdev
  *
- *  This program is free software: you can redistribute it and/or modify
- *  it under the terms of the GNU General Public License as published by
- *  the Free Software Foundation, either version 3 of the License, or
- *  (at your option) any later version.
- *
- *  This program is distributed in the hope that it will be useful,
- *  but WITHOUT ANY WARRANTY; without even the implied warranty of
- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *  GNU General Public License for more details.
- *
- *  You should have received a copy of the GNU General Public License
- *  along with this program.  If not, see <https://www.gnu.org/licenses/>.
+ * Copyright (C) 2021-2023  Daniel K. O.
+ * SPDX-License-Identifier: MIT
  */
 
 
@@ -22,8 +11,8 @@
 #include <iostream>
 #include <thread>
 
-#include "device.hpp"
-#include "uinput.hpp"
+#include <libevdevxx/Device.hpp>
+#include <libevdevxx/Uinput.hpp>
 
 
 using std::cout;
@@ -34,7 +23,7 @@ using namespace std::literals;
 
 using evdev::Device;
 using evdev::Uinput;
-using Code = evdev::Event::Code;
+using evdev::Code;
 
 
 int main()
@@ -44,7 +33,7 @@ int main()
 
     dev.enable_rel(Code{REL_X});
     dev.enable_rel(Code{REL_Y});
-    // needs at least one button
+    // needs at least one button to be recognized as a mouse
     dev.enable_key(Code{BTN_LEFT});
 
     Uinput udev{dev};

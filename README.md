@@ -19,8 +19,8 @@ a circle.
 #include <iostream>
 #include <thread>
 
-#include <libevdevxx/device.hpp>
-#include <libevdevxx/uinput.hpp>
+#include <libevdevxx/Device.hpp>
+#include <libevdevxx/Uinput.hpp>
 
 
 using std::cout;
@@ -31,7 +31,7 @@ using namespace std::literals;
 
 using evdev::Device;
 using evdev::Uinput;
-using Code = evdev::Event::Code;
+using evdev::Code;
 
 
 int main()
@@ -41,7 +41,7 @@ int main()
 
     dev.enable_rel(Code{REL_X});
     dev.enable_rel(Code{REL_Y});
-    // needs at least one button
+    // needs at least one button to be recognized as a mouse
     dev.enable_key(Code{BTN_LEFT});
 
     Uinput udev{dev};
@@ -76,7 +76,7 @@ Installing
 First, make sure you have the prerequisites installed:
 
   - A C++ 20 compiler.
-  - libevdev 1.6 or above
+  - libevdev 1.10 or above
 
 If you're not using a source tarball, you need to run the `bootstrap` script to generate
 the `configure` script:
