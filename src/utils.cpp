@@ -26,20 +26,6 @@ using std::out_of_range;
 namespace evdev::priv {
 
 
-    string
-    to_string(const string& arg)
-    {
-        return "\""s + arg + "\""s;
-    }
-
-
-    string
-    to_string(const char* s)
-    {
-        return "\""s + string{s} + "\""s;
-    }
-
-
     string errno_to_string(int e)
     {
         std::vector<char> buf(256);
@@ -91,39 +77,5 @@ namespace evdev::priv {
         }
         return input;
     }
-
-
-
-    FlagsGuard::FlagsGuard(std::ios_base& stream) :
-        stream(stream),
-        saved{stream.flags()}
-    {}
-
-
-    FlagsGuard::~FlagsGuard()
-    {
-        stream.flags(saved);
-    }
-
-
-    unsigned long
-    stoul_range(const string& arg,
-                size_t* pos,
-                unsigned base,
-                unsigned long max,
-                const string& error_msg)
-    {
-        try {
-            unsigned long value = std::stoul(arg, pos, base);
-            if (value > max)
-                throw out_of_range{error_msg + ": '"s + arg + "'"s};
-            return value;
-        }
-        catch (std::exception& e) {
-            throw invalid_argument{error_msg + ": '"s
-                    + arg + "': "s + e.what()};
-        }
-    }
-
 
 }

@@ -1,10 +1,6 @@
-name: Deploy Doxygen docs
+name: doxygen
 
 on:
-  # Runs on pushes targeting the default branch
-  #push:
-  #  branches: ["main"]
-
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
 
@@ -26,9 +22,10 @@ jobs:
     runs-on: ubuntu-latest
     steps:
 
-      - uses: ConorMacBride/install-package@v1
+      - uses: awalsh128/cache-apt-pkgs-action@latest
         with:
-          apt: libevdev-dev
+          packages: libevdev-dev
+          version: doxygen-cache
 
       - name: Checkout
         uses: actions/checkout@v3

@@ -11,7 +11,7 @@
 
 
 #include <cstdint>
-#include <ostream>
+#include <iosfwd>
 #include <string>
 
 #include <libevdev/libevdev.h>
@@ -19,7 +19,7 @@
 
 namespace evdev {
 
-
+    /// Maps to the ::input_absinfo struct from `linux/input.h`.
     struct AbsInfo {
 
         std::int32_t val  = 0;
@@ -82,16 +82,9 @@ namespace evdev {
     to_string(const AbsInfo& info);
 
 
-    // template<typename CharT,
-    //          typename Traits>
-    //std::basic_ostream<>&
-    auto&
-    operator<<(std::basic_ostream<auto, auto>& out,
-               const AbsInfo& info)
-    {
-        return out << to_string(info);
-    }
-
+    std::ostream&
+    operator <<(std::ostream& out,
+                const AbsInfo& info);
 
 
 } // namespace evdev

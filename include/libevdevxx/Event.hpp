@@ -25,6 +25,7 @@
 
 namespace evdev {
 
+    ///
     struct Event {
 
         // same as ::input_event

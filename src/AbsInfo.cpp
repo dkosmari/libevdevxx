@@ -26,4 +26,13 @@ namespace evdev {
     }
 
 
+    std::ostream&
+    operator <<(std::ostream& out,
+                const AbsInfo& info)
+    {
+        return out << to_string(info);
+    }
+
+
+
 } // namespace evdev

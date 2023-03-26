@@ -26,30 +26,6 @@ namespace evdev::priv {
     using std::size_t;
 
 
-    using namespace std::literals;
-
-
-    string to_string(const string& arg);
-
-    string to_string(const char* s);
-
-
-    template<typename T>
-    string
-    to_comma_string(const T& arg)
-    {
-        return ", "s + to_string(arg);
-    }
-
-
-    template<typename T, typename... Rest>
-    string
-    list_to_string(const T& first, const Rest&... rest)
-    {
-        return to_string(first) +
-            (to_comma_string(rest) + ...);
-    }
-
 
     string
     errno_to_string(int e);
@@ -67,21 +43,6 @@ namespace evdev::priv {
             const std::function<bool(char)>& pred);
 
 
-    class FlagsGuard {
-        std::ios_base& stream;
-        std::ios_base::fmtflags saved;
-    public:
-        FlagsGuard(std::ios_base& stream);
-        ~FlagsGuard();
-    };
-
-
-    unsigned long
-    stoul_range(const string& arg,
-                size_t* pos,
-                unsigned base,
-                unsigned long max,
-                const string& error_msg);
 }
 
 

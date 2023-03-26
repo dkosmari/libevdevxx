@@ -5,6 +5,7 @@
  * SPDX-License-Identifier: MIT
  */
 
+
 #ifndef LIBEVDEVXX_DEVICE_HPP
 #define LIBEVDEVXX_DEVICE_HPP
 
