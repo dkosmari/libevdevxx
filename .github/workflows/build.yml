@@ -1,0 +1,37 @@
+name: build
+
+on:
+  push:
+    branches: [ "main" ]
+
+  pull_request:
+    branches: [ "main" ]
+
+  workflow_dispatch:
+
+
+jobs:
+
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+
+      - name: Dependencies
+        uses: awalsh128/cache-apt-pkgs-action@latest
+        with:
+          packages: libevdev-dev
+          version: build
+
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Bootstrap
+        run: ./bootstrap
+
+      - name: Configure
+        run: ./configure
+
+      - name: Build
+        run: make
