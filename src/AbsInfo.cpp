@@ -6,6 +6,8 @@
  */
 
 
+#include <ostream>
+
 #include "libevdevxx/AbsInfo.hpp"
 
 

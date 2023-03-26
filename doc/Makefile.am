@@ -27,7 +27,7 @@ doxyfile.stamp: Doxyfile $(MD_FILES)
 
 install-data-local:
 	mkdir -p "$(DESTDIR)$(htmldir)"
-	cp -r -t "$(DESTDIR)$(htmldir)" html/*
+	cp -r -t "$(DESTDIR)$(htmldir)" html
 
 uninstall-local:
 	$(RM) -r "$(DESTDIR)$(htmldir)"

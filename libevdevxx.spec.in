@@ -82,6 +82,7 @@ This package contains tools from %{name}:
 %doc README
 %doc ChangeLog
 %doc NEWS
+%{_pkgdocdir}/html
 %{_includedir}/libevdevxx/*.hpp
 %{_libdir}/*.so
 %{_libdir}/pkgconfig/libevdevxx.pc
