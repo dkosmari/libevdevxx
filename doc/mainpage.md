@@ -1,5 +1,5 @@
-Intro
-=====
+Introduction
+============
 
 [libevdevxx](http://github.com/dkosmari/libevdevxx) is a C++20 wrapper for the C library
 [libevdev](http://www.freedesktop.org/wiki/Software/libevdev), which is a high-level C
