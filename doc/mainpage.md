@@ -17,3 +17,4 @@ In this example, a virtual device is created to mimick a mouse. Then events are 
 to simulate the mouse moving in a circle.
 
 @include circle-mouse.cpp
+
