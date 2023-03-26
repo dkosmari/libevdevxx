@@ -33,7 +33,8 @@ namespace evdev {
 
         using Base = detail::NumberBase<std::uint16_t, Code>;
 
-        using typename Base::Value;
+        /// The underlying value, same as `std::uint16_t`.
+        using value_type = typename Base::Value;
 
         // expose the Base constructors
 
@@ -41,7 +42,7 @@ namespace evdev {
 
 
         Code(Type type,
-             Value code_num);
+             value_type code_num);
 
 
         // named constructors
@@ -49,8 +50,8 @@ namespace evdev {
         /**
          * @brief Parse a `Type` and `Code` from a string
          *
-         * @arg `name` the string to parse.
-         * @arg[out] `pos` if not NULL, stores how many characters were parsed.
+         * @param name the string to parse.
+         * @param[out] pos if not `NULL`, store how many characters were parsed.
          */
         static
         std::pair<Type, Code>

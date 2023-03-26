@@ -29,11 +29,11 @@
 
 #include "detail/ScopedFile.hpp"
 
-
+/// The namespace of libevdevxx.
 namespace evdev {
 
 
-
+    /// Helper enum to use the logging functions.
     enum class LogPriority {
         none  = -1,
         error = LIBEVDEV_LOG_ERROR,
@@ -42,6 +42,13 @@ namespace evdev {
     };
 
 
+    /**
+     * @brief Represents a device (real of not).
+     *
+     * In order to use the logging function, the `log()` method must be overridden in a
+     * derived class, and a protected constructors (that take a `LogPriority` argument) must
+     * be called explicitly.
+     */
     class Device {
 
         struct Deleter {
@@ -59,38 +66,125 @@ namespace evdev {
 
     protected:
 
+        /**
+         * @brief Constructor to enable logging.
+         *
+         * @param priority The priority level; the log() method will only be called when
+         * the message has this priority or above.
+         *
+         * @sa log()
+         */
         Device(LogPriority priority);
 
+        /**
+         * @brief Constructor to enable logging, and a non-owning device file descriptor.
+         *
+         * @param priority The priority level; the log() method will only be called when
+         * the message has this priority or above.
+         *
+         * @param filedes File descriptor fot the device file (from `/dev/input/event*`)
+         * that will be used for I/O. Ownership is not taken over this, so the file will
+         * not be closed on destruction.
+         *
+         * @sa log()
+         */
         Device(LogPriority priority,
                int filedes);
 
+        /**
+         * @brief Constructor to enable logging and a device filename.
+         *
+         * @param priority The priority level; the log() method will only be called when
+         * the message has this priority or above.
+         *
+         * @param filename Path to to an evdev device (from `/dev/input/event*`) that will
+         * be open by this device.
+         *
+         * @param flags Flags used in the `open` system call.
+         *
+         * @sa log()
+         */
         Device(LogPriority priority,
                const std::filesystem::path& filename,
-               int flags = O_RDONLY);
+               int flags = O_RDONLY | O_NONBLOCK);
 
 
     public:
 
+        /**
+         * @brief Default constructor.
+         *
+         * No device file is associated with this device. For this to have any use, the
+         * user must later do either:
+         *
+         *   - call open() to open a device file.
+         *   - call fd() to supply a device file descriptor.
+         *   - pass it to a `Uinput` object, that will turn it into a virtual device.
+         *
+         * @sa open(), fd(int), Uinput
+         */
         Device();
+
+        /**
+         * @brief Construct form a device file descriptor. The file descriptor is not owned.
+         *
+         * @sa fd(int)
+         */
         Device(int filedes);
+
+        /**
+         * @brief Construct from a device file path.
+         */
         Device(const std::filesystem::path& filename,
                int flags = O_RDONLY | O_NONBLOCK);
-
 
         virtual ~Device() noexcept;
 
 
+        /// Access the internal `::libevdev` object.
         ::libevdev* data() noexcept;
+
+        /// Access the internal `::libevdev` object, const version.
         const ::libevdev* data() const noexcept;
 
 
+        /**
+         * @brief Grab the device through a `EVIOCGRAB` syscall.
+         *
+         * Use `Grabber` to grab and ungrab with exception-safety.
+         *
+         * @throw std::system_error
+         *
+         * @sa Grabber
+         */
         void grab();
+
+        /**
+         * @brief Ungrab the device.
+         *
+         * @throw std::system_error
+         *
+         * @sa Grabber
+         */
         void ungrab();
 
 
-        // supply a file descriptor without owning it
+        /**
+         * @brief Set a file descriptor and read the device metadata.
+         *
+         * You can only call this function once.
+         */
         void fd (int fd);
+
+        /**
+         * @brief Change the file descriptor used internally, without re-reading the actual
+         * device.
+         *
+         * This is only useful if you need to close and reopen the file descriptor.
+         */
         void change_fd(int fd);
+
+        /// Return the internal file descriptor used to access the device file.
         int fd() const;
 
 

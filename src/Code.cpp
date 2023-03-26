@@ -28,7 +28,7 @@ namespace evdev {
 
 
     Code::Code(Type type,
-               Value code_num) :
+               value_type code_num) :
         Base{code_num}
     {
         if (code_num > max(type))
@@ -85,7 +85,7 @@ namespace evdev {
         if (const char* n = ::libevdev_event_code_get_name(type, code))
             return n;
         else
-            return priv::to_hex(static_cast<Code::Value>(code), 3);
+            return priv::to_hex(static_cast<Code::value_type>(code), 3);
     }
 
 

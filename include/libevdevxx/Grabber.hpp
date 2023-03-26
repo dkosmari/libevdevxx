@@ -16,6 +16,7 @@
 namespace evdev {
 
 
+    /// RAII class to call Device::grab() and Device::ungrab() on a device.
     class Grabber {
 
         Device& dev;
