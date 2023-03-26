@@ -19,8 +19,7 @@ a circle.
 #include <iostream>
 #include <thread>
 
-#include <libevdevxx/Device.hpp>
-#include <libevdevxx/Uinput.hpp>
+#include <libevdevxx/evdevxx.hpp>
 
 
 using std::cout;
@@ -29,14 +28,11 @@ using std::flush;
 
 using namespace std::literals;
 
-using evdev::Device;
-using evdev::Uinput;
-using evdev::Code;
-
 
 int main()
 {
-    Device dev;
+    using evdev::Code;
+    evdev::Device dev;
     dev.name("Fake Mouse");
 
     dev.enable_rel(Code{REL_X});
@@ -44,7 +40,7 @@ int main()
     // needs at least one button to be recognized as a mouse
     dev.enable_key(Code{BTN_LEFT});
 
-    Uinput udev{dev};
+    evdev::Uinput udev{dev};
     cout << "Created uinput device at "
          << udev.devnode().value()
          << endl;

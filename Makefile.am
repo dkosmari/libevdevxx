@@ -14,7 +14,8 @@ SUBDIRS = \
 	include/libevdevxx \
 	src \
 	examples \
-	tools
+	tools \
+	doc
 
 
 pcfiledir = $(pkgconfigdir)

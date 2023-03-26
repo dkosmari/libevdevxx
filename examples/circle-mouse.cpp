@@ -1,18 +1,9 @@
-/*
- * libevdevxx - a C++ wrapper for libevdev
- *
- * Copyright (C) 2021-2023  Daniel K. O.
- * SPDX-License-Identifier: MIT
- */
-
-
 #include <chrono>
 #include <cmath>
 #include <iostream>
 #include <thread>
 
-#include <libevdevxx/Device.hpp>
-#include <libevdevxx/Uinput.hpp>
+#include <libevdevxx/evdevxx.hpp>
 
 
 using std::cout;
@@ -21,14 +12,12 @@ using std::flush;
 
 using namespace std::literals;
 
-using evdev::Device;
-using evdev::Uinput;
-using evdev::Code;
-
 
 int main()
 {
-    Device dev;
+    using evdev::Code;
+
+    evdev::Device dev;
     dev.name("Fake Mouse");
 
     dev.enable_rel(Code{REL_X});
@@ -36,7 +25,7 @@ int main()
     // needs at least one button to be recognized as a mouse
     dev.enable_key(Code{BTN_LEFT});
 
-    Uinput udev{dev};
+    evdev::Uinput udev{dev};
     cout << "Created uinput device at "
          << udev.devnode().value()
          << endl;
@@ -44,6 +33,7 @@ int main()
 
     const float radius = 10;
     for (int i = 0; i < 100; ++i) {
+
         float angle = i/100.0f * 2 * M_PI;
         int x = static_cast<int>(radius * std::cos(angle));
         int y = static_cast<int>(radius * std::sin(angle));

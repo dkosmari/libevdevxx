@@ -14,19 +14,19 @@ lib_LTLIBRARIES = libevdevxx.la
 
 libevdevxx_la_SOURCES = \
 	AbsInfo.cpp \
-	Type.cpp \
 	Code.cpp \
+	Device.cpp \
 	error.cpp error.hpp \
+	Event.cpp \
+	Grabber.cpp \
 	Property.cpp \
 	ReadFlag.cpp \
 	ReadStatus.cpp \
-	Event.cpp \
-	Device.cpp \
-	Grabber.cpp \
-	utils.cpp utils.hpp \
 	ScopedFile.cpp \
 	SyncError.cpp \
-	Uinput.cpp
+	Type.cpp \
+	Uinput.cpp \
+	utils.cpp utils.hpp
 
 
 libevdevxx_la_LIBADD = $(LIBEVDEV_LIBS)

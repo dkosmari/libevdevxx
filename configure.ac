@@ -23,6 +23,11 @@ AC_PROG_MAKE_SET
 AC_LANG([C++])
 AX_APPEND_COMPILE_FLAGS([-std=c++20], [CXX])
 
+
+AC_CHECK_PROGS([DOXYGEN], [doxygen])
+AM_CONDITIONAL([USE_DOXYGEN], [test -n "${DOXYGEN}"])
+
+
 PKG_INSTALLDIR
 
 # Checks for libraries.
@@ -42,13 +47,14 @@ AC_FUNC_STRERROR_R
 TARBALL_NAME="${PACKAGE_NAME}-${PACKAGE_VERSION}.tar.gz"
 AC_SUBST([TARBALL_NAME])
 
-AC_CONFIG_FILES([
-        examples/Makefile
-        include/libevdevxx/Makefile
-        libevdevxx.pc
-        libevdevxx.spec
-        Makefile
-        src/Makefile
-        tools/Makefile
+AC_CONFIG_FILES([Makefile
+                doc/Doxyfile
+                doc/Makefile
+                examples/Makefile
+                include/libevdevxx/Makefile
+                libevdevxx.pc
+                libevdevxx.spec
+                src/Makefile
+                tools/Makefile
 ])
 AC_OUTPUT
