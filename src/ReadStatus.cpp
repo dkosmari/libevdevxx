@@ -27,7 +27,7 @@ namespace evdev {
             case ReadStatus::dropped:
                 return "dropped"s;
             default:
-                return priv::errno_to_string(-static_cast<int>(st));
+                return priv::errno_to_string(-st);
         }
 
     }

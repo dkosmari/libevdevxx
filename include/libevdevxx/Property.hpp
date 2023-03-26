@@ -11,7 +11,7 @@
 
 
 #include <cstddef>
-#include <ostream>
+#include <iosfwd>
 #include <stdexcept>
 #include <string>
 #include <string_view>

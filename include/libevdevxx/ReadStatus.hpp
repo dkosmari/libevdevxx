@@ -20,7 +20,7 @@
 namespace evdev {
 
 
-    enum class ReadStatus : int {
+    enum ReadStatus : int {
         success = LIBEVDEV_READ_STATUS_SUCCESS,
         dropped = LIBEVDEV_READ_STATUS_SYNC,
         again   = -EAGAIN

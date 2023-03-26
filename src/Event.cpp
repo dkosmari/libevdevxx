@@ -5,6 +5,9 @@
  * SPDX-License-Identifier: MIT
  */
 
+
+#include <ostream>
+
 #include "libevdevxx/Event.hpp"
 
 #include "utils.hpp"
@@ -30,11 +33,13 @@ namespace evdev {
     }
 
 
-    void
-    test(std::ostream& out, const Event& e)
+    std::ostream&
+    operator <<(std::ostream& out,
+                const Event& e)
     {
-        out << "test: " << e << std::endl;
+        return out << to_string(e);
     }
+
 
 
 } // namespace evdev

@@ -23,19 +23,13 @@
 namespace evdev {
 
 
-
+    /// A class to send events to a virtual device.
     class Uinput {
-
-        struct Deleter {
-            void operator()(::libevdev_uinput* udev) const noexcept;
-        };
-
-        std::unique_ptr<::libevdev_uinput, Deleter> udev;
 
     public:
 
         Uinput(const Device& dev);
-        Uinput(const Device& dev, int f);
+        Uinput(const Device& dev, int filedes);
 
 
         ::libevdev_uinput* data() noexcept;
@@ -72,10 +66,19 @@ namespace evdev {
 
         void flush();
 
+
+    private:
+
+        struct Deleter {
+            void operator()(::libevdev_uinput* udev) const noexcept;
+        };
+
+        std::unique_ptr<::libevdev_uinput, Deleter> udev;
+
     };
 
 
-}
+} // namespace evdev
 
 
 #endif

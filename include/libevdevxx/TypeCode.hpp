@@ -10,6 +10,13 @@
 #define LIBEVDEVXX_TYPE_CODE_HPP
 
 
+#include <string>
+#include <utility>
+
+#include "Code.hpp"
+#include "Type.hpp"
+
+
 namespace evdev {
 
 
@@ -17,6 +24,10 @@ namespace evdev {
         Type type;
         Code code;
     };
+
+
+    std::pair<std::string, std::string>
+    to_strings(const TypeCode& tc);
 
 }
 

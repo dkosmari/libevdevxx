@@ -6,6 +6,8 @@
  */
 
 
+#include <ostream>
+
 #include "libevdevxx/Type.hpp"
 
 #include "utils.hpp"
@@ -45,6 +47,15 @@ namespace evdev {
             return s;
         else
             return priv::to_hex(type, 2);
+    }
+
+
+
+    std::ostream&
+    operator <<(std::ostream& out,
+                Type type)
+    {
+        return out << to_string(type);
     }
 
 

@@ -6,7 +6,7 @@ Version:        @PACKAGE_VERSION@
 Release:        %mkrel 1
 Summary:        A C++ wrapper for libevdev.
 Group:          System/Libraries
-License:        GPLv3+
+License:        MIT
 Source0:        @TARBALL_NAME@
 
 %description

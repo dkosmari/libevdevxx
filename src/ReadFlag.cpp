@@ -5,16 +5,13 @@
  * SPDX-License-Identifier: MIT
  */
 
+
 #include <ostream>
-#include <sstream>
 
 #include "libevdevxx/ReadFlag.hpp"
 
 #include "utils.hpp"
 
-
-using std::ostream;
-using std::ostringstream;
 
 using namespace std::literals;
 

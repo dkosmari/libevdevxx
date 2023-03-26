@@ -28,11 +28,11 @@ namespace evdev {
 
 
     Uinput::Uinput(const Device& dev,
-                   int f)
+                   int filedes)
     {
         ::libevdev_uinput* ptr = nullptr;
         int e = ::libevdev_uinput_create_from_device(dev.data(),
-                                                     f,
+                                                     filedes,
                                                      &ptr);
         if (e < 0)
             throw_sys_error(-e, "from libevdev_uinput_create_from_device()");

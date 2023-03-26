@@ -25,6 +25,7 @@ libevdevxx_la_SOURCES = \
 	ScopedFile.cpp \
 	SyncError.cpp \
 	Type.cpp \
+	TypeCode.cpp \
 	Uinput.cpp \
 	utils.cpp utils.hpp
 

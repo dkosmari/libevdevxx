@@ -5,6 +5,7 @@
  * SPDX-License-Identifier: MIT
  */
 
+
 #ifndef LIBEVDEVXX_EVENT_HPP
 #define LIBEVDEVXX_EVENT_HPP
 
@@ -85,14 +86,9 @@ namespace evdev {
     to_string(const Event& e);
 
 
-    //std::ostream&
-    inline
-    auto&
-    operator <<(std::basic_ostream<auto, auto>& out,
-                const Event& e)
-    {
-        return out << to_string(e);
-    }
+    std::ostream&
+    operator <<(std::ostream& out,
+                const Event& e);
 
 
 }

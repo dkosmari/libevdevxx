@@ -12,7 +12,7 @@
 
 #include <cstddef>
 #include <cstdint>
-#include <ostream>
+#include <iosfwd>
 #include <stdexcept>
 #include <string>
 #include <string_view>
@@ -115,15 +115,12 @@ namespace evdev {
 
 
     std::string
-    to_string(Type t);
+    to_string(Type type);
 
 
-    auto&
-    operator <<(std::basic_ostream<auto, auto>& out,
-                Type t)
-    {
-        return out << to_string(t);
-    }
+    std::ostream&
+    operator <<(std::ostream& out,
+                Type type);
 
 
 } // namespace evdev
