@@ -79,7 +79,7 @@ This package contains tools from %{name}:
 
 
 %files -n %{devname}
-%doc README
+%doc README.md
 %doc ChangeLog
 %doc NEWS
 %{_pkgdocdir}/html
