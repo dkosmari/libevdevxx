@@ -1,7 +1,7 @@
 %define libname %mklibname evdevxx
 %define devname %mklibname evdevxx -d
 
-Name:           @PACKAGE_NAME@
+Name:           @PACKAGE_TARNAME@
 Version:        @PACKAGE_VERSION@
 Release:        %mkrel 1
 Summary:        A C++ wrapper for libevdev.
