@@ -86,7 +86,6 @@ This package contains tools from %{name}:
 %{_includedir}/libevdevxx/*
 %{_libdir}/*.so
 %{_libdir}/pkgconfig/libevdevxx.pc
-%{_libdir}/*.la
 
 
 %files -n evdevxx-tools
