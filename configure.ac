@@ -29,7 +29,10 @@ AC_ARG_ENABLE([docs],
               [AS_HELP_STRING([--disable-docs], [disable generating documentation])],
               [ENABLE_DOCS=$enableval])
 AS_VAR_IF([ENABLE_DOCS], [yes],
-          [AC_CHECK_PROGS([DOXYGEN], [doxygen])])
+          [
+              AC_CHECK_PROGS([DOXYGEN], [doxygen])
+              AS_VAR_SET_IF([DOXYGEN], [], [ENABLE_DOCS=no])
+          ])
 AM_CONDITIONAL([BUILD_DOCS], [test "x$ENABLE_DOCS" = "xyes"])
 
 
