@@ -1,5 +1,6 @@
 # tests/Makefile.am
 
+if BUILD_EXAMPLES
 
 AM_CXXFLAGS = -Wall -Wextra
 
@@ -29,3 +30,6 @@ compile_flags.txt: Makefile
 	echo "$(AM_CPPFLAGS) $(CPPFLAGS) $(DEFS)" | xargs -n1 | sort -u > $(srcdir)/compile_flags.txt
 
 #all-local: company
+
+
+endif BUILD_EXAMPLES

@@ -2,7 +2,7 @@
 # Process this file with autoconf to produce a configure script.
 
 AC_PREREQ([2.70])
-AC_INIT([libevdevxx], [0.4.0], [])
+AC_INIT([libevdevxx], [0.4.0+], [])
 AC_CONFIG_SRCDIR([src/AbsInfo.cpp])
 AC_CONFIG_HEADERS([config.h])
 AC_CONFIG_AUX_DIR([build-aux])
@@ -24,8 +24,28 @@ AC_LANG([C++])
 AX_APPEND_COMPILE_FLAGS([-std=c++20], [CXX])
 
 
-AC_CHECK_PROGS([DOXYGEN], [doxygen])
-AM_CONDITIONAL([USE_DOXYGEN], [test -n "${DOXYGEN}"])
+ENABLE_DOCS=yes
+AC_ARG_ENABLE([docs],
+              [AS_HELP_STRING([--disable-docs], [disable generating documentation])],
+              [ENABLE_DOCS=$enableval])
+AS_VAR_IF([ENABLE_DOCS], [yes],
+          [AC_CHECK_PROGS([DOXYGEN], [doxygen])])
+AM_CONDITIONAL([BUILD_DOCS], [test "x$ENABLE_DOCS" = "xyes"])
+
+
+ENABLE_TOOLS=yes
+AC_ARG_ENABLE([tools],
+              [AS_HELP_STRING([--disable-tools], [disable building tools])],
+              [ENABLE_TOOLS=$enableval])
+AM_CONDITIONAL([BUILD_TOOLS], [test "x$ENABLE_TOOLS" = "xyes"])
+
+
+ENABLE_EXAMPLES=yes
+AC_ARG_ENABLE([examples],
+              [AS_HELP_STRING([--disable-examples], [disable building examples])],
+              [ENABLE_EXAMPLES=$enableval])
+AM_CONDITIONAL([BUILD_EXAMPLES], [test "x$ENABLE_EXAMPLES" = "xyes"])
+
 
 
 PKG_INSTALLDIR

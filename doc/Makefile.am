@@ -13,7 +13,7 @@ EXTRA_DIST = \
 	$(MD_FILES)
 
 
-if USE_DOXYGEN
+if BUILD_DOCS
 
 BUILT_SOURCES = html
 
@@ -38,4 +38,4 @@ clean-local:
 	$(RM) -rf html
 
 
-endif USE_DOXYGEN
+endif BUILD_DOCS

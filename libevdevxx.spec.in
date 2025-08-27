@@ -64,7 +64,7 @@ This package contains tools from %{name}:
 %autosetup
 
 %build 
-%configure --disable-static
+%configure --disable-static --disable-examples
 %make_build
 
 %install
