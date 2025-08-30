@@ -1,14 +1,12 @@
 /*
  * libevdevxx - a C++ wrapper for libevdev
  *
- * Copyright (C) 2021-2023  Daniel K. O.
+ * Copyright (C) 2025  Daniel K. O.
  * SPDX-License-Identifier: MIT
  */
 
-
 #ifndef LIBEVDEVXX_CODE_HPP
 #define LIBEVDEVXX_CODE_HPP
-
 
 #include <cstdint>
 #include <cstddef>
@@ -16,7 +14,7 @@
 #include <string_view>
 #include <utility>
 
-#include "detail/NumberBase.hpp"
+#include "NumberBase.hpp"
 #include "Type.hpp"
 
 
@@ -31,14 +29,13 @@ namespace evdev {
     struct Code :
         public detail::NumberBase<std::uint16_t, Code> {
 
-        using Base = detail::NumberBase<std::uint16_t, Code>;
+        using BaseType = detail::NumberBase<std::uint16_t, Code>;
 
         /// The underlying value, same as `std::uint16_t`.
-        using value_type = typename Base::Value;
+        using value_type = typename BaseType::Value;
 
-        // expose the Base constructors
-
-        using Base::Base;
+        // expose the BaseType constructors
+        using BaseType::BaseType;
 
 
         Code(Type type,
@@ -72,8 +69,6 @@ namespace evdev {
     code_to_string(Type type,
                    Code code);
 
-
-}
-
+} // namespace evdev
 
 #endif

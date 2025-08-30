@@ -1,7 +1,7 @@
 /*
  * libevdevxx - a C++ wrapper for libevdev
  *
- * Copyright (C) 2021-2023  Daniel K. O.
+ * Copyright (C) 2025  Daniel K. O.
  * SPDX-License-Identifier: MIT
  */
 
@@ -26,7 +26,6 @@ static_assert(sizeof(evdev::Property) == sizeof(unsigned));
 
 namespace evdev {
 
-
     Property
     Property::parse(std::string_view name,
                     std::size_t* pos)
@@ -47,7 +46,6 @@ namespace evdev {
     }
 
 
-
     std::string
     to_string(Property prop)
     {
@@ -55,7 +53,7 @@ namespace evdev {
         if (const char* s = ::libevdev_property_get_name(val))
             return s;
         else
-            return priv::to_hex(val, 2);
+            return detail::to_hex(val, 2);
     }
 
 
@@ -90,7 +88,7 @@ namespace evdev {
 
         // read property name
         std::string token;
-        if (priv::getline(input, token, is_valid))
+        if (detail::getline(input, token, is_valid))
             try {
                 std::size_t sz = 0;
                 prop = Property::parse(token, &sz);
@@ -102,7 +100,6 @@ namespace evdev {
             }
 
         return input;
-
     }
 
-}
+} // namespace evdev

@@ -1,14 +1,12 @@
 /*
  * libevdevxx - a C++ wrapper for libevdev
  *
- * Copyright (C) 2021-2023  Daniel K. O.
+ * Copyright (C) 2025  Daniel K. O.
  * SPDX-License-Identifier: MIT
  */
 
-
 #ifndef LIBEVDEVXX_READ_STATUS_HPP
 #define LIBEVDEVXX_READ_STATUS_HPP
-
 
 #include <cerrno>
 #include <iosfwd>
@@ -18,7 +16,6 @@
 
 
 namespace evdev {
-
 
     enum ReadStatus : int {
         success = LIBEVDEV_READ_STATUS_SUCCESS,
@@ -41,6 +38,5 @@ namespace evdev {
 
 
 } // namespace evdev
-
 
 #endif

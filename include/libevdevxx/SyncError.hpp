@@ -1,14 +1,12 @@
 /*
  * libevdevxx - a C++ wrapper for libevdev
  *
- * Copyright (C) 2021-2023  Daniel K. O.
+ * Copyright (C) 2025  Daniel K. O.
  * SPDX-License-Identifier: MIT
  */
 
-
 #ifndef LIBEVDEVXX_SYNC_ERROR_HPP
 #define LIBEVDEVXX_SYNC_ERROR_HPP
-
 
 #include <stdexcept>
 
@@ -17,7 +15,6 @@
 
 namespace evdev {
 
-
     struct SyncError : std::runtime_error {
 
         Event event;
@@ -25,7 +22,6 @@ namespace evdev {
         SyncError(const Event& event);
 
     };
-
 
 } // namespace evdev
 

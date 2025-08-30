@@ -1,20 +1,17 @@
 /*
  * libevdevxx - a C++ wrapper for libevdev
  *
- * Copyright (C) 2021-2023  Daniel K. O.
+ * Copyright (C) 2025  Daniel K. O.
  * SPDX-License-Identifier: MIT
  */
 
-
-#ifndef LIBEVDEVXX_DETAIL_NUMBER_BASE_HPP
-#define LIBEVDEVXX_DETAIL_NUMBER_BASE_HPP
-
+#ifndef LIBEVDEVXX_NUMBER_BASE_HPP
+#define LIBEVDEVXX_NUMBER_BASE_HPP
 
 #include <compare>
 
 
 namespace evdev::detail {
-
 
     // this template uses CRTP to create a type-safe integer
 
@@ -30,9 +27,7 @@ namespace evdev::detail {
 
         Value value;
 
-
     public:
-
 
         constexpr
         NumberBase() noexcept :
@@ -45,7 +40,6 @@ namespace evdev::detail {
         NumberBase(Value value) noexcept :
             value{value}
         {}
-
 
 
         constexpr
@@ -90,8 +84,6 @@ namespace evdev::detail {
 
     };
 
-
 } // namespace evdev::detail
-
 
 #endif

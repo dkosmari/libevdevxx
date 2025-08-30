@@ -1,20 +1,17 @@
 /*
  * libevdevxx - a C++ wrapper for libevdev
  *
- * Copyright (C) 2021-2023  Daniel K. O.
+ * Copyright (C) 2025  Daniel K. O.
  * SPDX-License-Identifier: MIT
  */
 
-
 #ifndef LIBEVDEVXX_GRABBER_HPP
 #define LIBEVDEVXX_GRABBER_HPP
-
 
 #include "Device.hpp"
 
 
 namespace evdev {
-
 
     /// RAII class to call Device::grab() and Device::ungrab() on a device.
     class Grabber {
@@ -27,10 +24,8 @@ namespace evdev {
 
         ~Grabber();
 
-    };
+    }; // class Grabber
 
-
-}
-
+} // namespace evdev
 
 #endif

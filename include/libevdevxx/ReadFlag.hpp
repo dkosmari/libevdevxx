@@ -1,14 +1,12 @@
 /*
  * libevdevxx - a C++ wrapper for libevdev
  *
- * Copyright (C) 2021-2023  Daniel K. O.
+ * Copyright (C) 2025  Daniel K. O.
  * SPDX-License-Identifier: MIT
  */
 
-
 #ifndef LIBEVDEVXX_READ_FLAG_HPP
 #define LIBEVDEVXX_READ_FLAG_HPP
-
 
 #include <iosfwd>
 #include <string>
@@ -18,14 +16,12 @@
 
 namespace evdev {
 
-
     enum ReadFlag : unsigned {
         normal     = LIBEVDEV_READ_FLAG_NORMAL,
         resync     = LIBEVDEV_READ_FLAG_SYNC,
         force_sync = LIBEVDEV_READ_FLAG_FORCE_SYNC,
         blocking   = LIBEVDEV_READ_FLAG_BLOCKING
     };
-
 
 
     inline
@@ -121,8 +117,6 @@ namespace evdev {
     operator <<(std::ostream& out,
                 ReadFlag flag);
 
-
-}
-
+} // namespace evdev
 
 #endif

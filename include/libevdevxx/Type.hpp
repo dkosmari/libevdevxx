@@ -1,14 +1,12 @@
 /*
  * libevdevxx - a C++ wrapper for libevdev
  *
- * Copyright (C) 2021-2023  Daniel K. O.
+ * Copyright (C) 2025  Daniel K. O.
  * SPDX-License-Identifier: MIT
  */
 
-
 #ifndef LIBEVDEVXX_TYPE_HPP
 #define LIBEVDEVXX_TYPE_HPP
-
 
 #include <cstddef>
 #include <cstdint>
@@ -19,7 +17,7 @@
 
 #include <libevdev/libevdev.h>
 
-#include "detail/NumberBase.hpp"
+#include "NumberBase.hpp"
 
 
 namespace evdev {
@@ -27,11 +25,9 @@ namespace evdev {
     class Type :
         public detail::NumberBase<std::uint16_t, Type> {
 
-        using Base = detail::NumberBase<std::uint16_t, Type>;
-
+        using BaseType = detail::NumberBase<std::uint16_t, Type>;
 
     public:
-
 
         constexpr
         Type()
@@ -41,7 +37,7 @@ namespace evdev {
         explicit
         constexpr
         Type(std::uint16_t number) :
-            Base{number}
+            BaseType{number}
         {
             if (number > EV_MAX)
                 throw std::invalid_argument{"invalid event type number"};
@@ -76,8 +72,6 @@ namespace evdev {
         }
 
 
-
-
         static const Type syn;
         static const Type key;
         static const Type rel;
@@ -91,27 +85,21 @@ namespace evdev {
         static const Type pwr;
         static const Type ff_status;
 
+    }; // class Type
 
-    };
 
-
-#define DEFINE(x, y)                                            \
-    inline constexpr const Type Type::x{EV_ ## y}
-
-    DEFINE(syn, SYN);
-    DEFINE(key, KEY);
-    DEFINE(rel, REL);
-    DEFINE(abs, ABS);
-    DEFINE(msc, MSC);
-    DEFINE(sw,  SW);
-    DEFINE(led, LED);
-    DEFINE(snd, SND);
-    DEFINE(rep, REP);
-    DEFINE(ff,  FF);
-    DEFINE(pwr, PWR);
-    DEFINE(ff_status, FF_STATUS);
-
-#undef DEFINE
+    inline constexpr const Type Type::syn       {EV_SYN};
+    inline constexpr const Type Type::key       {EV_KEY};
+    inline constexpr const Type Type::rel       {EV_REL};
+    inline constexpr const Type Type::abs       {EV_ABS};
+    inline constexpr const Type Type::msc       {EV_MSC};
+    inline constexpr const Type Type::sw        {EV_SW};
+    inline constexpr const Type Type::led       {EV_LED};
+    inline constexpr const Type Type::snd       {EV_SND};
+    inline constexpr const Type Type::rep       {EV_REP};
+    inline constexpr const Type Type::ff        {EV_FF};
+    inline constexpr const Type Type::pwr       {EV_PWR};
+    inline constexpr const Type Type::ff_status {EV_FF_STATUS};
 
 
     std::string
@@ -122,8 +110,6 @@ namespace evdev {
     operator <<(std::ostream& out,
                 Type type);
 
-
 } // namespace evdev
-
 
 #endif

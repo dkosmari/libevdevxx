@@ -1,13 +1,12 @@
-libevdevxx - a C++ wrapper for libevdev
-=======================================
+# libevdevxx - a C++ wrapper for libevdev
+
 
 `libevdevxx` is a C++20 wrapper for the C library `libevdev`, which is a high-level C
 library for the `evdev` Linux driver. This library exposes all of `libevdev` as C++ classes
 and methods, with RAII and type safety.
 
 
-Example
--------
+## Example
 
 This example ([examples/circle-mouse.cpp](examples/circle-mouse.cpp)) creates a virtual
 mouse, through the `uinput` subsystem, and creates events to simulate the mouse moving in
@@ -66,24 +65,31 @@ int main()
 See the contents of [examples](examples) and [tools](tools) for more examples.
 
 
-Installing
-----------
+## Building
 
-First, make sure you have the prerequisites installed:
+### Dependencies
 
-  - A C++ 20 compiler.
-  - libevdev 1.10 or above
+- A C++20 compiler, usually installed by a meta package like `task-c++` or `build-essential`.
 
-If you're not using a source tarball, you need to run the `bootstrap` script to generate
-the `configure` script:
+- C/C++ compilation tools such as:
+  - `autoconf`
+  - `automake`
+  - `libtool`
+  - `pkg-config`
 
-    ./bootstrap
+- [libevdev](http://www.freedesktop.org/wiki/Software/libevdev) 1.13+: usually available as a
+  package in your distro (you need the "devel" package.)
 
-With the `configure` script present, run:
 
-    ./configure
-    make
-    sudo make install
+### Instructions
+
+You can obtain the source through a release tarball, or by cloning the repository. If you
+use a release tarball, you can skip step 0.
+
+0. `./bootstrap`
+1. `./configure`
+2. `make`
+3. `sudo make install`
 
 This is a standard Automake package; more installation details can be found in the file
 [INSTALL](INSTALL) or by running `./configure --help`.

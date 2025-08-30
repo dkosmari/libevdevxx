@@ -1,14 +1,12 @@
 /*
  * libevdevxx - a C++ wrapper for libevdev
  *
- * Copyright (C) 2021-2023  Daniel K. O.
+ * Copyright (C) 2025  Daniel K. O.
  * SPDX-License-Identifier: MIT
  */
 
-
 #ifndef LIBEVDEVXX_PROPERTY_HPP
 #define LIBEVDEVXX_PROPERTY_HPP
-
 
 #include <cstddef>
 #include <iosfwd>
@@ -18,20 +16,17 @@
 
 #include <libevdev/libevdev.h>
 
-#include "detail/NumberBase.hpp"
+#include "NumberBase.hpp"
 
 
 namespace evdev {
 
-
     class Property :
         public detail::NumberBase<unsigned, Property> {
 
-        using Base = detail::NumberBase<unsigned, Property>;
-
+        using BaseType = detail::NumberBase<unsigned, Property>;
 
     public:
-
 
         constexpr
         Property()
@@ -40,7 +35,7 @@ namespace evdev {
 
         constexpr
         Property(unsigned val) :
-            Base{val}
+            BaseType{val}
         {
             if (val > INPUT_PROP_MAX)
                 throw std::invalid_argument{"invalid property number"};
@@ -57,7 +52,9 @@ namespace evdev {
         static
         inline
         constexpr
-        Property max() noexcept
+        Property
+        max()
+            noexcept
         {
             return Property{INPUT_PROP_MAX};
         }
@@ -72,7 +69,7 @@ namespace evdev {
         static const Property accelerometer;
 
 
-    };
+    }; // class Property
 
 
     inline constexpr Property Property::pointer        {INPUT_PROP_POINTER};
@@ -84,7 +81,8 @@ namespace evdev {
     inline constexpr Property Property::accelerometer  {INPUT_PROP_ACCELEROMETER};
 
 
-    std::string to_string(Property prop);
+    std::string
+    to_string(Property prop);
 
 
     std::ostream&
@@ -95,7 +93,7 @@ namespace evdev {
     std::istream&
     operator >>(std::istream& in,
                 Property& prop);
-}
 
+} // namespace evdev
 
 #endif

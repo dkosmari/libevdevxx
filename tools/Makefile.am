@@ -10,9 +10,7 @@ AM_CPPFLAGS = \
 	-I$(top_srcdir)/include
 
 
-LDADD = \
-	$(top_builddir)/src/libevdevxx.la \
-	$(LIBEVDEV_LIBS)
+LDADD = ../libevdevxx.la
 
 
 bin_PROGRAMS = \
@@ -27,11 +25,11 @@ evdevxx_read_SOURCES = read.cpp
 
 
 .PHONY: company
-
 company: compile_flags.txt
 
 compile_flags.txt: Makefile
-	echo "$(AM_CPPFLAGS) $(CPPFLAGS) $(DEFS)" | xargs -n1 | sort -u > $(srcdir)/compile_flags.txt
+	printf "%s" "$(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS)" | xargs -n1 | sort -u > compile_flags.txt
+	$(CPP) -xc++ /dev/null -E -Wp,-v 2>&1 | sed -n 's,^ ,-I,p' >> compile_flags.txt
 
 
 endif BUILD_TOOLS

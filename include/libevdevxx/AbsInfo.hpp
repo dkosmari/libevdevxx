@@ -1,14 +1,12 @@
 /*
  * libevdevxx - a C++ wrapper for libevdev
  *
- * Copyright (C) 2021-2023  Daniel K. O.
+ * Copyright (C) 2025  Daniel K. O.
  * SPDX-License-Identifier: MIT
  */
 
-
 #ifndef LIBEVDEVXX_ABS_INFO_HPP
 #define LIBEVDEVXX_ABS_INFO_HPP
-
 
 #include <cstdint>
 #include <iosfwd>
@@ -88,6 +86,5 @@ namespace evdev {
 
 
 } // namespace evdev
-
 
 #endif

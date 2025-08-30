@@ -1,7 +1,7 @@
 /*
  * libevdevxx - a C++ wrapper for libevdev
  *
- * Copyright (C) 2021-2023  Daniel K. O.
+ * Copyright (C) 2025  Daniel K. O.
  * SPDX-License-Identifier: MIT
  */
 
@@ -23,8 +23,7 @@ using std::invalid_argument;
 using std::out_of_range;
 
 
-namespace evdev::priv {
-
+namespace evdev::detail {
 
     string errno_to_string(int e)
     {
@@ -78,4 +77,4 @@ namespace evdev::priv {
         return input;
     }
 
-}
+} // namespace evdev::detail

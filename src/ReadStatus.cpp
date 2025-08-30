@@ -1,10 +1,9 @@
 /*
  * libevdevxx - a C++ wrapper for libevdev
  *
- * Copyright (C) 2021-2023  Daniel K. O.
+ * Copyright (C) 2025  Daniel K. O.
  * SPDX-License-Identifier: MIT
  */
-
 
 #include <ostream>
 
@@ -17,7 +16,6 @@ using namespace std::literals;
 
 namespace evdev {
 
-
     std::string
     to_string(ReadStatus st)
     {
@@ -27,7 +25,7 @@ namespace evdev {
             case ReadStatus::dropped:
                 return "dropped"s;
             default:
-                return priv::errno_to_string(-st);
+                return detail::errno_to_string(-st);
         }
 
     }
@@ -39,6 +37,5 @@ namespace evdev {
     {
         return out << to_string(st);
     }
-
 
 } // namespace evdev

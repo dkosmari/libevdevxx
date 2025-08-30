@@ -8,7 +8,7 @@ AC_CONFIG_HEADERS([config.h])
 AC_CONFIG_AUX_DIR([build-aux])
 AC_CONFIG_MACRO_DIR([m4])
 
-AM_INIT_AUTOMAKE([foreign])
+AM_INIT_AUTOMAKE([foreign subdir-objects])
 LT_INIT
 
 # Checks for programs.
@@ -24,9 +24,9 @@ AC_LANG([C++])
 AX_APPEND_COMPILE_FLAGS([-std=c++20], [CXX])
 
 
-ENABLE_DOCS=yes
+ENABLE_DOCS=no
 AC_ARG_ENABLE([docs],
-              [AS_HELP_STRING([--disable-docs], [disable generating documentation])],
+              [AS_HELP_STRING([--enable-docs], [enable generating documentation])],
               [ENABLE_DOCS=$enableval])
 AS_VAR_IF([ENABLE_DOCS], [yes],
           [
@@ -36,16 +36,16 @@ AS_VAR_IF([ENABLE_DOCS], [yes],
 AM_CONDITIONAL([BUILD_DOCS], [test "x$ENABLE_DOCS" = "xyes"])
 
 
-ENABLE_TOOLS=yes
+ENABLE_TOOLS=no
 AC_ARG_ENABLE([tools],
-              [AS_HELP_STRING([--disable-tools], [disable building tools])],
+              [AS_HELP_STRING([--enable-tools], [enable building tools])],
               [ENABLE_TOOLS=$enableval])
 AM_CONDITIONAL([BUILD_TOOLS], [test "x$ENABLE_TOOLS" = "xyes"])
 
 
-ENABLE_EXAMPLES=yes
+ENABLE_EXAMPLES=no
 AC_ARG_ENABLE([examples],
-              [AS_HELP_STRING([--disable-examples], [disable building examples])],
+              [AS_HELP_STRING([--enable-examples], [enable building examples])],
               [ENABLE_EXAMPLES=$enableval])
 AM_CONDITIONAL([BUILD_EXAMPLES], [test "x$ENABLE_EXAMPLES" = "xyes"])
 
@@ -74,10 +74,12 @@ AC_CONFIG_FILES([Makefile
                 doc/Doxyfile
                 doc/Makefile
                 examples/Makefile
-                include/libevdevxx/Makefile
                 libevdevxx.pc
                 libevdevxx.spec
-                src/Makefile
                 tools/Makefile
 ])
 AC_OUTPUT
+
+AC_MSG_NOTICE([Building documentation: $ENABLE_DOCS])
+AC_MSG_NOTICE([Building tools: $ENABLE_TOOLS])
+AC_MSG_NOTICE([Building examples: $ENABLE_EXAMPLES])

@@ -1,10 +1,9 @@
 /*
  * libevdevxx - a C++ wrapper for libevdev
  *
- * Copyright (C) 2021-2023  Daniel K. O.
+ * Copyright (C) 2025  Daniel K. O.
  * SPDX-License-Identifier: MIT
  */
-
 
 #include <cassert>
 #include <stdexcept>
@@ -19,23 +18,19 @@
 using namespace std::literals;
 
 
-
 namespace evdev {
-
 
     static_assert(sizeof(Code) == 2);
 
 
-
     Code::Code(Type type,
                value_type code_num) :
-        Base{code_num}
+        BaseType{code_num}
     {
         if (code_num > max(type))
             throw std::invalid_argument{"invalid code value for type "s
                     + to_string(type)};
     }
-
 
 
     std::pair<Type, Code>
@@ -77,7 +72,6 @@ namespace evdev {
     }
 
 
-
     std::string
     code_to_string(Type type,
                    Code code)
@@ -85,8 +79,7 @@ namespace evdev {
         if (const char* n = ::libevdev_event_code_get_name(type, code))
             return n;
         else
-            return priv::to_hex(static_cast<Code::value_type>(code), 3);
+            return detail::to_hex(static_cast<Code::value_type>(code), 3);
     }
 
-
-}
+} // namespace evdev

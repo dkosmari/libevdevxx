@@ -18,6 +18,7 @@ int main()
     using evdev::Code;
 
     evdev::Device dev;
+
     dev.name("Fake Mouse");
 
     dev.enable_rel(Code{REL_X});

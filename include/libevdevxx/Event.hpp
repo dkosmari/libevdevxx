@@ -1,10 +1,9 @@
 /*
  * libevdevxx - a C++ wrapper for libevdev
  *
- * Copyright (C) 2021-2023  Daniel K. O.
+ * Copyright (C) 2025  Daniel K. O.
  * SPDX-License-Identifier: MIT
  */
-
 
 #ifndef LIBEVDEVXX_EVENT_HPP
 #define LIBEVDEVXX_EVENT_HPP
@@ -67,7 +66,8 @@ namespace evdev {
         }
 
 
-        operator ::input_event() const noexcept
+        operator ::input_event()
+            const noexcept
         {
             ::input_event r;
             r.input_event_sec = sec;
@@ -90,7 +90,6 @@ namespace evdev {
     operator <<(std::ostream& out,
                 const Event& e);
 
-
-}
+} // namespace evdev
 
 #endif

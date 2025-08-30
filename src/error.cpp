@@ -1,10 +1,9 @@
 /*
  * libevdevxx - a C++ wrapper for libevdev
  *
- * Copyright (C) 2021-2023  Daniel K. O.
+ * Copyright (C) 2028  Daniel K. O.
  * SPDX-License-Identifier: MIT
  */
-
 
 #include <system_error>
 
@@ -12,7 +11,6 @@
 
 
 namespace evdev {
-
 
     [[noreturn]]
     void
@@ -32,5 +30,4 @@ namespace evdev {
         throw std::system_error{ec, msg};
     }
 
-
-}
+} // namespace evdev

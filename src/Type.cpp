@@ -1,10 +1,9 @@
 /*
  * libevdevxx - a C++ wrapper for libevdev
  *
- * Copyright (C) 2021-2023  Daniel K. O.
+ * Copyright (C) 2025  Daniel K. O.
  * SPDX-License-Identifier: MIT
  */
-
 
 #include <ostream>
 
@@ -17,7 +16,6 @@ using namespace std::literals;
 
 
 namespace evdev {
-
 
     static_assert(sizeof(Type) == 2);
 
@@ -46,7 +44,7 @@ namespace evdev {
         if (const char* s = ::libevdev_event_type_get_name(type))
             return s;
         else
-            return priv::to_hex(type, 2);
+            return detail::to_hex(type, 2);
     }
 
 
@@ -58,5 +56,4 @@ namespace evdev {
         return out << to_string(type);
     }
 
-
-}
+} // namespace evdev
