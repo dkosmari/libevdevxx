@@ -25,12 +25,11 @@
 
 namespace evdev {
 
-    ///
     struct Event {
 
-        // same as ::input_event
-        std::uint32_t sec{};
-        std::uint32_t usec{};
+        // Same fields as ::input_event, but not same memory layout.
+        decltype(::input_event::input_event_sec) sec{};
+        decltype(::input_event::input_event_usec) usec{};
         Type type;
         Code code;
         std::int32_t value{};

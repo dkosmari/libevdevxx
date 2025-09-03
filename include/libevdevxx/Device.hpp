@@ -8,6 +8,7 @@
 #ifndef LIBEVDEVXX_DEVICE_HPP
 #define LIBEVDEVXX_DEVICE_HPP
 
+#include <cstddef>
 #include <cstdarg>
 #include <cstddef>
 #include <cstdint>
@@ -60,36 +61,38 @@ namespace evdev {
 
         using state_type = std::tuple<BaseType::state_type, int>;
 
+    protected:
+
+
         // ------------------------- //
         // Initialization and setup. //
         // ------------------------- //
 
-    protected:
 
         /**
          * @brief Constructor to enable logging.
          *
-         * @param priority The priority level; the log() method will only be called when
+         * @param priority The priority level; the `log()` method will only be called when
          * the message has this priority or above.
          *
-         * @sa log()
+         * @sa `log()`
          */
         Device(LogPriority priority);
 
         /**
          * @brief Constructor to enable logging, and a non-owning device file descriptor.
          *
-         * @param priority The priority level; the log() method will only be called when
+         * @param priority The priority level; the `log()` method will only be called when
          * the message has this priority or above.
          *
-         * @param filedes File descriptor fot the device file (from `/dev/input/event*`)
-         * that will be used for I/O. Ownership is not taken over this, so the file will
-         * not be closed on destruction.
+         * @param fd File descriptor fot the device file (from `/dev/input/event*`) that
+         * will be used for I/O. Ownership is not taken over this, so the file will not be
+         * closed on destruction.
          *
-         * @sa log()
+         * @sa `log()`
          */
         Device(LogPriority priority,
-               int filedes);
+               int fd);
 
         /**
          * @brief Constructor to enable logging and a device filename.
@@ -109,7 +112,65 @@ namespace evdev {
                int flags = O_RDONLY | O_NONBLOCK);
 
 
+        /**
+         * @brief Constructor to enable logging, in-place.
+         *
+         * @param priority The priority level; the `log()` method will only be called when
+         * the message has this priority or above.
+         *
+         * @sa `log()`
+         */
+        void
+        create(LogPriority priority);
+
+
+        /**
+         * @brief Constructor to enable logging, and a non-owning device file descriptor,
+         * in-place.
+         *
+         * @param priority The priority level; the `log()` method will only be called when
+         * the message has this priority or above.
+         *
+         * @param fd File descriptor fot the device file (from `/dev/input/event*`) that
+         * will be used for I/O. Ownership is not taken over this, so the file will not be
+         * closed on destruction.
+         *
+         * @sa `log()`
+         */
+        void
+        create(LogPriority priority,
+               int fd);
+
+
+        /**
+         * @brief Constructor to enable logging and a device filename, in-place.
+         *
+         * @param priority The priority level; the log() method will only be called when
+         * the message has this priority or above.
+         *
+         * @param filename Path to to an evdev device (from `/dev/input/event*`) that will
+         * be open by this device.
+         *
+         * @param flags Flags used in the `open` system call.
+         *
+         * @sa log()
+         */
+        void
+        create(LogPriority priority,
+               const std::filesystem::path& filename,
+               int flags = O_RDONLY | O_NONBLOCK);
+
+
     public:
+
+        /**
+         * @brief Construct invalid device.
+         *
+         * In an invalid state, most operations are not allowed. You can safely destroy,
+         * move and check for validity.
+         */
+        Device(std::nullptr_t)
+            noexcept;
 
         /**
          * @brief Default constructor.
@@ -117,28 +178,22 @@ namespace evdev {
          * No device file is associated with this device. For this to have any use, the
          * user must later do either:
          *
-         *   - call open() to open a device file.
-         *   - call fd() to supply a device file descriptor.
+         *   - call `open()` to open a device file.
+         *   - call `set_fd()` to supply a device file descriptor.
          *   - pass it to a `Uinput` object, that will turn it into a virtual device.
          *
-         * @sa open(), fd(int), Uinput
+         * @sa `open()`, `set_fd(int)`, `Uinput`
          */
         Device();
 
         /**
-         * @brief Null constructor.
+         * @brief Construct form a device file descriptor.
          *
-         * Do not call any method from this object, other than assignment, destruction, or
-         * `is_valid()`.
-         */
-        Device(nullptr_t);
-
-        /**
-         * @brief Construct form a device file descriptor. The file descriptor is not owned.
+         * The file descriptor is not owned: it won't be closed during destruction.
          *
-         * @sa fd(int)
+         * @sa `set_fd(int)`
          */
-        Device(int filedes);
+        Device(int fd);
 
         /**
          * @brief Construct from a device file path.
@@ -149,6 +204,51 @@ namespace evdev {
 
         ~Device()
             noexcept;
+
+
+        /**
+         * @brief Create a new instance, in-place.
+         *
+         * No device file is associated with this device. For this to have any use, the
+         * user must later do either:
+         *
+         *   - call `open()` to open a device file.
+         *   - call `set_fd()` to supply a device file descriptor.
+         *   - pass it to a `Uinput` object, that will turn it into a virtual device.
+         *
+         * @sa `open()`, `set_fd(int)`, `Uinput`
+         */
+        void
+        create();
+
+
+        /**
+         * @brief Construct form a device file descriptor, in-place.
+         *
+         * The file descriptor is not owned: it won't be closed during destruction.
+         *
+         * @sa `set_fd(int)`
+         */
+        void
+        create(int fd);
+
+
+        /**
+         * @brief Construct from a device file path, in-place.
+         */
+        void
+        create(const std::filesystem::path& filename,
+               int flags = O_RDONLY | O_NONBLOCK);
+
+
+        /**
+         * @brief free all allocated resources and make the instance invalid.
+         *
+         * The result is the same as if this object was moved from.
+         */
+        void
+        destroy()
+            noexcept override;
 
 
         /// Move constructor.
@@ -163,8 +263,8 @@ namespace evdev {
 
 
         void
-        acquire(::libevdev* new_raw,
-                int new_owned_fd)
+        acquire(libevdev* new_raw,
+                int new_fd)
             noexcept;
 
 
@@ -176,11 +276,6 @@ namespace evdev {
         state_type
         release()
             noexcept;
-
-
-        void
-        destroy()
-            noexcept override;
 
 
         /**
@@ -211,20 +306,20 @@ namespace evdev {
          * You can only call this function once.
          */
         void
-        fd(int fd_);
+        set_fd(int fd);
 
         /**
-         * @brief Change the file descriptor used internally, without re-reading the actual
-         * device.
+         * @brief Change the file descriptor used internally, without re-reading the
+         * actual device.
          *
          * This is only useful if you need to close and reopen the file descriptor.
          */
         void
-        change_fd(int fd_);
+        change_fd(int fd);
 
         /// Return the internal file descriptor used to access the device file.
         int
-        fd()
+        get_fd()
             const;
 
         void
@@ -233,13 +328,15 @@ namespace evdev {
 
         // only valid if Device opened the file, not if given a fd.
         bool
-        is_open() const noexcept;
+        is_open()
+            const noexcept;
 
         void
-        close() noexcept;
+        close()
+            noexcept;
 
         void
-        nonblock(bool enable);
+        set_nonblock(bool enable);
 
 
         // ------------------ //
@@ -254,50 +351,50 @@ namespace evdev {
             const char* func,
             const char* format,
             std::va_list args)
-            const;
+            const noexcept;
 
 
         // --------------------- //
         // Querying capabilities //
         // --------------------- //
 
+
         std::string
-        name()
+        get_name()
             const;
 
         std::optional<std::string>
-        phys()
+        get_phys()
             const;
 
         std::optional<std::string>
-        uniq()
+        get_uniq()
             const;
 
         std::uint16_t
-        product()
+        get_product()
             const noexcept;
 
         std::uint16_t
-        vendor()
+        get_vendor()
             const noexcept;
 
         std::uint16_t
-        bustype()
+        get_bustype()
             const noexcept;
 
         std::uint16_t
-        version()
+        get_version()
             const noexcept;
 
         int
-        driver_version()
+        get_driver_version()
             const noexcept;
 
 
         bool
         has(Property prop)
             const noexcept;
-
 
         bool
         has(Type type)
@@ -311,42 +408,43 @@ namespace evdev {
         has(const TypeCode& tc)
             const noexcept;
 
+
         int
-        abs_min (Code code)
+        get_abs_min (Code code)
             const noexcept;
         int
-        abs_max (Code code)
+        get_abs_max (Code code)
             const noexcept;
         int
-        abs_fuzz(Code code)
+        get_abs_fuzz(Code code)
             const noexcept;
         int
-        abs_flat(Code code)
+        get_abs_flat(Code code)
             const noexcept;
         int
-        abs_res (Code code)
+        get_abs_res (Code code)
         const noexcept;
 
         AbsInfo
-        abs_info(Code code)
+        get_abs_info(Code code)
             const;
 
         int
-        get(Type type,
-            Code code)
+        get_value(Type type,
+                  Code code)
             const noexcept;
 
         int
-        get(const TypeCode& tc)
+        get_value(const TypeCode& tc)
             const noexcept;
 
         std::optional<int>
-        fetch(Type type,
-              Code code)
+        try_get_value(Type type,
+                      Code code)
             const noexcept;
 
         std::optional<int>
-        fetch(const TypeCode& tc)
+        try_get_value(const TypeCode& tc)
             const noexcept;
 
         bool
@@ -355,9 +453,20 @@ namespace evdev {
             const noexcept;
 
 
+        struct DelayPeriod {
+            int delay;
+            int period;
+        };
+
+        std::optional<DelayPeriod>
+        try_get_repeat()
+            const noexcept;
+
+
         // ----------------------------- //
         // Multi-touch related functions //
         // ----------------------------- //
+
 
         int
         get_slot(unsigned slot,
@@ -365,16 +474,20 @@ namespace evdev {
             const noexcept;
 
         std::optional<int>
-        fetch_slot(unsigned slot,
-                   Code code)
-            const noexcept;
-
-        std::optional<int>
-        num_slots()
+        try_get_slot(unsigned slot,
+                     Code code)
             const noexcept;
 
         int
-        current_slot()
+        get_num_slots()
+            const;
+
+        std::optional<int>
+        try_get_num_slots()
+            const noexcept;
+
+        int
+        get_current_slot()
             const noexcept;
 
 
@@ -382,26 +495,34 @@ namespace evdev {
         // Modifying the appearance or capabilities //
         // ---------------------------------------- //
 
-        void
-        name(const std::string& n);
 
         void
-        phys(const std::string& phys);
+        set_name(const std::string& name)
+            noexcept;
 
         void
-        uniq(const std::string& uniq);
+        set_phys(const std::string& phys)
+            noexcept;
 
         void
-        product (std::uint16_t pid);
+        set_uniq(const std::string& uniq)
+            noexcept;
 
         void
-        vendor  (std::uint16_t vid);
+        set_product(std::uint16_t pid)
+            noexcept;
 
         void
-        bustype (std::uint16_t bus);
+        set_vendor(std::uint16_t vid)
+            noexcept;
 
         void
-        version (std::uint16_t ver);
+        set_bustype(std::uint16_t bus)
+            noexcept;
+
+        void
+        set_version(std::uint16_t ver)
+            noexcept;
 
         void
         enable(Property prop);
@@ -410,13 +531,13 @@ namespace evdev {
         disable(Property prop);
 
         void
-        set(Type type,
-            Code code,
-            int value);
+        set_value(Type type,
+                  Code code,
+                  int value);
 
         void
-        set(const TypeCode& tc,
-            int value);
+        set_value(const TypeCode& tc,
+                  int value);
 
         void
         set_slot(unsigned slot,
@@ -424,28 +545,34 @@ namespace evdev {
                  int value);
 
         void
-        abs_min (Code code,
-                 int val);
+        set_abs_min(Code code,
+                    int val)
+            noexcept;
 
         void
-        abs_max (Code code,
-                 int val);
+        set_abs_max(Code code,
+                    int val)
+            noexcept;
 
         void
-        abs_fuzz(Code code,
-                 int val);
+        set_abs_fuzz(Code code,
+                     int val)
+            noexcept;
 
         void
-        abs_flat(Code code,
-                 int val);
+        set_abs_flat(Code code,
+                     int val)
+            noexcept;
 
         void
-        abs_res (Code code,
-                 int val);
+        set_abs_res(Code code,
+                    int val)
+            noexcept;
 
         void
-        abs_info(Code code,
-                 const AbsInfo& abs);
+        set_abs_info(Code code,
+                     const AbsInfo& abs)
+            noexcept;
 
         void
         enable(Type type);
@@ -476,12 +603,12 @@ namespace evdev {
         disable(const TypeCode& tc);
 
         void
-        kernel_abs_info(Code code,
-                        const AbsInfo& abs);
+        set_kernel_abs_info(Code code,
+                            const AbsInfo& abs);
 
         void
-        kernel_led_value(Code code,
-                         ::libevdev_led_value value);
+        set_kernel_led_value(Code code,
+                             libevdev_led_value value);
 
         void
         set_clock_id(int clockid);
@@ -490,6 +617,7 @@ namespace evdev {
         // -------------- //
         // Event handling //
         // -------------- //
+
 
         Event
         read(ReadFlag flags = ReadFlag::normal);
@@ -500,28 +628,29 @@ namespace evdev {
             noexcept;
 
         bool
-        pending();
+        has_pending();
 
 
         // ------------------- //
         // Convenience methods //
         // ------------------- //
 
+
         std::vector<Property>
-        properties()
+        get_properties()
             const;
 
         std::vector<Type>
-        types()
+        get_types()
             const;
 
         std::vector<Code>
-        codes(Type type)
+        get_codes(Type type)
             const;
 
         std::vector<Code>
-        codes(Type type,
-              Code max)
+        get_codes(Type type,
+                  Code max)
             const;
 
 

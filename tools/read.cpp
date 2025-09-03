@@ -28,13 +28,16 @@ volatile std::sig_atomic_t should_quit = false;
 
 
 extern "C"
-void handle_terminate(int)
+void
+handle_terminate(int)
 {
     should_quit = true;
 }
 
 
-int main(int argc, char* argv[])
+int
+main(int argc,
+     char* argv[])
 {
     if (argc != 2) {
         cerr << "Usage:\n"
@@ -45,7 +48,7 @@ int main(int argc, char* argv[])
 
     try {
         evdev::Device dev{argv[1]};
-        cout << "Opened device \"" << dev.name() << "\"" << endl;
+        cout << "Opened device \"" << dev.get_name() << "\"" << endl;
 
         std::signal(SIGINT, handle_terminate);
         std::signal(SIGTERM, handle_terminate);
@@ -53,7 +56,7 @@ int main(int argc, char* argv[])
         while (!should_quit) {
 
             try {
-                while (!should_quit && !dev.pending())
+                while (!should_quit && !dev.has_pending())
                     std::this_thread::sleep_for(10ms);
                 if (should_quit)
                     break;
@@ -77,5 +80,4 @@ int main(int argc, char* argv[])
         cerr << "Error: " << e.what() << endl;
         return -1;
     }
-
 }

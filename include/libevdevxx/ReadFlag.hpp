@@ -89,26 +89,6 @@ namespace evdev {
     }
 
 
-    inline
-    constexpr
-    void
-    set(ReadFlag& f,
-        ReadFlag bit)
-    {
-        f |= bit;
-    }
-
-
-    inline
-    constexpr
-    void
-    unset(ReadFlag& f,
-          ReadFlag bit)
-    {
-        f &= ~bit;
-    }
-
-
     std::string
     to_string(ReadFlag flag);
 

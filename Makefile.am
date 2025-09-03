@@ -74,7 +74,8 @@ pcfiledir = $(pkgconfigdir)
 pcfile_DATA = libevdevxx.pc
 
 
-.PHONY: rpm
+.PHONY: company docs rpm
+
 
 RPM_TARBALL_NAME = $(HOME)/rpmbuild/SOURCES/$(TARBALL_NAME)
 
@@ -84,9 +85,12 @@ rpm: libevdevxx.spec dist-gzip
 	rpmbuild -ba $<
 
 
-.PHONY: company
 company: compile_flags.txt
 
 compile_flags.txt: Makefile
 	printf "%s" "$(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS)" | xargs -n1 | sort -u > compile_flags.txt
 	$(CPP) -xc++ /dev/null -E -Wp,-v 2>&1 | sed -n 's,^ ,-I,p' >> compile_flags.txt
+
+
+docs:
+	$(MAKE) --directory doc

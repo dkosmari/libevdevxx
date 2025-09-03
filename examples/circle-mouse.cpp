@@ -13,13 +13,14 @@ using std::flush;
 using namespace std::literals;
 
 
-int main()
+int
+main()
 {
     using evdev::Code;
 
     evdev::Device dev;
 
-    dev.name("Fake Mouse");
+    dev.set_name("Fake Mouse");
 
     dev.enable_rel(Code{REL_X});
     dev.enable_rel(Code{REL_Y});
@@ -28,7 +29,7 @@ int main()
 
     evdev::Uinput udev{dev};
     cout << "Created uinput device at "
-         << udev.devnode().value()
+         << udev.get_devnode()
          << endl;
     cout << "Doing a circle... " << flush;
 
@@ -39,8 +40,8 @@ int main()
         int x = static_cast<int>(radius * std::cos(angle));
         int y = static_cast<int>(radius * std::sin(angle));
 
-        udev.rel(Code{REL_X}, x);
-        udev.rel(Code{REL_Y}, y);
+        udev.write_rel(Code{REL_X}, x);
+        udev.write_rel(Code{REL_Y}, y);
         udev.flush();
 
         std::this_thread::sleep_for(16ms);

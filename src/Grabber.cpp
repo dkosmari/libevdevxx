@@ -10,16 +10,50 @@
 
 namespace evdev {
 
-    Grabber::Grabber(Device& dev) :
-        dev(dev)
+    Grabber::Grabber()
+        noexcept = default;
+
+
+    Grabber::Grabber(Device& d) :
+        dev{&d}
     {
-        dev.grab();
+        dev->grab();
     }
 
 
     Grabber::~Grabber()
     {
-        dev.ungrab();
+        ungrab();
+    }
+
+
+    Grabber::Grabber(Grabber&& other)
+        noexcept :
+        dev{other.dev}
+    {
+        other.dev = nullptr;
+    }
+
+
+    Grabber&
+    Grabber::operator =(Grabber&& other)
+    {
+        if (this != &other) {
+            ungrab();
+            dev = other.dev;
+            other.dev = nullptr;
+        }
+        return *this;
+    }
+
+
+    void
+    Grabber::ungrab()
+    {
+        if (dev) {
+            dev->ungrab();
+            dev = nullptr;
+        }
     }
 
 } // namespace evdev

@@ -9,8 +9,8 @@ and methods, with RAII and type safety.
 ## Example
 
 This example ([examples/circle-mouse.cpp](examples/circle-mouse.cpp)) creates a virtual
-mouse, through the `uinput` subsystem, and creates events to simulate the mouse moving in
-a circle.
+mouse, through the `uinput` subsystem, and generates events to simulate the mouse moving
+in a circle.
 
 ```cpp
 #include <chrono>
@@ -28,11 +28,14 @@ using std::flush;
 using namespace std::literals;
 
 
-int main()
+int
+main()
 {
     using evdev::Code;
+
     evdev::Device dev;
-    dev.name("Fake Mouse");
+
+    dev.set_name("Fake Mouse");
 
     dev.enable_rel(Code{REL_X});
     dev.enable_rel(Code{REL_Y});
@@ -47,6 +50,7 @@ int main()
 
     const float radius = 10;
     for (int i = 0; i < 100; ++i) {
+
         float angle = i/100.0f * 2 * M_PI;
         int x = static_cast<int>(radius * std::cos(angle));
         int y = static_cast<int>(radius * std::sin(angle));

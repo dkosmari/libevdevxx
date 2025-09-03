@@ -5,32 +5,28 @@
  * SPDX-License-Identifier: MIT
  */
 
+#include <stdexcept>
+#include <utility>
+
 #include "libevdevxx/Uinput.hpp"
 
 #include "error.hpp"
 
 
+using std::runtime_error;
+
+
 namespace evdev {
 
-    Uinput::Uinput()
-        noexcept = default;
-
-
-    Uinput::Uinput(const Device& dev) :
-        Uinput{dev, LIBEVDEV_UINPUT_OPEN_MANAGED}
+    Uinput::Uinput(std::nullptr_t)
+        noexcept
     {}
 
 
     Uinput::Uinput(const Device& dev,
-                   int filedes)
+                   int fd)
     {
-        libevdev_uinput* ptr = nullptr;
-        int e = libevdev_uinput_create_from_device(dev.data(),
-                                                   filedes,
-                                                   &ptr);
-        if (e < 0)
-            throw_sys_error(-e, "from libevdev_uinput_create_from_device()");
-        BaseType::acquire(ptr);
+        create(dev, fd);
     }
 
 
@@ -50,6 +46,22 @@ namespace evdev {
         noexcept = default;
 
 
+
+    void
+    Uinput::create(const Device& dev,
+                   int fd)
+    {
+        libevdev_uinput* udev = nullptr;
+        int e = libevdev_uinput_create_from_device(dev.data(),
+                                                   fd,
+                                                   &udev);
+        if (e < 0)
+            throw_sys_error(-e, "from libevdev_uinput_create_from_device()");
+        destroy();
+        acquire(udev);
+    }
+
+
     void
     Uinput::destroy()
         noexcept
@@ -61,15 +73,27 @@ namespace evdev {
 
 
     int
-    Uinput::fd()
+    Uinput::get_fd()
         const noexcept
     {
         return libevdev_uinput_get_fd(raw);
     }
 
 
+    std::filesystem::path
+    Uinput::get_syspath()
+        const
+    {
+        auto result = try_get_syspath();
+        if (!result)
+            throw runtime_error{"No syspath for this uinput device."};
+        return std::move(*result);
+    }
+
+
     std::optional<std::filesystem::path>
-    Uinput::syspath()
+    Uinput::try_get_syspath()
+        const
     {
         const char* p = libevdev_uinput_get_syspath(raw);
         if (!p)
@@ -78,8 +102,20 @@ namespace evdev {
     }
 
 
+    std::filesystem::path
+    Uinput::get_devnode()
+        const
+    {
+        auto result = try_get_devnode();
+        if (!result)
+            throw runtime_error{"No devnode for this uinput device."};
+        return std::move(*result);
+    }
+
+
     std::optional<std::filesystem::path>
-    Uinput::devnode()
+    Uinput::try_get_devnode()
+        const
     {
         const char* p = libevdev_uinput_get_devnode(raw);
         if (!p)
@@ -115,91 +151,91 @@ namespace evdev {
 
 
     void
-    Uinput::syn(Code code,
-                int value)
+    Uinput::write_syn(Code code,
+                      int value)
     {
         write(Type::syn, code, value);
     }
 
     void
-    Uinput::key(Code code,
-                int value)
+    Uinput::write_key(Code code,
+                      int value)
     {
         write(Type::key, code, value);
     }
 
     void
-    Uinput::rel(Code code,
-                int value)
+    Uinput::write_rel(Code code,
+                      int value)
     {
         write(Type::rel, code, value);
     }
 
     void
-    Uinput::abs(Code code,
-                int value)
+    Uinput::write_abs(Code code,
+                      int value)
     {
         write(Type::abs, code, value);
     }
 
     void
-    Uinput::msc(Code code,
-                int value)
+    Uinput::write_msc(Code code,
+                      int value)
     {
         write(Type::msc, code, value);
     }
 
     void
-    Uinput::sw(Code code,
-               int value)
+    Uinput::write_sw(Code code,
+                     int value)
     {
         write(Type::sw, code, value);
     }
 
 
     void
-    Uinput::led(Code code,
-                int value)
+    Uinput::write_led(Code code,
+                      int value)
     {
         write(Type::led, code, value);
     }
 
 
     void
-    Uinput::snd(Code code,
-                int value)
+    Uinput::write_snd(Code code,
+                      int value)
     {
         write(Type::snd, code, value);
     }
 
 
     void
-    Uinput::rep(Code code,
-                int value)
+    Uinput::write_rep(Code code,
+                      int value)
     {
         write(Type::rep, code, value);
     }
 
 
     void
-    Uinput::ff(Code code,
-               int value)
+    Uinput::write_ff(Code code,
+                     int value)
     {
         write(Type::ff, code, value);
     }
 
 
     void
-    Uinput::pwr(Code code,
-                int value)
+    Uinput::write_pwr(Code code,
+                      int value)
     {
         write(Type::pwr, code, value);
     }
 
 
     void
-    Uinput::ff_status(Code code,
-                      int value)
+    Uinput::write_ff_status(Code code,
+                            int value)
     {
         write(Type::ff_status, code, value);
     }
@@ -208,7 +244,7 @@ namespace evdev {
     void
     Uinput::flush()
     {
-        syn(Code{SYN_REPORT}, 0);
+        write_syn(Code{SYN_REPORT}, 0);
     }
 
 } // namespace evdev

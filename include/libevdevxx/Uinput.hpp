@@ -8,6 +8,7 @@
 #ifndef LIBEVDEVXX_UINPUT_HPP
 #define LIBEVDEVXX_UINPUT_HPP
 
+#include <cstddef>
 #include <filesystem>
 #include <memory>
 #include <optional>
@@ -29,13 +30,11 @@ namespace evdev {
 
     public:
 
-        Uinput()
+        Uinput(std::nullptr_t p = nullptr)
             noexcept;
 
-        Uinput(const Device& dev);
-
         Uinput(const Device& dev,
-               int filedes);
+               int fd = LIBEVDEV_UINPUT_OPEN_MANAGED);
 
         ~Uinput()
             noexcept;
@@ -52,19 +51,33 @@ namespace evdev {
 
 
         void
+        create(const Device& dev,
+               int fd = LIBEVDEV_UINPUT_OPEN_MANAGED);
+
+        void
         destroy()
             noexcept override;
 
 
         int
-        fd()
+        get_fd()
             const noexcept;
 
-        std::optional<std::filesystem::path>
-        syspath();
+        std::filesystem::path
+        get_syspath()
+            const;
 
         std::optional<std::filesystem::path>
-        devnode();
+        try_get_syspath()
+            const;
+
+        std::filesystem::path
+        get_devnode()
+            const;
+
+        std::optional<std::filesystem::path>
+        try_get_devnode()
+            const;
 
 
         void
@@ -83,51 +96,52 @@ namespace evdev {
         // convenience methods
 
         void
-        syn(Code code,
-            int value);
-
-        void
-        key(Code code,
-            int value);
-
-        void
-        rel(Code code,
-            int value);
-
-        void
-        abs(Code code,
-            int value);
-
-        void
-        msc(Code code,
-            int value);
-
-        void
-        sw(Code code,
-           int value);
-
-        void
-        led(Code code,
-            int value);
-
-        void
-        snd(Code code,
-            int value);
-
-        void
-        rep(Code code,
-            int value);
-
-        void
-        ff(Code code,
-           int value);
-
-        void
-        pwr(Code code,
-            int value);
-        void
-        ff_status(Code code,
+        write_syn(Code code,
                   int value);
+
+        void
+        write_key(Code code,
+                  int value);
+
+        void
+        write_rel(Code code,
+                  int value);
+
+        void
+        write_abs(Code code,
+                  int value);
+
+        void
+        write_msc(Code code,
+                  int value);
+
+        void
+        write_sw(Code code,
+           int value);
+
+        void
+        write_led(Code code,
+                  int value);
+
+        void
+        write_snd(Code code,
+                  int value);
+
+        void
+        write_rep(Code code,
+                  int value);
+
+        void
+        write_ff(Code code,
+                 int value);
+
+        void
+        write_pwr(Code code,
+                  int value);
+
+        void
+        write_ff_status(Code code,
+                        int value);
 
         void
         flush();

@@ -17,12 +17,13 @@ namespace evdev {
     {
         using std::to_string;
 
-        return "val=" + to_string(info.val)
+        return "{ val=" + to_string(info.val)
             + ", min=" + to_string(info.min)
             + ", max=" + to_string(info.max)
             + ", fuzz=" + to_string(info.fuzz)
             + ", flat=" + to_string(info.flat)
-            + ", res=" + to_string(info.res);
+            + ", res=" + to_string(info.res)
+            + " }";
     }
 
 

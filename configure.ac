@@ -53,19 +53,20 @@ AM_CONDITIONAL([BUILD_EXAMPLES], [test "x$ENABLE_EXAMPLES" = "xyes"])
 
 PKG_INSTALLDIR
 
-# Checks for libraries.
+
 PKG_CHECK_MODULES([LIBEVDEV], [libevdev >= 1.10])
 
-# Checks for header files.
+
 AC_CHECK_HEADERS([fcntl.h])
 AC_CHECK_HEADERS([sys/ioctl.h])
 AC_CHECK_HEADERS([unistd.h])
 
-# Checks for typedefs, structures, and compiler characteristics.
+
 AC_TYPE_MODE_T
 
-# Checks for library functions.
+
 AC_FUNC_STRERROR_R
+
 
 TARBALL_NAME="${PACKAGE_TARNAME}-${PACKAGE_VERSION}.tar.gz"
 AC_SUBST([TARBALL_NAME])

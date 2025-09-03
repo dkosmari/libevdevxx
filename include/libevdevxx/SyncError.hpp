@@ -25,5 +25,4 @@ namespace evdev {
 
 } // namespace evdev
 
-
 #endif

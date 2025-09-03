@@ -84,7 +84,6 @@ namespace evdev {
     operator <<(std::ostream& out,
                 const AbsInfo& info);
 
-
 } // namespace evdev
 
 #endif

@@ -41,16 +41,20 @@ unsigned columns = 80;
 
 
 template<typename T>
-void print_if(const string& label, const optional<T>& arg)
+void
+print_if(const string& label,
+              const optional<T>& arg)
 {
     if (arg)
         cout << label << *arg << "\n";
 }
 
 
-void print_codes(const Device& d, Type t)
+void
+print_codes(const Device& d,
+                 Type t)
 {
-    auto codes = d.codes(t);
+    auto codes = d.get_codes(t);
     unsigned x = 4;
     cout << "   ";
 
@@ -73,33 +77,35 @@ void print_codes(const Device& d, Type t)
 }
 
 
-void print_abs(const Device& d)
+void
+print_abs(const Device& d)
 {
-    auto codes = d.codes(Type::abs);
+    auto codes = d.get_codes(Type::abs);
     for (Code c : codes) {
         cout << "    " << code_to_string(Type::abs, c) << "\n";
-        cout << "        " << d.abs_info(c) << "\n";
+        cout << "        " << d.get_abs_info(c) << "\n";
     }
 }
 
 
-void print_device(const Device& d)
+void
+print_device(const Device& d)
 {
-    cout << "  Name: " << d.name() << "\n";
-    print_if("  Phys: ", d.phys());
-    print_if("  Uniq: ", d.uniq());
+    cout << "  Name: " << d.get_name() << "\n";
+    print_if("  Phys: ", d.get_phys());
+    print_if("  Uniq: ", d.get_uniq());
 
     cout << hex << setfill('0')
-         << "  VID: " << setw(4) << d.vendor() << "\n"
-         << "  PID: " << setw(4) << d.product() << "\n"
-         << "  BUS: " << setw(4) << d.bustype() << "\n"
-         << "  VER: " << setw(4) << d.version() << "\n"
+         << "  VID: " << setw(4) << d.get_vendor() << "\n"
+         << "  PID: " << setw(4) << d.get_product() << "\n"
+         << "  BUS: " << setw(4) << d.get_bustype() << "\n"
+         << "  VER: " << setw(4) << d.get_version() << "\n"
          << dec;
 
-    for (auto prop : d.properties())
+    for (auto prop : d.get_properties())
         cout << "  Prop: " << prop << "\n";
 
-    for (auto t : d.types()) {
+    for (auto t : d.get_types()) {
         cout << "  Type: " << t << "\n";
         switch (t) {
             case Type::abs:
@@ -127,7 +133,9 @@ read_columns_env()
 }
 
 
-int main(int argc, char* argv[])
+int
+main(int argc,
+     char* argv[])
 {
     read_columns_env();
 

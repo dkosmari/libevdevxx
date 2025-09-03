@@ -36,7 +36,6 @@ namespace evdev {
     operator <<(std::ostream& out,
                 ReadStatus st);
 
-
 } // namespace evdev
 
 #endif
