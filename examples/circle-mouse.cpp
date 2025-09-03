@@ -5,13 +5,11 @@
 
 #include <libevdevxx/evdevxx.hpp>
 
-
 using std::cout;
 using std::endl;
 using std::flush;
 
 using namespace std::literals;
-
 
 int
 main()

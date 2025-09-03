@@ -33,29 +33,25 @@ using namespace std::literals;
 
 namespace evdev {
 
-    namespace {
-
-        void
-        device_log_helper(const libevdev* /*dev*/,
-                          libevdev_log_priority priority,
-                          void* data,
-                          const char* file,
-                          int line,
-                          const char* func,
-                          const char* format,
-                          std::va_list args)
-            noexcept
-        {
-            const Device* d = static_cast<const Device*>(data);
-            d->log(LogPriority{priority},
-                   file,
-                   line,
-                   func,
-                   format,
-                   args);
-        }
-
-    } // namespace
+    void
+    Device::log_helper(const libevdev* /*dev*/,
+                       libevdev_log_priority priority,
+                       void* data,
+                       const char* file,
+                       int line,
+                       const char* func,
+                       const char* format,
+                       std::va_list args)
+        noexcept
+    {
+        const Device* d = static_cast<const Device*>(data);
+        d->log(LogLevel{priority},
+               file,
+               line,
+               func,
+               format,
+               args);
+    }
 
 
     // ------------------------- //
@@ -63,20 +59,20 @@ namespace evdev {
     // ------------------------- //
 
 
-    Device::Device(LogPriority priority)
+    Device::Device(LogLevel priority)
     {
         create(priority);
     }
 
 
-    Device::Device(LogPriority priority,
+    Device::Device(LogLevel priority,
                    int fd)
     {
         create(priority, fd);
     }
 
 
-    Device::Device(LogPriority priority,
+    Device::Device(LogLevel priority,
                    const std::filesystem::path& filename,
                    int flags)
     {
@@ -85,14 +81,14 @@ namespace evdev {
 
 
     void
-    Device::create(LogPriority priority)
+    Device::create(LogLevel priority)
     {
         create(priority, -1);
     }
 
 
     void
-    Device::create(LogPriority priority,
+    Device::create(LogLevel priority,
                    int fd)
     {
         create(priority);
@@ -101,10 +97,10 @@ namespace evdev {
         auto dev = libevdev_new();
         if (!dev)
             throw runtime_error{"Could not construct libevdev device."};
-        if (priority != LogPriority::none) {
+        if (priority != LogLevel::none) {
             auto pri = static_cast<libevdev_log_priority>(priority);
             libevdev_set_device_log_function(dev,
-                                             device_log_helper,
+                                             log_helper,
                                              pri,
                                              this);
         }
@@ -114,7 +110,7 @@ namespace evdev {
 
 
     void
-    Device::create(LogPriority priority,
+    Device::create(LogLevel priority,
                    const std::filesystem::path& filename,
                    int flags)
     {
@@ -332,17 +328,6 @@ namespace evdev {
 
 
     void
-    Device::close()
-        noexcept
-    {
-        if (is_open()) {
-            ::close(owned_fd);
-            owned_fd = -1;
-        }
-    }
-
-
-    void
     Device::set_nonblock(bool enable)
     {
         if (!is_open())
@@ -368,9 +353,12 @@ namespace evdev {
 
 
     void
-    Device::log(LogPriority,
-                const char* /*file*/, int /*line*/, const char* /*func*/,
-                const char* /*format*/, va_list /*args*/)
+    Device::log(LogLevel /*priority*/,
+                const char* /*file*/,
+                int /*line*/,
+                const char* /*func*/,
+                const char* /*format*/,
+                va_list /*args*/)
         const noexcept
     {}
 

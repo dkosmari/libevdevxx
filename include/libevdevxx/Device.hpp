@@ -35,21 +35,12 @@
 /// The namespace of libevdevxx.
 namespace evdev {
 
-    /// Helper enum to use the logging functions.
-    enum class LogPriority {
-        none  = -1,
-        error = LIBEVDEV_LOG_ERROR,
-        info  = LIBEVDEV_LOG_INFO,
-        debug = LIBEVDEV_LOG_DEBUG
-    };
-
-
     /**
-     * @brief Represents a device (real of not).
+     * @brief Represents a device (real or not).
      *
-     * In order to use the logging function, the `log()` method must be overridden in a
-     * derived class, and a protected constructors (that take a `LogPriority` argument) must
-     * be called explicitly.
+     * In order to use the logging function, the log() method must be overridden in a
+     * derived class, and a protected constructor (that takes a Device::LogLevel argument)
+     * must be called explicitly.
      */
     class Device :
         public detail::basic_wrapper<libevdev*> {
@@ -61,6 +52,19 @@ namespace evdev {
 
         using state_type = std::tuple<BaseType::state_type, int>;
 
+
+        static
+        void
+        log_helper(const libevdev* dev,
+                   libevdev_log_priority priority,
+                   void* data,
+                   const char* file,
+                   int line,
+                   const char* func,
+                   const char* format,
+                   std::va_list args)
+            noexcept;
+
     protected:
 
 
@@ -68,30 +72,37 @@ namespace evdev {
         // Initialization and setup. //
         // ------------------------- //
 
+        /// Helper enum to use the logging functions.
+        enum class LogLevel {
+            none  = -1,                 ///< Invalid level.
+            error = LIBEVDEV_LOG_ERROR, ///< Error level.
+            info  = LIBEVDEV_LOG_INFO,  ///< Information level.
+            debug = LIBEVDEV_LOG_DEBUG  ///< Debug level.
+        };
 
         /**
          * @brief Constructor to enable logging.
          *
-         * @param priority The priority level; the `log()` method will only be called when
+         * @param priority The priority level; the log() method will only be called when
          * the message has this priority or above.
          *
-         * @sa `log()`
+         * @sa log()
          */
-        Device(LogPriority priority);
+        Device(LogLevel priority);
 
         /**
          * @brief Constructor to enable logging, and a non-owning device file descriptor.
          *
-         * @param priority The priority level; the `log()` method will only be called when
+         * @param priority The priority level; the log() method will only be called when
          * the message has this priority or above.
          *
          * @param fd File descriptor fot the device file (from `/dev/input/event*`) that
          * will be used for I/O. Ownership is not taken over this, so the file will not be
          * closed on destruction.
          *
-         * @sa `log()`
+         * @sa log()
          */
-        Device(LogPriority priority,
+        Device(LogLevel priority,
                int fd);
 
         /**
@@ -107,7 +118,7 @@ namespace evdev {
          *
          * @sa log()
          */
-        Device(LogPriority priority,
+        Device(LogLevel priority,
                const std::filesystem::path& filename,
                int flags = O_RDONLY | O_NONBLOCK);
 
@@ -115,30 +126,30 @@ namespace evdev {
         /**
          * @brief Constructor to enable logging, in-place.
          *
-         * @param priority The priority level; the `log()` method will only be called when
+         * @param priority The priority level; the log() method will only be called when
          * the message has this priority or above.
          *
-         * @sa `log()`
+         * @sa log()
          */
         void
-        create(LogPriority priority);
+        create(LogLevel priority);
 
 
         /**
          * @brief Constructor to enable logging, and a non-owning device file descriptor,
          * in-place.
          *
-         * @param priority The priority level; the `log()` method will only be called when
+         * @param priority The priority level; the log() method will only be called when
          * the message has this priority or above.
          *
          * @param fd File descriptor fot the device file (from `/dev/input/event*`) that
          * will be used for I/O. Ownership is not taken over this, so the file will not be
          * closed on destruction.
          *
-         * @sa `log()`
+         * @sa log()
          */
         void
-        create(LogPriority priority,
+        create(LogLevel priority,
                int fd);
 
 
@@ -156,7 +167,7 @@ namespace evdev {
          * @sa log()
          */
         void
-        create(LogPriority priority,
+        create(LogLevel priority,
                const std::filesystem::path& filename,
                int flags = O_RDONLY | O_NONBLOCK);
 
@@ -178,11 +189,13 @@ namespace evdev {
          * No device file is associated with this device. For this to have any use, the
          * user must later do either:
          *
-         *   - call `open()` to open a device file.
-         *   - call `set_fd()` to supply a device file descriptor.
-         *   - pass it to a `Uinput` object, that will turn it into a virtual device.
+         *   - call open() to open a device file.
+         *   - call set_fd() to supply a device file descriptor.
+         *   - pass it to a Uinput object, that will turn it into a virtual device.
          *
-         * @sa `open()`, `set_fd(int)`, `Uinput`
+         * @sa open()
+         * @sa set_fd()
+         * @sa Uinput
          */
         Device();
 
@@ -191,7 +204,7 @@ namespace evdev {
          *
          * The file descriptor is not owned: it won't be closed during destruction.
          *
-         * @sa `set_fd(int)`
+         * @sa set_fd()
          */
         Device(int fd);
 
@@ -212,11 +225,13 @@ namespace evdev {
          * No device file is associated with this device. For this to have any use, the
          * user must later do either:
          *
-         *   - call `open()` to open a device file.
-         *   - call `set_fd()` to supply a device file descriptor.
-         *   - pass it to a `Uinput` object, that will turn it into a virtual device.
+         *   - call open() to open a device file.
+         *   - call set_fd() to supply a device file descriptor.
+         *   - pass it to a Uinput object, that will turn it into a virtual device.
          *
-         * @sa `open()`, `set_fd(int)`, `Uinput`
+         * @sa open()
+         * @sa set_fd()
+         * @sa Uinput
          */
         void
         create();
@@ -227,7 +242,7 @@ namespace evdev {
          *
          * The file descriptor is not owned: it won't be closed during destruction.
          *
-         * @sa `set_fd(int)`
+         * @sa set_fd()
          */
         void
         create(int fd);
@@ -281,7 +296,7 @@ namespace evdev {
         /**
          * @brief Grab the device through a `EVIOCGRAB` syscall.
          *
-         * Use `Grabber` to grab and ungrab with exception-safety.
+         * Use Grabber to grab and ungrab with exception-safety.
          *
          * @throw std::system_error
          *
@@ -322,19 +337,22 @@ namespace evdev {
         get_fd()
             const;
 
+        /**
+         * @brief Open a device file and set it for the device.
+         *
+         * This Device instance must have been default-constructed for this to work. The
+         * file handle is owned by Device, you don't have to close it explicitly.
+         */
         void
         open(const std::filesystem::path& filename,
                  int flags = O_RDONLY | O_NONBLOCK);
 
-        // only valid if Device opened the file, not if given a fd.
+        /// Check if a file was opened with open().
         bool
         is_open()
             const noexcept;
 
-        void
-        close()
-            noexcept;
-
+        /// Set the owned file handle's `O_NONBLOCK` flag.
         void
         set_nonblock(bool enable);
 
@@ -345,7 +363,7 @@ namespace evdev {
 
         virtual
         void
-        log(LogPriority p,
+        log(LogLevel priority,
             const char* file,
             int line,
             const char* func,
