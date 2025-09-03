@@ -1,5 +1,7 @@
 # libevdevxx - a C++ wrapper for libevdev
 
+![build status](https://github.com/dkosmari/libevdevxx/actions/workflows/build.yml/badge.svg)
+
 
 `libevdevxx` is a C++20 wrapper for the C library `libevdev`, which is a high-level C
 library for the `evdev` Linux driver. This library exposes all of `libevdev` as C++ classes
