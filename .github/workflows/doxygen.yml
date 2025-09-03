@@ -36,7 +36,7 @@ jobs:
         run: ./bootstrap
 
       - name: Configuring
-        run: ./configure
+        run: ./configure --enable-docs
 
       - name: Running Doxygen
         uses: mattnotmitt/doxygen-action@edge

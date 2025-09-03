@@ -31,7 +31,7 @@ jobs:
         run: ./bootstrap
 
       - name: Configure
-        run: ./configure
+        run: ./configure --enable-examples --enable-tools
 
       - name: Build
         run: make
