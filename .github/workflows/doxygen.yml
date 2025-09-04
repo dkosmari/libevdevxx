@@ -63,7 +63,7 @@ jobs:
 
       needs: build
 
-      steps:
+    steps:
 
       - name: Deploy to GitHub Pages
         id: deployment
