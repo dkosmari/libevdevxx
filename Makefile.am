@@ -21,6 +21,7 @@ libevdevxxdir = $(includedir)/libevdevxx
 
 libevdevxx_HEADERS = \
 	include/libevdevxx/AbsInfo.hpp \
+	include/libevdevxx/basic_wrapper.hpp \
 	include/libevdevxx/Code.hpp \
 	include/libevdevxx/Device.hpp \
 	include/libevdevxx/evdevxx.hpp \

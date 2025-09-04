@@ -2,7 +2,11 @@
 # Process this file with autoconf to produce a configure script.
 
 AC_PREREQ([2.70])
-AC_INIT([libevdevxx], [0.4.0+], [])
+AC_INIT([libevdevxx],
+        [0.4.0+],
+        [https://github.com/dkosmari/libevdevxx/issues],
+        [],
+        [https://github.com/dkosmari/libevdevxx])
 AC_CONFIG_SRCDIR([src/AbsInfo.cpp])
 AC_CONFIG_HEADERS([config.h])
 AC_CONFIG_AUX_DIR([build-aux])
