@@ -100,6 +100,7 @@ print_device(const Device& d)
          << "  PID: " << setw(4) << d.get_product() << "\n"
          << "  BUS: " << setw(4) << d.get_bustype() << "\n"
          << "  VER: " << setw(4) << d.get_version() << "\n"
+         << "  DRV: " << setw(4) << d.get_driver_version() << "\n"
          << dec;
 
     for (auto prop : d.get_properties())
