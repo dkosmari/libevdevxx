@@ -82,7 +82,7 @@ namespace evdev::detail {
             return old;
         }
 
-    };
+    }; // class NumberBase
 
 } // namespace evdev::detail
 

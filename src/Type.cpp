@@ -24,7 +24,7 @@ namespace evdev {
     Type::parse(std::string_view name,
                 std::size_t* pos)
     {
-        int num = ::libevdev_event_type_from_name_n(name.data(),
+        int num = libevdev_event_type_from_name_n(name.data(),
                                                     name.size());
 
         if (num == -1)
@@ -41,7 +41,7 @@ namespace evdev {
     std::string
     to_string(Type type)
     {
-        if (const char* s = ::libevdev_event_type_get_name(type))
+        if (const char* s = libevdev_event_type_get_name(type))
             return s;
         else
             return detail::to_hex(type, 2);

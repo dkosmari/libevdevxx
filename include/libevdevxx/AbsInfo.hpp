@@ -76,6 +76,7 @@ namespace evdev {
     };
 
 
+    [[nodiscard]]
     std::string
     to_string(const AbsInfo& info);
 

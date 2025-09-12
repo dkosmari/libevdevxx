@@ -43,14 +43,15 @@ namespace evdev {
 
 
         // named constructors
+        [[nodiscard]]
         static
         Property
         parse(std::string_view name,
               std::size_t* pos = nullptr);
 
 
+        [[nodiscard]]
         static
-        inline
         constexpr
         Property
         max()
@@ -68,19 +69,19 @@ namespace evdev {
         static const Property pointing_stick;
         static const Property accelerometer;
 
-
     }; // class Property
 
 
-    inline constexpr Property Property::pointer        {INPUT_PROP_POINTER};
-    inline constexpr Property Property::direct         {INPUT_PROP_DIRECT};
-    inline constexpr Property Property::button_pad     {INPUT_PROP_BUTTONPAD};
-    inline constexpr Property Property::semi_mt        {INPUT_PROP_SEMI_MT};
-    inline constexpr Property Property::top_button_pad {INPUT_PROP_TOPBUTTONPAD};
-    inline constexpr Property Property::pointing_stick {INPUT_PROP_POINTING_STICK};
-    inline constexpr Property Property::accelerometer  {INPUT_PROP_ACCELEROMETER};
+    constexpr Property Property::pointer        {INPUT_PROP_POINTER};
+    constexpr Property Property::direct         {INPUT_PROP_DIRECT};
+    constexpr Property Property::button_pad     {INPUT_PROP_BUTTONPAD};
+    constexpr Property Property::semi_mt        {INPUT_PROP_SEMI_MT};
+    constexpr Property Property::top_button_pad {INPUT_PROP_TOPBUTTONPAD};
+    constexpr Property Property::pointing_stick {INPUT_PROP_POINTING_STICK};
+    constexpr Property Property::accelerometer  {INPUT_PROP_ACCELEROMETER};
 
 
+    [[nodiscard]]
     std::string
     to_string(Property prop);
 

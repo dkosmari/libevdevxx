@@ -20,11 +20,11 @@ namespace evdev {
         normal     = LIBEVDEV_READ_FLAG_NORMAL,
         resync     = LIBEVDEV_READ_FLAG_SYNC,
         force_sync = LIBEVDEV_READ_FLAG_FORCE_SYNC,
-        blocking   = LIBEVDEV_READ_FLAG_BLOCKING
+        blocking   = LIBEVDEV_READ_FLAG_BLOCKING,
     };
 
 
-    inline
+    [[nodiscard]]
     constexpr
     ReadFlag
     operator |(ReadFlag a,
@@ -35,7 +35,7 @@ namespace evdev {
     }
 
 
-    inline
+    [[nodiscard]]
     constexpr
     ReadFlag
     operator &(ReadFlag a,
@@ -46,7 +46,7 @@ namespace evdev {
     }
 
 
-    inline
+    [[nodiscard]]
     constexpr
     ReadFlag
     operator ^(ReadFlag a,
@@ -57,7 +57,7 @@ namespace evdev {
     }
 
 
-    inline
+    [[nodiscard]]
     constexpr
     ReadFlag
     operator ~(ReadFlag a)
@@ -67,7 +67,7 @@ namespace evdev {
     }
 
 
-    inline
+    [[nodiscard]]
     constexpr
     ReadFlag&
     operator |=(ReadFlag& a,
@@ -89,6 +89,7 @@ namespace evdev {
     }
 
 
+    [[nodiscard]]
     std::string
     to_string(ReadFlag flag);
 

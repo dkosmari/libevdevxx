@@ -24,12 +24,9 @@ namespace evdev {
     };
 
 
+    [[nodiscard]]
     std::string
     to_string(ReadStatus st);
-
-
-    int
-    to_errno(ReadStatus st);
 
 
     std::ostream&

@@ -348,6 +348,7 @@ namespace evdev {
                  int flags = O_RDONLY | O_NONBLOCK);
 
         /// Check if a file was opened with open().
+        [[nodiscard]]
         bool
         is_open()
             const noexcept;
@@ -356,6 +357,11 @@ namespace evdev {
         void
         set_nonblock(bool enable);
 
+        /// Get the owned file handle's `O_NONBLOCK` flag.
+        [[nodiscard]]
+        bool
+        get_nonblock()
+            const;
 
         // ------------------ //
         // Logging facilities //
@@ -377,90 +383,116 @@ namespace evdev {
         // --------------------- //
 
 
+        [[nodiscard]]
         std::string
         get_name()
             const;
 
+        [[nodiscard]]
         std::optional<std::string>
         get_phys()
             const;
 
+        [[nodiscard]]
         std::optional<std::string>
         get_uniq()
             const;
 
+        [[nodiscard]]
         std::uint16_t
         get_product()
             const noexcept;
 
+        [[nodiscard]]
         std::uint16_t
         get_vendor()
             const noexcept;
 
+        [[nodiscard]]
         std::uint16_t
         get_bustype()
             const noexcept;
 
+        [[nodiscard]]
         std::uint16_t
         get_version()
             const noexcept;
 
+        [[nodiscard]]
         int
         get_driver_version()
             const noexcept;
 
 
+        [[nodiscard]]
         bool
         has(Property prop)
             const noexcept;
 
+        [[nodiscard]]
         bool
         has(Type type)
             const noexcept;
 
+        [[nodiscard]]
         bool
         has(Type type, Code code)
             const noexcept;
 
+        [[nodiscard]]
         bool
         has(const TypeCode& tc)
             const noexcept;
 
 
+        [[nodiscard]]
         int
         get_abs_min (Code code)
             const noexcept;
+
+        [[nodiscard]]
         int
         get_abs_max (Code code)
             const noexcept;
+
+        [[nodiscard]]
         int
         get_abs_fuzz(Code code)
             const noexcept;
+
+        [[nodiscard]]
         int
         get_abs_flat(Code code)
             const noexcept;
+
+        [[nodiscard]]
         int
         get_abs_res (Code code)
         const noexcept;
 
+        [[nodiscard]]
         AbsInfo
         get_abs_info(Code code)
             const;
 
+        [[nodiscard]]
         int
         get_value(Type type,
                   Code code)
             const noexcept;
 
+        [[nodiscard]]
         int
         get_value(const TypeCode& tc)
             const noexcept;
 
+        [[nodiscard]]
         std::optional<int>
         try_get_value(Type type,
                       Code code)
             const noexcept;
 
+        [[nodiscard]]
         std::optional<int>
         try_get_value(const TypeCode& tc)
             const noexcept;
@@ -476,6 +508,7 @@ namespace evdev {
             int period;
         };
 
+        [[nodiscard]]
         std::optional<DelayPeriod>
         try_get_repeat()
             const noexcept;
@@ -486,11 +519,13 @@ namespace evdev {
         // ----------------------------- //
 
 
+        [[nodiscard]]
         int
         get_slot(unsigned slot,
                  Code code)
             const noexcept;
 
+        [[nodiscard]]
         std::optional<int>
         try_get_slot(unsigned slot,
                      Code code)
@@ -500,10 +535,12 @@ namespace evdev {
         get_num_slots()
             const;
 
+        [[nodiscard]]
         std::optional<int>
         try_get_num_slots()
             const noexcept;
 
+        [[nodiscard]]
         int
         get_current_slot()
             const noexcept;
@@ -640,11 +677,13 @@ namespace evdev {
         Event
         read(ReadFlag flags = ReadFlag::normal);
 
+        [[nodiscard]]
         ReadStatus
         read(Event& event,
              ReadFlag flags = ReadFlag::normal)
             noexcept;
 
+        [[nodiscard]]
         bool
         has_pending();
 
@@ -654,18 +693,22 @@ namespace evdev {
         // ------------------- //
 
 
+        [[nodiscard]]
         std::vector<Property>
         get_properties()
             const;
 
+        [[nodiscard]]
         std::vector<Type>
         get_types()
             const;
 
+        [[nodiscard]]
         std::vector<Code>
         get_codes(Type type)
             const;
 
+        [[nodiscard]]
         std::vector<Code>
         get_codes(Type type,
                   Code max)

@@ -8,7 +8,6 @@
 #ifndef LIBEVDEVXX_EVENT_HPP
 #define LIBEVDEVXX_EVENT_HPP
 
-
 #include <compare>
 #include <cstddef>
 #include <cstdint>
@@ -81,6 +80,7 @@ namespace evdev {
 
 
 
+    [[nodiscard]]
     std::string
     to_string(const Event& e);
 

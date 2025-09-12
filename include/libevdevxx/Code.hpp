@@ -50,6 +50,7 @@ namespace evdev {
          * @param name the string to parse.
          * @param[out] pos if not `NULL`, store how many characters were parsed.
          */
+        [[nodiscard]]
         static
         std::pair<Type, Code>
         parse(std::string_view name,
@@ -57,6 +58,7 @@ namespace evdev {
 
 
         /// Returns the maximum code available for a given type.
+        [[nodiscard]]
         static
         Code
         max(Type type); // depends on type
@@ -65,6 +67,7 @@ namespace evdev {
 
 
     /// Converts the code to a string representation.
+    [[nodiscard]]
     std::string
     code_to_string(Type type,
                    Code code);

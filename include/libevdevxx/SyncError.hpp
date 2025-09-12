@@ -21,7 +21,7 @@ namespace evdev {
 
         SyncError(const Event& event);
 
-    };
+    }; // struct SyncError
 
 } // namespace evdev
 

@@ -30,7 +30,7 @@ namespace evdev {
     Property::parse(std::string_view name,
                     std::size_t* pos)
     {
-        int val = ::libevdev_property_from_name_n(name.data(),
+        int val = libevdev_property_from_name_n(name.data(),
                                                   name.size());
 
         if (val == -1)
@@ -50,7 +50,7 @@ namespace evdev {
     to_string(Property prop)
     {
         unsigned val = prop;
-        if (const char* s = ::libevdev_property_get_name(val))
+        if (const char* s = libevdev_property_get_name(val))
             return s;
         else
             return detail::to_hex(val, 2);

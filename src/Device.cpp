@@ -347,6 +347,21 @@ namespace evdev {
     }
 
 
+    bool
+    Device::get_nonblock()
+        const
+    {
+        if (!is_open())
+            throw logic_error{"File must be open before querying the nonblock state."};
+
+        int flags = ::fcntl(owned_fd, F_GETFL);
+        if (flags < 0)
+            throw_sys_error(errno);
+
+        return flags & O_NONBLOCK;
+    }
+
+
     // ------------------ //
     // Logging facilities //
     // ------------------ //

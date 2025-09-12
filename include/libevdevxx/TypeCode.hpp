@@ -22,6 +22,8 @@ namespace evdev {
         Code code;
     };
 
+
+    [[nodiscard]]
     std::pair<std::string, std::string>
     to_strings(const TypeCode& tc);
 

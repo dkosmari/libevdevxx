@@ -98,6 +98,7 @@ namespace evdev::detail {
         }
 
 
+        [[nodiscard]]
         raw_type
         data()
             noexcept
@@ -106,6 +107,7 @@ namespace evdev::detail {
         }
 
 
+        [[nodiscard]]
         const raw_type
         data()
             const noexcept

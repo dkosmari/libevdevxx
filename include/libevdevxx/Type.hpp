@@ -46,12 +46,14 @@ namespace evdev {
 
         // named constructors
 
+        [[nodiscard]]
         static
         Type
         parse(std::string_view name,
               std::size_t* pos = nullptr);
 
 
+        [[nodiscard]]
         static
         constexpr
         Type
@@ -62,6 +64,7 @@ namespace evdev {
         }
 
 
+        [[nodiscard]]
         static
         constexpr
         std::uint16_t
@@ -88,20 +91,21 @@ namespace evdev {
     }; // class Type
 
 
-    inline constexpr const Type Type::syn       {EV_SYN};
-    inline constexpr const Type Type::key       {EV_KEY};
-    inline constexpr const Type Type::rel       {EV_REL};
-    inline constexpr const Type Type::abs       {EV_ABS};
-    inline constexpr const Type Type::msc       {EV_MSC};
-    inline constexpr const Type Type::sw        {EV_SW};
-    inline constexpr const Type Type::led       {EV_LED};
-    inline constexpr const Type Type::snd       {EV_SND};
-    inline constexpr const Type Type::rep       {EV_REP};
-    inline constexpr const Type Type::ff        {EV_FF};
-    inline constexpr const Type Type::pwr       {EV_PWR};
-    inline constexpr const Type Type::ff_status {EV_FF_STATUS};
+    constexpr const Type Type::syn       {EV_SYN};
+    constexpr const Type Type::key       {EV_KEY};
+    constexpr const Type Type::rel       {EV_REL};
+    constexpr const Type Type::abs       {EV_ABS};
+    constexpr const Type Type::msc       {EV_MSC};
+    constexpr const Type Type::sw        {EV_SW};
+    constexpr const Type Type::led       {EV_LED};
+    constexpr const Type Type::snd       {EV_SND};
+    constexpr const Type Type::rep       {EV_REP};
+    constexpr const Type Type::ff        {EV_FF};
+    constexpr const Type Type::pwr       {EV_PWR};
+    constexpr const Type Type::ff_status {EV_FF_STATUS};
 
 
+    [[nodiscard]]
     std::string
     to_string(Type type);
 

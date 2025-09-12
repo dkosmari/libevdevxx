@@ -59,22 +59,27 @@ namespace evdev {
             noexcept override;
 
 
+        [[nodiscard]]
         int
         get_fd()
             const noexcept;
 
+        [[nodiscard]]
         std::filesystem::path
         get_syspath()
             const;
 
+        [[nodiscard]]
         std::optional<std::filesystem::path>
         try_get_syspath()
             const;
 
+        [[nodiscard]]
         std::filesystem::path
         get_devnode()
             const;
 
+        [[nodiscard]]
         std::optional<std::filesystem::path>
         try_get_devnode()
             const;
