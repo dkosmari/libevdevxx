@@ -25,12 +25,18 @@ doxyfile.stamp: Doxyfile $(MD_FILES)
 	$(DOXYGEN) $<
 	echo Timestamp > $@
 
+
 install-data-local:
 	mkdir -p "$(DESTDIR)$(htmldir)"
 	cp -r -t "$(DESTDIR)$(htmldir)" html
 
+
 uninstall-local:
-	$(RM) -r "$(DESTDIR)$(htmldir)"
+	-$(RM) -r "$(DESTDIR)$(htmldir)/html"
+
+uninstall-hook:
+	-rmdir --ignore-fail-on-non-empty --parent $(DESTDIR)$(htmldir)
+
 
 CLEANFILES = doxyfile.stamp
 
