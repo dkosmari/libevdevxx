@@ -3,7 +3,7 @@
 
 AC_PREREQ([2.70])
 AC_INIT([libevdevxx],
-        [0.5.1],
+        [0.5.2],
         [https://github.com/dkosmari/libevdevxx/issues],
         [],
         [https://github.com/dkosmari/libevdevxx])
