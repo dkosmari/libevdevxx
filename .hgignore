@@ -6,7 +6,6 @@ syntax: glob
 *.log
 *.o
 *.pc
-*.spec
 *.tar.gz
 *~
 .deps
