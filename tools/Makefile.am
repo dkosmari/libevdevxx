@@ -24,6 +24,11 @@ evdevxx_query_SOURCES = query.cpp
 evdevxx_read_SOURCES = read.cpp
 
 
+# Don't leave empty directories behind during uninstall
+uninstall-hook:
+	-rmdir --ignore-fail-on-non-empty --parent $(DESTDIR)$(bindir)
+
+
 .PHONY: company
 company: compile_flags.txt
 

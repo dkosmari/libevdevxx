@@ -75,6 +75,13 @@ pcfiledir = $(pkgconfigdir)
 pcfile_DATA = libevdevxx.pc
 
 
+# Don't leave empty directories behind during uninstall
+uninstall-hook:
+	-rmdir --ignore-fail-on-non-empty --parent $(DESTDIR)$(libevdevxxdir)
+	-rmdir --ignore-fail-on-non-empty --parent $(DESTDIR)$(libdir)
+	-rmdir --ignore-fail-on-non-empty --parent $(DESTDIR)$(pcfiledir)
+
+
 .PHONY: company docs rpm
 
 
