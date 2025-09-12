@@ -79,7 +79,7 @@ pcfile_DATA = libevdevxx.pc
 uninstall-hook:
 	-rmdir --ignore-fail-on-non-empty --parent $(DESTDIR)$(libevdevxxdir)
 	-rmdir --ignore-fail-on-non-empty --parent $(DESTDIR)$(libdir)
-	-rmdir --ignore-fail-on-non-empty --parent $(DESTDIR)$(pkgconfigdir)
+	-rmdir --ignore-fail-on-non-empty --parent $(DESTDIR)$(pcfiledir)
 
 
 .PHONY: company docs rpm
