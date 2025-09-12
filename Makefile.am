@@ -6,7 +6,6 @@ ACLOCAL_AMFLAGS = -I m4
 EXTRA_DIST = \
 	bootstrap \
 	libevdevxx.pc.in \
-	libevdevxx.spec.in \
 	README.md
 
 
@@ -80,15 +79,7 @@ uninstall-hook:
 	-rmdir --ignore-fail-on-non-empty $(DESTDIR)$(libevdevxxdir)
 
 
-.PHONY: company docs rpm
-
-
-RPM_TARBALL_NAME = $(HOME)/rpmbuild/SOURCES/$(TARBALL_NAME)
-
-rpm: libevdevxx.spec dist-gzip
-	[ -e $(RPM_TARBALL_NAME) ] || \
-		$(LN_S) $(PWD)/$(TARBALL_NAME) $(RPM_TARBALL_NAME)
-	rpmbuild -ba $<
+.PHONY: company docs
 
 
 company: compile_flags.txt

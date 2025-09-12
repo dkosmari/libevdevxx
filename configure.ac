@@ -80,7 +80,6 @@ AC_CONFIG_FILES([Makefile
                 doc/Makefile
                 examples/Makefile
                 libevdevxx.pc
-                libevdevxx.spec
                 tools/Makefile
 ])
 AC_OUTPUT
