@@ -1,9 +1,9 @@
-name: Mageia 9 amd64 RPM package
+name: Fedora 42 amd64 RPM package
 
 on: [workflow_dispatch]
 
 env:
-  DISTRO: mageia-9
+  DISTRO: fedora-42
 
 jobs:
   build-rpm:
@@ -42,6 +42,6 @@ jobs:
     - name: Upload
       uses: actions/upload-artifact@v4
       with:
-        name: Mageia 9 packages
+        name: ${{ env.DISTRO }} packages
         path: packages/${{ env.DISTRO }}/output
         if-no-files-found: error

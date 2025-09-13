@@ -1,11 +1,11 @@
-%define libname    %mklibname evdevxx
-%define devname    %mklibname evdevxx -d
-%define staticname %mklibname evdevxx -d -s
+%define libname    libevdevxx
+%define devname    libevdevxx-devel
+%define staticname libevdevxx-static-devel
 %define toolsname  evdevxx-tools
 
 Name:           libevdevxx
 Version:        0.5.2
-Release:        %mkrel 1
+Release:        1%{?dist}
 Summary:        A C++ wrapper for libevdev.
 Group:          System/Libraries
 License:        MIT
@@ -25,13 +25,6 @@ BuildRequires:  doxygen
 #############
 ## library ##
 #############
-
-%package -n     %{libname}
-Summary:        A C++ wrapper for libevdev.
-Group:          System/Libraries
-
-%description -n %{libname}
-This is the library needed to run programs linked with %{libname}.
 
 
 ###########
