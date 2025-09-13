@@ -42,6 +42,6 @@ jobs:
     - name: Upload
       uses: actions/upload-artifact@v4
       with:
-        name: Mageia 9 packages
+        name: ${{ env.DISTRO }} packages
         path: packages/${{ env.DISTRO }}/output
         if-no-files-found: error
