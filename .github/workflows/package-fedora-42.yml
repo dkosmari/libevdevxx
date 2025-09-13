@@ -1,4 +1,4 @@
-name: Fedora 42 amd64 RPM package
+name: Fedora 42 RPM package
 
 on: [workflow_dispatch]
 
@@ -36,7 +36,7 @@ jobs:
       uses: tj-actions/docker-cp@v2
       with:
         container: container-${{ env.DISTRO }}
-        source: /buildroot
+        source: /root/rpmbuild
         destination: packages/${{ env.DISTRO }}/output
 
     - name: Upload

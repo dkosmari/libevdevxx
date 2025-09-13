@@ -1,4 +1,4 @@
-name: Mageia 9 amd64 RPM package
+name: Mageia 9 RPM package
 
 on: [workflow_dispatch]
 
