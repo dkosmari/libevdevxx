@@ -18,6 +18,7 @@ jobs:
         tags: image-mageia-9
         context: ./packages/mageia-9
       env:
+        DOCKER_BUILD_SUMMARY: false
         DOCKER_BUILD_RECORD_UPLOAD: false
 
     - name: Build RPM package
