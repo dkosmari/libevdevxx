@@ -1,0 +1,3 @@
+usr/include/libevdevxx/*
+usr/lib/*/lib*.so
+usr/lib/*/pkgconfig/*.pc
