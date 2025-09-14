@@ -9,13 +9,13 @@ URL="https://github.com/dkosmari/libevdevxx/releases/download/v${VERSION}/${TARB
 
 wget -q "${URL}" || exit 1
 
-ln -s ${TARBALL} ${NAME}_${VERSION}.orig.tar.gz
+ln -s ${TARBALL} ${NAME}_${VERSION}.orig.tar.gz || exit 2
 
-tar xf ${TARBALL} || exit 2
+tar xf ${TARBALL} || exit 3
 
-(cd ${TARNAME} && mv ../debian . && debuild) || exit 3
+(cd ${TARNAME} && mv ../debian . && debuild) || exit 4
 
-mkdir -p output || exit 4
+mkdir -p output || exit 5
 
 mv --target-directory=output \
    *.deb \
@@ -23,6 +23,6 @@ mv --target-directory=output \
    *.dsc \
    *.build \
    *.buildinfo \
-   *.changes || exit 5
+   *.changes || exit 6
 
 exit 0

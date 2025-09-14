@@ -36,7 +36,7 @@ jobs:
       uses: tj-actions/docker-cp@v2
       with:
         container: container-${{ env.DISTRO }}
-        source: /root/rpmbuild
+        source: /root/rpmbuild/output
         destination: packages/${{ env.DISTRO }}/output
 
     - name: Upload
