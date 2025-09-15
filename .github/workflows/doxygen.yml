@@ -29,7 +29,7 @@ jobs:
         uses: awalsh128/cache-apt-pkgs-action@latest
         with:
           packages: libevdev-dev
-          version: doxygen-cache
+          version: doxygen
 
       - name: Checkout
         uses: actions/checkout@v5

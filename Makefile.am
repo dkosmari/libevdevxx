@@ -63,7 +63,6 @@ libevdevxx_la_SOURCES = \
 	src/Type.cpp \
 	src/TypeCode.cpp \
 	src/Uinput.cpp \
-	src/utils.cpp \
 	src/utils.hpp
 
 

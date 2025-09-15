@@ -6,7 +6,7 @@
 Name:           libevdevxx
 Version:        0.5.2
 Release:        1%{?dist}
-Summary:        A C++ wrapper for libevdev.
+Summary:        A C++20 wrapper for libevdev.
 Group:          System/Libraries
 License:        MIT
 URL:            https://github.com/dkosmari/libevdevxx
@@ -16,10 +16,10 @@ Source0:        https://github.com/dkosmari/libevdevxx/releases/download/v%{vers
 This is the library needed to run programs linked with %{name}.
 
 BuildRequires:  automake
+BuildRequires:  doxygen
+BuildRequires:  gcc-c++
 BuildRequires:  libtool
 BuildRequires:  pkgconfig(libevdev)
-BuildRequires:  gcc-c++
-BuildRequires:  doxygen
 
 
 #############
@@ -103,7 +103,7 @@ This package contains tools from %{name}:
 %{_pkgdocdir}/html
 %{_includedir}/libevdevxx/*
 %{_libdir}/*.so
-%{_libdir}/pkgconfig/libevdevxx.pc
+%{_libdir}/pkgconfig/*.pc
 
 
 ##########################
@@ -115,7 +115,7 @@ This package contains tools from %{name}:
 %{_pkgdocdir}/html
 %{_includedir}/libevdevxx/*
 %{_libdir}/*.a
-%{_libdir}/pkgconfig/libevdevxx.pc
+%{_libdir}/pkgconfig/*.pc
 
 
 ###################
