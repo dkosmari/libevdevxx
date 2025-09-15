@@ -4,7 +4,7 @@
 %define toolsname  evdevxx-tools
 
 Name:           libevdevxx
-Version:        0.5.2
+Version:        0.5.3
 Release:        1%{?dist}
 Summary:        A C++20 wrapper for libevdev.
 Group:          System/Libraries
@@ -36,6 +36,7 @@ Summary:        Development package for %{libname}.
 Group:          Development/C++
 Provides:       %{devname} = %{version}
 Requires:       %{libname} = %{version}-%{release}
+Requires:       pkgconfig(libevdev)
 
 %description -n %{devname}
 This package provides libraries and headers files for %{name}
@@ -50,6 +51,7 @@ development.
 Summary:        Development package for %{libname}, with static linking.
 Group:          Development/C++
 Provides:       %{staticname} = %{version}
+Requires:       pkgconfig(libevdev)
 
 %description -n %{staticname}
 This package provides static libraries for %{name} development.

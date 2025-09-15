@@ -10,9 +10,3 @@ export DEB_LDFLAGS_MAINT_APPEND = -Wl,-O1
 override_dh_auto_configure:
 	dh_auto_configure -- $(CONFIG) --enable-docs --enable-tools
 
-
-#override_dh_install:
-#	dh_install --list-missing -X.la -X.pyc -X.pyo
-
-# override_dh_missing:
-# 	dh_missing -X.la

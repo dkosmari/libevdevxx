@@ -4,8 +4,8 @@
 %define toolsname  evdevxx-tools
 
 Name:           libevdevxx
-Version:        0.5.2
-Release:        %mkrel 2
+Version:        0.5.3
+Release:        %mkrel 1
 Summary:        A C++20 wrapper for libevdev.
 Group:          System/Libraries
 License:        MIT
@@ -43,6 +43,7 @@ Summary:        Development package for %{libname}.
 Group:          Development/C++
 Provides:       %{devname} = %{version}
 Requires:       %{libname} = %{version}-%{release}
+Requires:       pkgconfig(libevdev)
 
 %description -n %{devname}
 This package provides libraries and headers files for %{name}
