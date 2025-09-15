@@ -1,3 +1,9 @@
+libevdevxx (0.5.2-2) UNRELEASED; urgency=low
+
+  * Fixed dependencies.
+
+ -- Daniel K. O. <dkosmari>  Sat, 15 Sep 2025 01:45:00 -0300
+
 libevdevxx (0.5.2-1) UNRELEASED; urgency=low
 
   * Initial release.

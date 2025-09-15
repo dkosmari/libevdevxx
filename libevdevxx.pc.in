@@ -6,6 +6,6 @@ includedir=@includedir@
 Name: @PACKAGE_NAME@
 Version: @PACKAGE_VERSION@
 Description: A C++ wrapper for libevdev.
-Requires.private: libevdev
+Requires: libevdev
 Libs: -L${libdir} -levdevxx
 Cflags: -I${includedir}

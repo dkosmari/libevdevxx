@@ -76,7 +76,7 @@ This package contains tools from %{name}:
 %prep
 %autosetup
 
-%build 
+%build
 %configure --disable-examples --enable-docs --enable-tools
 %make_build
 

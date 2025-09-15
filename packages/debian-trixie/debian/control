@@ -21,7 +21,7 @@ Multi-Arch: same
 Pre-Depends:
  ${misc:Pre-Depends},
 Depends:
- libevdev2 (>= 1.10),
+ libevdev2,
  ${misc:Depends},
  ${shlibs:Depends},
 Description: The runtime package for libevdevxx.
@@ -34,6 +34,7 @@ Architecture: any
 Multi-Arch: same
 Depends:
  libevdevxx (= ${binary:Version}),
+ libevdev-dev,
  ${misc:Depends},
 Suggests: libevdevxx-doc
 Description: The development package for libevdevxx.
@@ -45,8 +46,8 @@ Section: libdevel
 Architecture: any
 Multi-Arch: same
 Depends:
- ${misc:Depends},
  libevdev-dev,
+ ${misc:Depends},
 Suggests: libevdevxx-doc
 Description: The static development package for libevdevxx.
  libevdevxx is a C++ wrapper for libevdev.
