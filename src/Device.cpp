@@ -1,14 +1,14 @@
 /*
  * libevdevxx - a C++ wrapper for libevdev
  *
- * Copyright (C) 2025  Daniel K. O.
+ * Copyright (C) 2025-2026  Daniel K. O.
  * SPDX-License-Identifier: MIT
  */
 
 #include <stdexcept>
 #include <string>
 
-#ifdef HAVE_CONFIG_
+#ifdef HAVE_CONFIG_H
 #include <config.h>
 #endif
 
